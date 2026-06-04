@@ -35,6 +35,7 @@ jobs:
       - name: Prepare deployment directory
         run: |
           mkdir -p _site
+          touch _site/.nojekyll
           cp index.html _site/
           cp script.js _site/
           cp style.css _site/
@@ -46,7 +47,7 @@ jobs:
           echo "Contents of _site:"
           ls -la _site/
           echo "Contents of _site/storybook:"
-          ls -la _site/storybook/
+          ls -la _site/storybook/ | head -20
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
