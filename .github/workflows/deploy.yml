@@ -43,6 +43,10 @@ jobs:
           cp -r "reference images" _site/ || true
           mkdir -p _site/storybook
           cp -r storybook-static/* _site/storybook/
+          echo "Contents of _site:"
+          ls -la _site/
+          echo "Contents of _site/storybook:"
+          ls -la _site/storybook/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
