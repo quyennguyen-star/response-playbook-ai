@@ -25,7 +25,8 @@
       "Bash(curl -s \"https://api.github.com/repos/quyennguyen-star/response-playbook-ai/actions/runs/26970997122/jobs\")",
       "Bash(curl -s \"https://quyennguyen-star.github.io/response-playbook-ai/\")",
       "Bash(curl -I \"https://quyennguyen-star.github.io/response-playbook-ai/storybook/index.html\")",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "Bash(npm list *)"
     ]
   },
   "enableAllProjectMcpServers": true,

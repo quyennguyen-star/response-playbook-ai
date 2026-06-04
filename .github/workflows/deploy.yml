@@ -32,15 +32,20 @@ jobs:
       - name: Build Storybook
         run: npm run build-storybook
 
+      - name: Build Components
+        run: npm run build-components
+
       - name: Prepare deployment directory
         run: |
           mkdir -p _site
           touch _site/.nojekyll
           cp index.html _site/
+          cp components-demo.html _site/
           cp script.js _site/
           cp style.css _site/
           cp tokens.css _site/
           cp -r img _site/
+          cp -r dist _site/
           cp -r "reference images" _site/ || true
           mkdir -p _site/storybook
           cp -r storybook-static/* _site/storybook/

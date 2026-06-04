@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playbook Components Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="dist/components.css">
+  <style>
+    body {
+      font-family: 'Figtree', sans-serif;
+      padding: var(--space-10);
+      background: var(--grey-050);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .demo-section {
+      background: var(--base-white);
+      padding: var(--space-8);
+      margin-bottom: var(--space-8);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+    }
+    .demo-section h2 {
+      margin-bottom: var(--space-6);
+      color: var(--text-primary);
+    }
+    .demo-row {
+      display: flex;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Playbook React Components Demo</h1>
+  <p>All components are built from React and bundled into a single JavaScript file.</p>
+
+  <div class="demo-section">
+    <h2>Buttons</h2>
+    <div class="demo-row">
+      <div id="button-primary"></div>
+      <div id="button-secondary"></div>
+      <div id="button-small"></div>
+      <div id="button-large"></div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>Feedback Bar</h2>
+    <div id="feedback-bar"></div>
+  </div>
+
+  <div class="demo-section">
+    <h2>AI Thinking</h2>
+    <div id="ai-thinking"></div>
+  </div>
+
+  <div class="demo-section">
+    <h2>Response Labels</h2>
+    <div class="demo-row">
+      <div id="label-answer"></div>
+      <div id="label-guidance"></div>
+      <div id="label-action"></div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>Prompt Chips</h2>
+    <div class="demo-row">
+      <div id="chip-1"></div>
+      <div id="chip-2"></div>
+      <div id="chip-3"></div>
+    </div>
+  </div>
+
+  <!-- Load the compiled components bundle -->
+  <script src="dist/components.iife.js"></script>
+
+  <script>
+    // Mount all components
+    window.mountComponent('Button', 'button-primary', {
+      children: 'Primary Button',
+      variant: 'primary'
+    });
+
+    window.mountComponent('Button', 'button-secondary', {
+      children: 'Secondary Button',
+      variant: 'secondary'
+    });
+
+    window.mountComponent('Button', 'button-small', {
+      children: 'Small',
+      size: 'small'
+    });
+
+    window.mountComponent('Button', 'button-large', {
+      children: 'Large Button',
+      size: 'large'
+    });
+
+    window.mountComponent('FeedbackBar', 'feedback-bar', {
+      onFeedback: (feedback) => console.log('Feedback received:', feedback)
+    });
+
+    window.mountComponent('AIThinking', 'ai-thinking', {
+      text: 'Analyzing your request...'
+    });
+
+    window.mountComponent('ResponseLabel', 'label-answer', {
+      children: 'Answer',
+      type: 'answer'
+    });
+
+    window.mountComponent('ResponseLabel', 'label-guidance', {
+      children: 'Guidance',
+      type: 'guidance'
+    });
+
+    window.mountComponent('ResponseLabel', 'label-action', {
+      children: 'Next step',
+      type: 'action'
+    });
+
+    window.mountComponent('PromptChip', 'chip-1', {
+      children: 'How do I ship internationally?',
+      onClick: () => alert('Chip clicked!')
+    });
+
+    window.mountComponent('PromptChip', 'chip-2', {
+      children: 'Where are my API keys?'
+    });
+
+    window.mountComponent('PromptChip', 'chip-3', {
+      children: 'Show me more examples'
+    });
+  </script>
+</body>
+</html>
