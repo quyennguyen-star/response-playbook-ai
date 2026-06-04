@@ -1,0 +1,2338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Response Playbook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --grey-050: #F7F8FA; --grey-100: #F0F2F5; --grey-200: #E1E4E8; --grey-300: #C5CAD3;
+      --grey-400: #A4ABB6; --grey-500: #848B96; --grey-600: #656C76; --grey-700: #484F59;
+      --grey-800: #2C323A; --grey-900: #181B21; --grey-950: #0A0B0D;
+      --blue-050: #EDF6FF; --blue-100: #DBECFE; --blue-700: #1D5AD8;
+      --green-050: #F0FDF4; --green-100: #DCFCE7; --green-200: #BBF7D0; --green-700: #15803D;
+      --indigo-050: #F7F7FF; --indigo-100: #EEF0FF; --indigo-600: #4D55E6; --indigo-700: #3D3CC2; --indigo-950: #11003A;
+      --brand-cobalt: #2C3FFF; --base-white: #FFFFFF;
+      --border-light: var(--grey-200); --border-medium: var(--grey-400);
+      --text-primary: var(--grey-950); --text-secondary: var(--grey-600); --text-link: var(--blue-700);
+      --radius-xs: 4px; --radius-sm: 8px; --radius-md: 16px;
+      --space-1: 2px; --space-2: 4px; --space-3: 6px; --space-4: 8px; --space-5: 12px;
+      --space-6: 16px; --space-8: 24px; --space-10: 32px; --space-12: 48px;
+      --font-size-xs: 11px; --font-size-sm: 13px; --font-size-md: 14px;
+      --font-size-lg: 16px; --font-size-xl: 20px; --font-size-2xl: 28px;
+      --font-weight-medium: 500; --font-weight-semibold: 600; --font-weight-bold: 700;
+      --sidebar-width: 256px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Figtree', sans-serif; background: var(--base-white);
+      color: var(--text-primary); font-size: var(--font-size-md);
+      line-height: 1.5; display: flex;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-width); min-height: 100vh; background: var(--base-white);
+      position: fixed; top: 0; left: 0; display: flex; flex-direction: column;
+      z-index: 100; padding: var(--space-5);
+    }
+    .sidebar-inner {
+      border-radius: var(--radius-md);
+      flex: 1; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .sidebar-logo {
+      display: flex; align-items: center; gap: var(--space-4);
+      padding: var(--space-5);
+    }
+    .sidebar-logo-text { font-size: var(--font-size-md); font-weight: 600; }
+    .sidebar-nav { padding: var(--space-5) 0; flex: 1; overflow-y: auto; }
+    
+    .nav-item {
+      display: block;
+      padding: var(--space-4) var(--space-5);
+      font-size: var(--font-size-md);
+      color: var(--text-primary);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.1s ease, font-weight 0.1s ease;
+      text-decoration: none;
+      margin: 1px var(--space-3);
+      line-height: 1.5;
+    }
+    .nav-item:hover {
+      background: var(--grey-100);
+    }
+    .nav-item.active {
+      background: var(--grey-100);
+      font-weight: 500;
+    }
+    .nav-item.parent {
+      cursor: pointer; margin-top: var(--space-3); margin-bottom: 2px;
+    }
+    .nav-item.parent:hover { background: var(--grey-100); }
+    .nav-group {
+      margin-left: var(--space-8); border-left: 1px solid var(--grey-200);
+      padding-left: var(--space-1); padding-bottom: var(--space-1); display: none;
+    }
+    .nav-group.open { display: block; }
+
+    /* MAIN */
+    .main { margin-left: var(--sidebar-width); flex: 1; }
+    .page { display: none; padding: var(--space-8); max-width: 1088px; }
+    .page.active { display: block; }
+    .page-title { font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-2); }
+    .page-subtitle {
+      font-size: var(--font-size-md); color: var(--text-primary);
+      margin-bottom: var(--space-10);
+    }
+    .section-title { font-size: var(--font-size-lg); font-weight: var(--font-weight-medium); margin-bottom: var(--space-6); }
+    .section-subtitle { font-size: var(--font-size-sm); color: var(--text-primary); margin-bottom: var(--space-6); }
+
+    /* VIEW TOGGLE */
+    .view-toggle {
+      display: flex; gap: 0; background: var(--grey-100);
+      border-radius: 6px; padding: 2px; width: fit-content;
+    }
+    .toggle-btn {
+      padding: 4px var(--space-4); border: none; background: transparent;
+      font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
+      font-weight: 500; color: var(--text-secondary); cursor: pointer;
+      border-radius: 4px; transition: all 0.15s;
+    }
+    .toggle-btn.active {
+      background: var(--base-white); color: var(--text-primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    /* ANATOMY CARDS */
+    .anatomy-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: var(--space-10);
+    }
+    .anatomy-card {
+      background: var(--grey-100);
+      padding: var(--space-8);
+      border-right: 1px solid var(--border-light);
+    }
+    .anatomy-card:last-child {
+      border-right: none;
+    }
+    .anatomy-card-header {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--line-height-xl);
+      margin-bottom: 0;
+      color: var(--text-primary);
+    }
+    .anatomy-card-num {
+      display: inline;
+    }
+    .anatomy-card-title {
+      display: inline;
+    }
+    .anatomy-card-desc {
+      font-size: var(--font-size-md);
+      color: var(--text-primary);
+      line-height: var(--line-height-lg);
+    }
+
+    /* RESPONSE ANATOMY CARDS */
+    .anatomy-cards-section {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: var(--space-5); margin-top: var(--space-5);
+    }
+    .anatomy-pattern-card {
+      border: 1px solid var(--border-light); border-radius: var(--radius-sm);
+      background: var(--base-white); overflow: hidden;
+    }
+    .anatomy-pattern-card-content { padding: var(--space-6); }
+    .anatomy-pattern-card-title {
+      font-size: var(--font-size-md); font-weight: 700;
+      margin-bottom: var(--space-5);
+    }
+    .anatomy-step {
+      display: flex; align-items: center; gap: var(--space-3);
+      font-size: var(--font-size-md); margin-bottom: var(--space-3);
+    }
+    .step-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 600; flex-shrink: 0;
+    }
+    .step-num.blue { background: var(--indigo-100); color: var(--indigo-600); }
+    .step-num.teal { background: var(--blue-100); color: var(--blue-700); }
+    .step-num.green { background: var(--green-050); color: var(--green-700); }
+    .anatomy-pattern-footer {
+      background: var(--grey-050); padding: var(--space-4) var(--space-6);
+      border-top: 1px solid var(--border-light);
+    }
+    .check-item {
+      display: flex; align-items: flex-start; gap: var(--space-3);
+      font-size: var(--font-size-sm); color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+    .check-item:last-child { margin-bottom: 0; }
+    .check-icon { color: var(--green-700); flex-shrink: 0; font-size: 12px; }
+
+    /* REUSABLE EXPLORER COMPONENT */
+    .examples-layout,
+    .clarification-explorer {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 0;
+      margin-bottom: var(--space-10);
+      background: transparent;
+      padding: 0;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      overflow: hidden;
+    }
+    .examples-list,
+    .clarification-left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      background: var(--base-white);
+      border: none;
+      border-radius: 0;
+      padding: var(--space-4);
+    }
+    .example-item,
+    .clarification-item {
+      padding: var(--space-5) var(--space-6);
+      cursor: pointer;
+      border-left: 4px solid transparent;
+      transition: all 0.15s;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+    }
+    .example-item:hover,
+    .clarification-item:hover {
+      background: var(--grey-050);
+      border-color: transparent;
+    }
+    .example-item.active,
+    .clarification-item.active {
+      background: var(--grey-050);
+      border: 1px solid transparent;
+      border-left: 4px solid var(--indigo-950);
+    }
+    .example-item-title { font-size: var(--font-size-md); font-weight: 500; color: var(--text-primary); }
+    .example-item.active .example-item-title,
+    .clarification-item.active { color: var(--indigo-950); font-weight: 600; }
+    .example-item-desc {
+      display: none;
+    }
+    .example-preview,
+    .clarification-right {
+      padding: var(--space-8) var(--space-10);
+      background: var(--grey-050);
+      border-radius: var(--radius-sm);
+    }
+
+    /* ANATOMY VIEW */
+    .user-bubble {
+      background: var(--grey-100);
+      border-radius: var(--radius-sm);
+      padding: var(--space-6);
+      margin-bottom: var(--space-8);
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-lg);
+    }
+    .user-bubble span {
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-right: var(--space-3);
+    }
+    .user-bubble strong {
+      font-weight: 600;
+    }
+    .response-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+    .response-label {
+      display: inline-block;
+      background: var(--indigo-100);
+      color: var(--indigo-600);
+      font-size: var(--font-size-xs);
+      font-weight: 400;
+      padding: var(--space-3) var(--space-5);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      flex-shrink: 0;
+      width: 100px;
+      text-align: center;
+    }
+    .response-text {
+      font-size: var(--font-size-md);
+      flex: 1;
+    }
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.4;
+        transform: scale(1.2);
+      }
+    }
+
+    .feedback-btn:hover {
+      background: var(--grey-100) !important;
+    }
+    .feedback-btn:hover svg {
+      color: var(--text-primary) !important;
+    }
+
+    .btn {
+      display: flex;
+      min-width: 32px;
+      max-height: 32px;
+      padding: var(--space-3) var(--space-3);
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-3);
+      border-radius: var(--radius-xs);
+      border: 1px solid var(--border-light);
+      background: var(--base-white);
+      box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.10), 0 1px 1px 0 rgba(0, 0, 0, 0.10);
+      font-size: var(--font-size-sm);
+      font-family: 'Figtree', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn:hover { border-color: var(--border-medium); }
+
+    /* CHAT PREVIEW */
+    .chat-container {
+      display: flex; flex-direction: column; gap: var(--space-6);
+      padding: var(--space-8); background: transparent; min-height: 300px;
+    }
+    .chat-msg-user {
+      align-self: flex-end; background: var(--grey-100);
+      border: 1px solid var(--border-light); padding: var(--space-4) var(--space-5);
+      border-radius: 18px 18px 4px 18px; font-size: var(--font-size-md);
+      max-width: 65%; line-height: 1.5;
+    }
+    .chat-msg-ai {
+      align-self: flex-start; display: flex; flex-direction: column;
+      gap: var(--space-4); max-width: 90%;
+    }
+    .chat-ai-answer { font-size: var(--font-size-md); line-height: 1.6; }
+    .chat-ai-path { font-weight: 600; margin-top: var(--space-2); font-size: var(--font-size-md); }
+    .chat-action-btn {
+      padding: var(--space-3) var(--space-6); border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm); font-size: var(--font-size-md);
+      font-family: 'Figtree', sans-serif; font-weight: 500;
+      cursor: pointer; background: var(--base-white); transition: all 0.15s;
+      width: fit-content;
+    }
+    .chat-action-btn:hover { background: var(--grey-050); border-color: var(--grey-600); }
+    .chat-feedback { display: flex; gap: var(--space-3); margin-top: var(--space-4); }
+    .chat-like-icon {
+      color: var(--grey-400); cursor: pointer; font-size: 18px; transition: color 0.15s;
+    }
+    .chat-like-icon:hover { color: var(--grey-700); }
+    .chat-input-area {
+      border: 1px solid var(--border-light); border-radius: var(--radius-sm);
+      padding: var(--space-4) var(--space-5); margin-top: var(--space-6);
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--base-white);
+    }
+    .chat-input-icon { color: var(--grey-400); cursor: pointer; font-size: 18px; }
+    .chat-disclaimer {
+      font-size: 11px; color: var(--grey-500);
+      text-align: center; margin-top: var(--space-3);
+    }
+
+    /* ACCORDION */
+    .accordion {
+      border: 1px solid var(--border-light); border-radius: var(--radius-sm);
+      overflow: hidden; margin-bottom: var(--space-6);
+    }
+    .accordion-item { border-bottom: 1px solid var(--border-light); }
+    .accordion-item:last-child { border-bottom: none; }
+    .accordion-header {
+      padding: var(--space-5) var(--space-6); display: flex;
+      justify-content: space-between; align-items: center; cursor: pointer;
+      font-weight: 500; font-size: var(--font-size-md);
+      background: var(--base-white); transition: background 0.15s;
+    }
+    .accordion-header:hover { background: var(--grey-050); }
+    .accordion-header .chevron {
+      transition: transform 0.2s;
+      color: var(--grey-600);
+      fill: var(--grey-600);
+      flex-shrink: 0;
+      display: block;
+    }
+    .accordion-header.open .chevron { transform: rotate(180deg); }
+    .accordion-body {
+      display: none; padding: var(--space-4) var(--space-6) var(--space-5);
+      font-size: var(--font-size-sm); color: var(--text-primary);
+      background: var(--base-white);
+      line-height: 1.6;
+    }
+    .accordion-body.open { display: block; }
+    .accordion-body p { margin-bottom: var(--space-3); }
+
+    /* COMMON RESPONSE PARTS */
+    .common-response-parts {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--space-10);
+      margin-bottom: var(--space-10);
+    }
+    .common-response-header {
+      padding-right: var(--space-8);
+    }
+    .common-response-cards {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+    .response-part-card {
+      background: var(--grey-050);
+      border-radius: var(--radius-sm);
+      padding: var(--space-6);
+    }
+    .response-part-title {
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--line-height-xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+    .response-part-desc {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--line-height-lg);
+      color: var(--text-primary);
+    }
+
+    /* SUPPORTED GRID */
+    .supported-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5); margin-top: var(--space-5);
+    }
+    .supported-card {
+      border: 1px solid var(--border-light); border-radius: var(--radius-sm);
+      padding: var(--space-6); background: var(--grey-050);
+    }
+    .supported-card-title {
+      font-size: var(--font-size-md); font-weight: 600; margin-bottom: var(--space-4);
+    }
+    .supported-card-item {
+      font-size: var(--font-size-sm); color: var(--text-primary); margin-bottom: var(--space-2);
+    }
+
+    /* PRINCIPALS HERO */
+    .principles-hero-image {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: var(--space-10);
+    }
+
+    /* RESPONSE PATTERNS PAGE */
+    .rp-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      grid-auto-rows: 1fr;
+      margin-bottom: var(--space-8);
+    }
+    .rp-pattern-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .pattern-card {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--base-white);
+      height: 100%;
+    }
+    .pattern-card-header {
+      padding: var(--space-8);
+      color: var(--base-white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .pattern-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-sm);
+    }
+    .pattern-card-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-semibold);
+      margin: 0;
+      color: var(--base-white);
+    }
+    .pattern-card-body {
+      padding: var(--space-6);
+    }
+    .pattern-card-desc {
+      font-size: var(--font-size-sm);
+      line-height: 1.6;
+      margin-bottom: var(--space-6);
+      color: var(--text-primary);
+    }
+    .pattern-card-anatomy {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .pattern-anatomy-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--font-size-sm);
+    }
+    .pattern-anatomy-num {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-primary);
+    }
+    .pattern-anatomy-label {
+      font-weight: var(--font-weight-medium);
+      color: var(--text-primary);
+    }
+
+    /* USE CASE TABLE */
+    .uc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: var(--space-10);
+      border: 1px solid var(--border-light);
+    }
+    .uc-table th {
+      text-align: left;
+      padding: var(--space-3) var(--space-4);
+      background: var(--grey-050);
+      border-bottom: 1px solid var(--border-light);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-primary);
+    }
+    .uc-table td {
+      padding: var(--space-4) var(--space-4);
+      border-bottom: 1px solid var(--border-light);
+      font-size: var(--font-size-sm);
+      vertical-align: top;
+    }
+    .uc-table tr:last-child td {
+      border-bottom: none;
+    }
+    .uc-badge {
+      display: inline-block;
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-xs);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+    }
+    .uc-badge.assist {
+      background: var(--indigo-100);
+      color: var(--indigo-600);
+    }
+    .uc-badge.configure {
+      background: var(--green-050);
+      color: var(--green-700);
+    }
+    .uc-badge.insight {
+      background: var(--blue-100);
+      color: var(--blue-700);
+    }
+    .patterns-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5); margin-bottom: var(--space-6);
+    }
+    .chip-group { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .chip {
+      display: inline-block; padding: 2px var(--space-4);
+      border: 1px solid var(--border-light); border-radius: 9999px;
+      font-size: var(--font-size-xs); color: var(--text-secondary);
+      background: var(--grey-050);
+    }
+    .info-banner {
+      background: var(--grey-050); border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm); padding: var(--space-5) var(--space-6);
+      font-size: var(--font-size-sm); color: var(--text-primary);
+      margin-bottom: var(--space-10);
+    }
+
+    /* TABLES */
+    .use-case-table { width: 100%; border-collapse: collapse; font-size: var(--font-size-sm); }
+    .use-case-table th {
+      text-align: left; padding: var(--space-4) var(--space-5);
+      background: var(--grey-050); border: 1px solid var(--border-light);
+      font-weight: 600; color: var(--text-secondary); font-size: var(--font-size-xs);
+    }
+    .use-case-table td {
+      padding: var(--space-4) var(--space-5); border: 1px solid var(--border-light);
+      vertical-align: top;
+    }
+    .badge {
+      display: inline-block; padding: 2px var(--space-3);
+      border-radius: var(--radius-xs); font-size: var(--font-size-xs); font-weight: 500;
+    }
+    .badge-assist { background: var(--indigo-100); color: var(--indigo-600); }
+    .badge-configure { background: var(--green-050); color: var(--green-700); }
+    .badge-insight { background: var(--blue-050); color: var(--blue-700); }
+
+    /* CLARIFICATION EXPLORER */
+    .clarification-examples {
+      border: 1px solid var(--border-light); border-radius: var(--radius-sm);
+      overflow: hidden; margin-bottom: var(--space-10);
+    }
+    .clarification-layout { display: grid; grid-template-columns: 220px 1fr; }
+    .clarification-left { border-right: 1px solid var(--border-light); }
+    .clarification-item {
+      padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--border-light);
+      cursor: pointer; border-left: 2px solid transparent;
+      font-size: var(--font-size-md); font-weight: 500; transition: all 0.15s;
+    }
+    .clarification-item:last-child { border-bottom: none; }
+    .clarification-item:hover { background: var(--grey-050); }
+    .clarification-item.active {
+      border-left-color: var(--brand-cobalt); color: var(--brand-cobalt);
+      background: var(--base-white);
+    }
+    .clarification-right { padding: var(--space-6); background: var(--base-white); }
+    .clarification-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: var(--space-4);
+    }
+    .clarification-title { font-size: var(--font-size-md); font-weight: 600; }
+    .clarification-route { font-size: var(--font-size-xs); color: var(--text-secondary); }
+    .user-query-right {
+      background: var(--grey-050); border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm); padding: var(--space-3) var(--space-5);
+      font-size: var(--font-size-sm); text-align: right;
+      margin-bottom: var(--space-5); display: inline-block;
+      float: right; clear: both;
+    }
+    .ai-message {
+      font-size: var(--font-size-sm); margin-bottom: var(--space-5);
+      clear: both; padding-top: var(--space-3);
+    }
+    .prompt-chips { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-5); }
+    .prompt-chip {
+      display: inline-block; padding: var(--space-3) var(--space-5);
+      border: 1px solid var(--border-light); border-radius: 9999px;
+      font-size: var(--font-size-sm); cursor: pointer;
+      background: var(--base-white); transition: background 0.15s;
+      max-width: fit-content;
+    }
+    .prompt-chip:hover { background: var(--grey-050); }
+    .chat-input-mock {
+      border: 1px solid var(--border-light); border-radius: var(--radius-sm);
+      padding: var(--space-4) var(--space-5); display: flex;
+      justify-content: space-between; align-items: center;
+      background: var(--base-white); min-height: 56px;
+    }
+    .plus, .send { color: var(--text-secondary); font-size: 16px; }
+
+    /* CONFIGURE */
+    .configure-query {
+      background: var(--grey-050); border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm); padding: var(--space-4) var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+    .configure-query span {
+      color: var(--text-primary); margin-right: var(--space-3);
+      font-size: var(--font-size-sm);
+    }
+    .configure-query strong { font-weight: 600; font-size: var(--font-size-md); }
+    .configure-response-row {
+      display: grid; grid-template-columns: 110px 1fr;
+      gap: var(--space-4); align-items: start; margin-bottom: var(--space-6);
+    }
+    .configure-label {
+      display: inline-block;
+      background: var(--indigo-100);
+      color: var(--indigo-600);
+      font-size: var(--font-size-xs);
+      font-weight: 400;
+      padding: var(--space-3) var(--space-5);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      flex-shrink: 0;
+      width: 100px;
+      text-align: center;
+    }
+    .configure-content { font-size: var(--font-size-sm); }
+    .configure-content strong {
+      font-weight: 600; display: block; margin-bottom: 2px;
+    }
+    .btn-group { display: flex; flex-direction: column; gap: var(--space-3); }
+
+    /* CB SPECIFIC */
+    .ai-response-text { font-size: var(--font-size-sm); margin-bottom: var(--space-5); }
+    .btn-chips { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-5); }
+    .like-row { display: flex; gap: var(--space-4); margin-bottom: var(--space-5); }
+    .like-btn { font-size: 14px; cursor: pointer; opacity: 0.5; }
+
+    /* MISC */
+    .use-when-list { margin-bottom: var(--space-8); }
+    .use-when-item {
+      display: flex; align-items: flex-start; gap: var(--space-3);
+      font-size: var(--font-size-sm); color: var(--text-primary);
+      margin-bottom: var(--space-3);
+    }
+    .bullet { color: var(--text-secondary); }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .shimmer-text {
+      background: linear-gradient(90deg,
+        var(--grey-400) 0%,
+        var(--grey-600) 25%,
+        var(--grey-950) 50%,
+        var(--grey-600) 75%,
+        var(--grey-400) 100%);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+
+    @keyframes convergeTop {
+      0% { transform: translate(-50%, 0); }
+      25% { transform: translate(-50%, 4px); }
+      50% { transform: translate(-50%, 0); }
+      75% { transform: translate(-50%, 4px); }
+      100% { transform: translate(-50%, 0); }
+    }
+    @keyframes convergeLeft {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(4px, -4px); }
+      50% { transform: translate(0, 0); }
+      75% { transform: translate(4px, -4px); }
+      100% { transform: translate(0, 0); }
+    }
+    @keyframes convergeRight {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-4px, -4px); }
+      50% { transform: translate(0, 0); }
+      75% { transform: translate(-4px, -4px); }
+      100% { transform: translate(0, 0); }
+    }
+    @keyframes colorChange {
+      0%, 25% { background: var(--grey-400); }
+      50%, 75% { background: var(--grey-950); }
+      100% { background: var(--grey-400); }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-inner">
+    <div class="sidebar-logo">
+      <img src="img/Logos/Askmono.svg" alt="Logo" style="height: 24px; width: auto;" />
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-item" data-page="principles">Principles</div>
+      <div class="nav-item parent" data-page="response-patterns" data-group="response-patterns">Response Patterns</div>
+      <div class="nav-group" id="group-response-patterns">
+        <div class="nav-item" data-page="assist">Assist</div>
+        <div class="nav-item" data-page="insight">Insight</div>
+        <div class="nav-item" data-page="configure">Configure</div>
+      </div>
+      <div class="nav-item parent" data-page="guardrails" data-group="guardrails">Guardrails</div>
+      <div class="nav-group" id="group-guardrails">
+        <div class="nav-item" data-page="clarification">Clarification</div>
+        <div class="nav-item" data-page="capability-boundary">Capability Boundary</div>
+        <div class="nav-item" data-page="escalation">Escalation</div>
+      </div>
+      <div class="nav-item parent" data-page="ui-patterns" data-group="ui-patterns">UI Patterns</div>
+      <div class="nav-group" id="group-ui-patterns">
+        <div class="nav-item" data-page="chain-of-thought">Chain of Thought</div>
+        <div class="nav-item" data-page="feedback-bar">Feedback Bar</div>
+        <div class="nav-item" data-page="ai-thinking">AI Thinking</div>
+        <div class="nav-item" data-page="input-assisted">Generated Content</div>
+        <div class="nav-item" data-page="prompt-chips">Prompt Chips</div>
+        <div class="nav-item" data-page="buttons-ctas">Buttons & CTAs</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+
+  <!-- PRINCIPALS -->
+  <div class="page active" id="page-principles">
+    <img src="img/Image.png" alt="Principles Header" class="principles-hero-image" />
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>1. Lead with value</span>
+          <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+          </svg>
+        </div>
+        <div class="accordion-body">
+          <p>Start with the most useful thing: the answer, insight, recommendation, confirmation, or limitation.</p>
+          <p>Ask: What does the user need to know first?</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>2. Make the next step clear</span>
+          <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+          </svg>
+        </div>
+        <div class="accordion-body">
+          <p>Every response should help the user continue with a path, CTA, review step, follow-up, or support route.</p>
+          <p>Ask: What should the user do next?</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>3. Keep the user in control</span>
+          <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+          </svg>
+        </div>
+        <div class="accordion-body">
+          <p>When AI prepares or applies something, the user should understand what will happen and be able to review before changes are made.</p>
+          <p>Ask: Does the user need to review or confirm this?</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>4. Build trust when it matters</span>
+          <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+          </svg>
+        </div>
+        <div class="accordion-body">
+          <p>Use data, sources, context, previews, or fallback when the response affects decisions, cost, settings, support, or account-specific outcomes.</p>
+          <p>Ask: What does the user need to trust this?</p>
+        </div>
+      </div>
+    </div>
+    <div class="common-response-parts">
+      <div class="common-response-header">
+        <div class="section-title">Common Response Parts</div>
+        <p class="section-subtitle">Not every response needs every part. The structure should match the user's intent and risk level.</p>
+      </div>
+      <div class="common-response-cards">
+        <div class="response-part-card">
+          <div class="response-part-title">Main Message</div>
+          <div class="response-part-desc">The primary answer, insight, confirmation, or limitation.</div>
+        </div>
+        <div class="response-part-card">
+          <div class="response-part-title">Guidance</div>
+          <div class="response-part-desc">Path, steps, instructions, or supporting detail.</div>
+        </div>
+        <div class="response-part-card">
+          <div class="response-part-title">Supporting source / data</div>
+          <div class="response-part-desc">Evidence that helps users trust the response.</div>
+        </div>
+        <div class="response-part-card">
+          <div class="response-part-title">Action</div>
+          <div class="response-part-desc">CTA, deep link, review step, or next move.</div>
+        </div>
+        <div class="response-part-card">
+          <div class="response-part-title">Fallback / Escalation</div>
+          <div class="response-part-desc">Safe path when AI cannot complete or resolve the request.</div>
+        </div>
+        <div class="response-part-card">
+          <div class="response-part-title">Feedback</div>
+          <div class="response-part-desc">User rating or response-quality signal.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESPONSE PATTERNS -->
+  <div class="page" id="page-response-patterns">
+    <h1 class="page-title">Response Patterns</h1>
+    <p class="page-subtitle">Response patterns help product teams choose how AI should respond based on the interaction type: assisting users, providing proactive insights, or configuring system behavior.</p>
+
+    <!-- Pattern Overview Cards -->
+    <div class="rp-cards">
+      <!-- Assist Card -->
+      <div style="background: var(--grey-100); padding: var(--space-6); border-radius: var(--radius-md); display: flex; flex-direction: column; height: 100%;">
+        <div style="background: var(--base-white); padding: var(--space-6); border-radius: var(--radius-sm); margin-bottom: var(--space-6); flex: 1; display: flex; flex-direction: column;">
+          <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-5);">Assist</h3>
+          <p style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5; margin-bottom: var(--space-8);">User asks for help, guidance, explanation, search, or support context.</p>
+
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--blue-100); color: var(--blue-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">1</div>
+              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Answer</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--blue-100); color: var(--blue-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">2</div>
+              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Guidance</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--blue-100); color: var(--blue-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">3</div>
+              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Next step</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-3); padding: 0 var(--space-2);">
+          <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-primary); flex-shrink: 0; margin-top: 2px;">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div style="font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.5;">Include steps, paths, or links when helpful.</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-primary); flex-shrink: 0; margin-top: 2px;">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div style="font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.5;">State limitations clearly.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Insight Card -->
+      <div style="background: var(--grey-100); padding: var(--space-6); border-radius: var(--radius-md); display: flex; flex-direction: column; height: 100%;">
+        <div style="background: var(--base-white); padding: var(--space-6); border-radius: var(--radius-sm); margin-bottom: var(--space-6); flex: 1; display: flex; flex-direction: column;">
+          <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-5);">Insight</h3>
+          <p style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5; margin-bottom: var(--space-8);">AI surfaces a trend, issue, risk, or opportunity and recommends what to do next.</p>
+
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--indigo-100); color: var(--indigo-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">1</div>
+              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Insight</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--indigo-100); color: var(--indigo-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">2</div>
+              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Recommendation</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--indigo-100); color: var(--indigo-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">3</div>
+              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Next step</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-3); padding: 0 var(--space-2);">
+          <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-primary); flex-shrink: 0; margin-top: 2px;">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div style="font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.5;">Make the insight proactive.</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-primary); flex-shrink: 0; margin-top: 2px;">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div style="font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.5;">Support with data or signals.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Configure Card -->
+      <div style="background: var(--grey-100); padding: var(--space-6); border-radius: var(--radius-md); display: flex; flex-direction: column; height: 100%;">
+        <div style="background: var(--base-white); padding: var(--space-6); border-radius: var(--radius-sm); margin-bottom: var(--space-6); flex: 1; display: flex; flex-direction: column;">
+          <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-5);">Configure</h3>
+          <p style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5; margin-bottom: var(--space-8);">User wants to create, edit, apply, or generate something with AI.</p>
+
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--green-100); color: var(--green-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">1</div>
+              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Confirm intent</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--green-100); color: var(--green-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">2</div>
+              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Preview</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--green-100); color: var(--green-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">3</div>
+              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Apply</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-3); padding: 0 var(--space-2);">
+          <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-primary); flex-shrink: 0; margin-top: 2px;">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div style="font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.5;">Preview before applying.</div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-primary); flex-shrink: 0; margin-top: 2px;">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div style="font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.5;">Describe what changed after completion.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Use Case Mapping -->
+    <h2 class="section-title" style="margin-top:var(--space-10)">Use Case Mapping</h2>
+    <table class="uc-table">
+      <thead>
+        <tr>
+          <th>Use Case</th>
+          <th>Example ask</th>
+          <th>Pattern</th>
+          <th>End State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Find / navigate</td>
+          <td>"Where do I find API keys?"</td>
+          <td><span class="uc-badge assist">Assist</span></td>
+          <td>User gets the exact location, path, and link to the screen, setting, or action.</td>
+        </tr>
+        <tr>
+          <td>Learn / guidance</td>
+          <td>"How do I void a label?"</td>
+          <td><span class="uc-badge assist">Assist</span></td>
+          <td>User gets clear instructions with a path to complete the task.</td>
+        </tr>
+        <tr>
+          <td>Support / troubleshooting</td>
+          <td>"Why can't I connect my store?"</td>
+          <td><span class="uc-badge assist">Assist</span></td>
+          <td>User understands the likely issue, fix steps, and where to go if unresolved.</td>
+        </tr>
+        <tr>
+          <td>Human escalation</td>
+          <td>"I need to talk to a person."</td>
+          <td><span class="uc-badge assist">Assist</span></td>
+          <td>User is routed to the right support path.</td>
+        </tr>
+        <tr>
+          <td>Ask my data</td>
+          <td>"What product cost me the most in shipping last month?"</td>
+          <td><span class="uc-badge assist">Assist</span></td>
+          <td>User gets the answer with supporting data and source, plus link to the relevant report/page.</td>
+        </tr>
+        <tr>
+          <td>Create / generate</td>
+          <td>"Create a rule to use UPS Ground for orders over $50."</td>
+          <td><span class="uc-badge configure">Configure</span></td>
+          <td>AI drafts the rule.</td>
+        </tr>
+        <tr>
+          <td>Apply / update</td>
+          <td>"Change these orders to FedEx Ground."</td>
+          <td><span class="uc-badge configure">Configure</span></td>
+          <td>AI summarizes the affected items, previews the change, and requires confirmation.</td>
+        </tr>
+        <tr>
+          <td>Proactive Insight</td>
+          <td>Machine detects a possible automation, optimization or issue</td>
+          <td><span class="uc-badge insight">Insight</span></td>
+          <td>User sees the alert/CTA and can review, act or dismiss</td>
+        </tr>
+        <tr>
+          <td>Unsupported / unknown</td>
+          <td>"Can you fix this carrier outage?"</td>
+          <td><span class="uc-badge assist">Assist</span></td>
+          <td>AI explains the limitation, provides the best available next step, and routes or escalates.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ASSIST -->
+  <div class="page" id="page-assist">
+    <h1 class="page-title">Assist</h1>
+    <p class="page-subtitle">Assist helps users get answers, follow instructions, understand product or support context, and move to the right next step.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">01 Answer</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Direct answer, summary, limitation statement.</div>
+      </div>
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Guidance</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Path, steps, context, or supporting detail.</div>
+      </div>
+      <div style="padding: var(--space-6);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Next step</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Link, CTA, follow-up, fallback, or escalation.</div>
+      </div>
+    </div>
+    <div class="section-title">Examples</div>
+    <div class="examples-layout">
+      <div class="examples-list" id="assist-examples-list">
+        <div class="example-item active" data-example="0">
+          <div class="example-item-title">Find / navigate</div>
+          <div class="example-item-desc">"Where do I find API keys?"</div>
+        </div>
+        <div class="example-item" data-example="1">
+          <div class="example-item-title">Learn / guidance</div>
+          <div class="example-item-desc">"How do I void a label?"</div>
+        </div>
+        <div class="example-item" data-example="2">
+          <div class="example-item-title">Support / troubleshooting</div>
+          <div class="example-item-desc">"Why can't I connect my store?"</div>
+        </div>
+        <div class="example-item" data-example="3">
+          <div class="example-item-title">Search</div>
+          <div class="example-item-desc">"Find orders from John Smith last week."</div>
+        </div>
+        <div class="example-item" data-example="4">
+          <div class="example-item-title">Ask my data</div>
+          <div class="example-item-desc">"What product cost me the most?"</div>
+        </div>
+        <div class="example-item" data-example="5">
+          <div class="example-item-title">Unsupported / unknown</div>
+          <div class="example-item-desc">"Can you fix this carrier outage?"</div>
+        </div>
+      </div>
+      <div class="example-preview">
+        <div class="user-bubble">
+          <span>User:</span>
+          <strong id="assist-user-query">Where do I find my API keys?</strong>
+        </div>
+        <div class="response-row">
+          <div class="response-label">Answer</div>
+          <div class="response-text" id="assist-answer">You can find API keys in Settings.</div>
+        </div>
+        <div class="response-row">
+          <div class="response-label">Guidance</div>
+          <div class="response-text" id="assist-guidance">Settings > Developer > API Keys</div>
+        </div>
+        <div class="response-row">
+          <div class="response-label">Next step</div>
+          <button class="btn" id="assist-nextstep">Open API Keys</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-title">Supported UI</div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-10);">
+      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Answer</div>
+        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Text response</div>
+          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Result summary</div>
+          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Limitation message</div>
+        </div>
+      </div>
+      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Guidance</div>
+        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Path</div>
+          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Instructions</div>
+          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Numbered list</div>
+          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Checklist</div>
+        </div>
+      </div>
+      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Next step</div>
+        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Button</div>
+          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Text link</div>
+          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Follow-up chips</div>
+          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Support handoff</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSIGHT -->
+  <div class="page" id="page-insight">
+    <h1 class="page-title">Insight</h1>
+    <p class="page-subtitle">Insight proactively surfaces a meaningful trend, issue, risk, opportunity, savings opportunity, or workflow improvement.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">01 Insight</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Observation based on a meaningful signal, trend, issue, or opportunity.</div>
+      </div>
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Recommendation</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">A suggested next step based on the insight.</div>
+      </div>
+      <div style="padding: var(--space-6);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Next step</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">A CTA, deep link, review action, or follow-up.</div>
+      </div>
+    </div>
+    <div class="section-title">Examples</div>
+    <div class="examples-layout">
+      <div class="examples-list" id="insight-examples-list">
+        <div class="example-item active" data-insight="0">
+          <div class="example-item-title">Savings Insight</div>
+        </div>
+        <div class="example-item" data-insight="1">
+          <div class="example-item-title">Label Failures</div>
+        </div>
+        <div class="example-item" data-insight="2">
+          <div class="example-item-title">Opportunity Insight</div>
+        </div>
+      </div>
+      <div class="example-preview" id="insight-preview"></div>
+    </div>
+  </div>
+
+  <!-- CONFIGURE -->
+  <div class="page" id="page-configure">
+    <h1 class="page-title">Configure</h1>
+    <p class="page-subtitle">Configure helps users create, apply, or generate something with AI, such as a report, automation rule, setting, or workflow.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">01 Confirm Intent</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Direct answer, Scope confirmation.</div>
+      </div>
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Plan, Preview</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Configuration preview.</div>
+      </div>
+      <div style="padding: var(--space-6);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Execution, Next Steps</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Manual configuration instructions, Follow-up options, Support details.</div>
+      </div>
+    </div>
+    <div class="section-title">Examples</div>
+    <div class="examples-layout">
+      <div class="examples-list" id="configure-examples-list">
+        <div class="example-item active" data-configure="0">
+          <div class="example-item-title">Create/Generate</div>
+        </div>
+        <div class="example-item" data-configure="1">
+          <div class="example-item-title">Confirm Update</div>
+        </div>
+      </div>
+      <div class="example-preview" id="configure-preview"></div>
+    </div>
+  </div>
+
+  <!-- CLARIFICATION -->
+  <div class="page" id="page-clarification">
+    <h1 class="page-title">Clarification</h1>
+    <p class="page-subtitle">Narrows broad, ambiguous, or incomplete requests before choosing a response pattern.</p>
+
+    <h2 class="section-title">Use when</h2>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
+      <li>The user's request could go in multiple directions</li>
+      <li>Required information is missing</li>
+      <li>The AI needs the user to choose a path before responding</li>
+    </ul>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
+      </div>
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">02 Ask clarifying question</div>
+      </div>
+      <div style="padding: var(--space-6);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Offer options</div>
+      </div>
+    </div>
+    <div class="section-title">Examples</div>
+    <p class="section-subtitle">Clarification is needed when the request could lead to multiple paths:</p>
+    <div class="examples-layout">
+      <div class="examples-list" id="clarification-examples-list">
+        <div class="example-item active" data-clarify="0">
+          <div class="example-item-title">Improve shipping costs</div>
+        </div>
+        <div class="example-item" data-clarify="1">
+          <div class="example-item-title">Fix this issue</div>
+        </div>
+        <div class="example-item" data-clarify="2">
+          <div class="example-item-title">Create a rule</div>
+        </div>
+        <div class="example-item" data-clarify="3">
+          <div class="example-item-title">Help with labels</div>
+        </div>
+        <div class="example-item" data-clarify="4">
+          <div class="example-item-title">Optimize my workflow</div>
+        </div>
+      </div>
+      <div class="example-preview">
+        <div id="clarification-preview"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAPABILITY BOUNDARY -->
+  <div class="page" id="page-capability-boundary">
+    <h1 class="page-title">Capability Boundary</h1>
+    <p class="page-subtitle">Explains when AI cannot complete a request and provides the safest next step.</p>
+    <div class="use-when-list">
+      <p style="font-weight:600;margin-bottom:var(--space-4)">Use when</p>
+      <div class="use-when-item"><span class="bullet">·</span> AI cannot perform the requested action</div>
+      <div class="use-when-item"><span class="bullet">·</span> AI does not have access to the required data or system</div>
+      <div class="use-when-item"><span class="bullet">·</span> The request requires human support</div>
+      <div class="use-when-item"><span class="bullet">·</span> The action is outside the product's current AI capability</div>
+      <div class="use-when-item"><span class="bullet">·</span> The safest path is to guide, route, or escalate instead</div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
+      </div>
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">02 State the boundary</div>
+      </div>
+      <div style="padding: var(--space-6);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Offer next step</div>
+      </div>
+    </div>
+    <div class="section-title">Examples</div>
+    <div class="examples-layout">
+      <div class="examples-list" id="cb-examples-list">
+        <div class="example-item active" data-cb="0">
+          <div class="example-item-title">Limitation message</div>
+        </div>
+        <div class="example-item" data-cb="1">
+          <div class="example-item-title">Deep Link</div>
+        </div>
+        <div class="example-item" data-cb="2">
+          <div class="example-item-title">Support handoff</div>
+        </div>
+      </div>
+      <div class="example-preview" id="cb-preview"></div>
+    </div>
+  </div>
+
+  <!-- ESCALATION -->
+  <div class="page" id="page-escalation">
+    <h1 class="page-title">Escalation</h1>
+    <p class="page-subtitle">Routes the user to Help Center when the issue cannot be safely or confidently resolved.</p>
+    <div class="use-when-list">
+      <p style="font-weight:600;margin-bottom:var(--space-4)">Use when</p>
+      <div class="use-when-item"><span class="bullet">·</span> The issue remains unresolved after guidance or retry</div>
+      <div class="use-when-item"><span class="bullet">·</span> The request involves billing, refunds, compliance, or sensitive changes</div>
+      <div class="use-when-item"><span class="bullet">·</span> The user is blocked and cannot continue</div>
+      <div class="use-when-item"><span class="bullet">·</span> The user explicitly asks for support</div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
+      </div>
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">02 Explain why escalation is needed</div>
+      </div>
+      <div style="padding: var(--space-6);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Route to support</div>
+      </div>
+    </div>
+    <div class="section-title">Examples</div>
+
+    <!-- Example 1: Billing Issue -->
+    <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-secondary); margin-bottom: var(--space-3);">Billing or sensitive issue</div>
+    <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-10); margin-bottom: var(--space-10); background: var(--grey-050); max-width: 600px;">
+      <div style="overflow: hidden; margin-bottom: var(--space-6);">
+        <div class="user-query-right">I need help with my billing issue</div>
+      </div>
+
+      <div class="ai-message" style="margin-bottom: var(--space-6);">
+        Here's the Help Center where you can contact support:
+      </div>
+
+      <div style="margin-bottom: var(--space-6);">
+        <button class="btn" style="display: inline-flex; align-items: center; gap: var(--space-2);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+          </svg>
+          Navigate to Help Center
+        </button>
+      </div>
+
+      <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.6; margin-bottom: var(--space-6);">
+        From there you can browse help articles or reach out to Support directly via chat or email.
+      </div>
+
+      <div class="like-row">
+        <span class="like-btn">👍</span>
+        <span class="like-btn">👎</span>
+      </div>
+    </div>
+
+    <!-- Example 2: Direct Support Request -->
+    <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-secondary); margin-bottom: var(--space-3);">Direct support request</div>
+    <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-10); margin-bottom: var(--space-10); background: var(--grey-050); max-width: 600px;">
+      <div style="overflow: hidden; margin-bottom: var(--space-6);">
+        <div class="user-query-right">I need support</div>
+      </div>
+
+      <div class="ai-message" style="margin-bottom: var(--space-6);">
+        Here's where you can get help:
+      </div>
+
+      <div style="margin-bottom: var(--space-6);">
+        <button class="btn" style="display: inline-flex; align-items: center; gap: var(--space-2);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+          </svg>
+          Get Support
+        </button>
+      </div>
+
+      <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.6; margin-bottom: var(--space-6);">
+        You can reach our support team via chat or email through the Help Center.
+      </div>
+
+      <div class="like-row">
+        <span class="like-btn">👍</span>
+        <span class="like-btn">👎</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUARDRAILS -->
+  <div class="page" id="page-guardrails">
+    <h1 class="page-title">Guardrails</h1>
+    <p class="page-subtitle">Guardrails define when AI should pause, clarify, state a boundary, or route the user instead of continuing with a normal response pattern.</p>
+
+    <!-- Pattern Cards Grid -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin-bottom: var(--space-10);">
+      <!-- Clarification -->
+      <div style="background: var(--grey-050); border-radius: var(--radius-md); padding: var(--space-10); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-page="clarification" onclick="showPage('clarification')" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+        <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Clarification</h3>
+        <p style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.5;">Narrows broad, ambiguous, or incomplete requests before choosing a response pattern.</p>
+      </div>
+
+      <!-- Capability Boundary -->
+      <div style="background: var(--grey-050); border-radius: var(--radius-md); padding: var(--space-10); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-page="capability-boundary" onclick="showPage('capability-boundary')" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+        <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Capability Boundary</h3>
+        <p style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.5;">Explains when AI cannot complete a request and provides the safest next step.</p>
+      </div>
+
+      <!-- Escalation -->
+      <div style="background: var(--grey-050); border-radius: var(--radius-md); padding: var(--space-10); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-page="escalation" onclick="showPage('escalation')" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+        <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Escalation</h3>
+        <p style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.5;">Defines when AI should route the user to Help Center instead of continuing in the current flow.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- UI PATTERNS -->
+  <div class="page" id="page-ui-patterns">
+    <h1 class="page-title">UI Patterns</h1>
+    <p class="page-subtitle">Common UI components used across response patterns.</p>
+    <div class="info-banner">UI Patterns documentation coming soon.</div>
+  </div>
+
+  <!-- CHAIN OF THOUGHT -->
+  <div class="page" id="page-chain-of-thought">
+    <h1 class="page-title">Chain of Thought</h1>
+    <p class="page-subtitle">Shows AI reasoning steps as the response is being generated.</p>
+
+    <div class="section-title">Loading State</div>
+    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+      <div style="max-width: 600px;">
+        <!-- Loading with thinking indicator - Collapsed -->
+        <div id="cot-loading-summary" style="cursor: pointer;" onclick="toggleLoadingCOT()">
+          <div style="display: flex; align-items: center; gap: var(--space-2);">
+            <div style="position: relative; width: 12px; height: 12px; flex-shrink: 0;">
+              <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; top: 0; left: 50%; animation: convergeTop 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
+              <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; bottom: 0; left: 0; animation: convergeLeft 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
+              <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; bottom: 0; right: 0; animation: convergeRight 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
+            </div>
+            <div style="font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: 400;">Analyzing the user's request</div>
+            <svg id="loading-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition: transform 0.2s ease; flex-shrink: 0; color: var(--grey-600);">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Expanded Details -->
+        <div id="cot-loading-details" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+          <div style="padding-top: var(--space-4); padding-left: var(--space-2);">
+            <!-- Step 1 - Completed with detail -->
+            <div style="padding-left: 0;">
+              <div style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-1);">
+                <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--grey-600); flex-shrink: 0; margin-top: 6px;"></div>
+                <div style="flex: 1;">
+                  <div style="font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: 400;">Fetching order data</div>
+                </div>
+              </div>
+              <div style="margin-left: 1px; padding-left: var(--space-4); border-left: 2px solid var(--grey-200); font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.6; padding-bottom: var(--space-3);">
+                Retrieved 847 orders from the past 30 days.
+              </div>
+            </div>
+
+            <!-- Step 2 - Completed with detail -->
+            <div style="padding-left: 0;">
+              <div style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-1);">
+                <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--grey-600); flex-shrink: 0; margin-top: 6px;"></div>
+                <div style="flex: 1;">
+                  <div style="font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: 400;">Analyzing patterns</div>
+                </div>
+              </div>
+              <div style="margin-left: 1px; padding-left: var(--space-4); border-left: 2px solid var(--grey-200); font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.6; padding-bottom: var(--space-3);">
+                Identifying top products and shipping trends across regions.
+              </div>
+            </div>
+
+            <!-- Step 3 - In Progress -->
+            <div style="padding-left: 0;">
+              <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
+                <div style="width: 4px; height: 4px; border-radius: 50%; border: 1px solid var(--grey-400); background: transparent; flex-shrink: 0; margin-top: 6px;"></div>
+                <div style="flex: 1;">
+                  <div class="shimmer-text" style="font-size: var(--font-size-xs); font-weight: 400;">Preparing summary</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">Completed State</div>
+    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+      <div style="max-width: 600px;">
+        <!-- Collapsed Summary -->
+        <div id="cot-completed-summary" style="cursor: pointer;" onclick="toggleCompletedCOT()">
+          <div style="display: flex; align-items: center; gap: var(--space-2);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--grey-600); flex-shrink: 0;">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div style="font-size: var(--font-size-xs); color: var(--text-secondary);">4 steps completed</div>
+            <svg id="completed-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition: transform 0.2s ease; flex-shrink: 0; color: var(--grey-600);">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Expanded Details -->
+        <div id="cot-completed-details" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+          <div style="padding-top: var(--space-4); padding-left: var(--space-2);">
+            <!-- Step 1 -->
+            <div style="padding-left: 0;">
+              <div style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-1);">
+                <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--grey-600); flex-shrink: 0; margin-top: 6px;"></div>
+                <div style="font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: 400;">Fetching order data</div>
+              </div>
+              <div style="margin-left: 1px; padding-left: var(--space-4); border-left: 2px solid var(--grey-200); font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.6; padding-bottom: var(--space-3);">
+                Retrieved 847 orders from the past 30 days.
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div style="padding-left: 0;">
+              <div style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-1);">
+                <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--grey-600); flex-shrink: 0; margin-top: 6px;"></div>
+                <div style="font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: 400;">Analyzing patterns</div>
+              </div>
+              <div style="margin-left: 1px; padding-left: var(--space-4); border-left: 2px solid var(--grey-200); font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.6; padding-bottom: var(--space-3);">
+                Identifying top products and shipping trends across regions.
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div style="padding-left: 0;">
+              <div style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-1);">
+                <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--grey-600); flex-shrink: 0; margin-top: 6px;"></div>
+                <div style="font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: 400;">Preparing summary</div>
+              </div>
+              <div style="margin-left: 1px; padding-left: var(--space-4); border-left: 2px solid var(--grey-200); font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.6;">
+                Compiling findings into a comprehensive report.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">When to use</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
+      <li>Complex tasks that benefit from showing reasoning steps</li>
+      <li>Building user trust by revealing the AI's thought process</li>
+      <li>Long-running operations where progress indication is valuable</li>
+    </ul>
+  </div>
+
+  <!-- FEEDBACK BAR -->
+  <div class="page" id="page-feedback-bar">
+    <h1 class="page-title">Feedback Bar</h1>
+    <p class="page-subtitle">A component to collect user feedback on AI responses.</p>
+
+    <div class="section-title">Interactive Preview</div>
+    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10); position: relative; min-height: 400px; display: flex; align-items: center; justify-content: center;">
+      <!-- Restart Button -->
+      <button onclick="restartFeedback()" style="position: absolute; top: var(--space-4); right: var(--space-4); background: var(--base-white); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: var(--space-2) var(--space-4); font-size: var(--font-size-xs); color: var(--text-secondary); cursor: pointer; font-family: 'Figtree', sans-serif; font-weight: 500; display: flex; align-items: center; gap: var(--space-2);">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        </svg>
+        Restart
+      </button>
+
+      <div style="position: relative; min-height: 32px;">
+        <!-- Default State -->
+        <div id="feedback-default" style="position: absolute; display: flex; align-items: center; gap: var(--space-2);">
+          <button class="feedback-btn" onclick="selectFeedback('up')" style="background: transparent; border: none; cursor: pointer; padding: var(--space-2); display: flex; align-items: center; justify-content: center; border-radius: var(--radius-xs); transition: background 0.15s ease;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-secondary); transition: color 0.15s ease;">
+              <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+            </svg>
+          </button>
+          <button class="feedback-btn" onclick="selectFeedback('down')" style="background: transparent; border: none; cursor: pointer; padding: var(--space-2); display: flex; align-items: center; justify-content: center; border-radius: var(--radius-xs); transition: background 0.15s ease;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-secondary); transition: color 0.15s ease;">
+              <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Selected State -->
+        <div id="feedback-selected" style="position: absolute; display: none; align-items: center; gap: var(--space-3);">
+          <button onclick="deselectFeedback()" style="background: transparent; border: none; cursor: pointer; padding: var(--space-2); display: flex; align-items: center; justify-content: center;">
+            <svg id="selected-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color: var(--text-primary);">
+              <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+            </svg>
+          </button>
+          <button id="add-feedback-btn" onclick="openFeedbackModal()" style="background: var(--base-white); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: var(--space-2) var(--space-4); font-size: var(--font-size-sm); color: var(--text-primary); cursor: pointer; font-family: 'Figtree', sans-serif; font-weight: 500; white-space: nowrap;">
+            Add Feedback
+          </button>
+        </div>
+      </div>
+
+      <!-- Feedback Modal -->
+      <div id="feedback-modal" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--base-white); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); z-index: 10;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+          <h3 style="font-size: var(--font-size-lg); font-weight: 600; color: var(--text-primary);">Feedback</h3>
+          <button onclick="closeFeedbackModal()" style="background: transparent; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-secondary);">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <label style="display: block; font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-2);">What could have been better?</label>
+        <textarea id="feedback-text" style="width: 300px; height: 80px; padding: var(--space-3); border: 1px solid var(--border-light); border-radius: var(--radius-xs); font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; color: var(--text-primary); resize: none; margin-bottom: var(--space-4); box-sizing: border-box; outline: none;" placeholder="Share your feedback..."></textarea>
+        <div style="display: flex; justify-content: flex-end;">
+          <button onclick="submitFeedback()" style="background: var(--green-700); color: var(--base-white); border: none; border-radius: var(--radius-xs); padding: var(--space-2) var(--space-5); font-size: var(--font-size-sm); font-weight: 600; cursor: pointer; font-family: 'Figtree', sans-serif;">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">When to use</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
+      <li>After AI generates a response to gauge helpfulness</li>
+      <li>To collect data for improving AI response quality</li>
+      <li>When you need binary feedback (helpful/not helpful)</li>
+    </ul>
+  </div>
+
+  <!-- AI THINKING -->
+  <div class="page" id="page-ai-thinking">
+    <h1 class="page-title">AI Thinking</h1>
+    <p class="page-subtitle">Visual indicators that show AI is processing a request.</p>
+
+    <div class="section-title">Interactive Preview</div>
+    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+      <div style="max-width: 100%;">
+        <div style="padding: var(--space-14); position: relative;">
+          <!-- Animated dots - single set that changes color -->
+          <div style="display: flex; justify-content: center; align-items: center; gap: var(--space-3);">
+            <div style="position: relative; width: 12px; height: 12px;">
+              <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; top: 0; left: 50%; animation: convergeTop 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
+              <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; bottom: 0; left: 0; animation: convergeLeft 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
+              <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; bottom: 0; right: 0; animation: convergeRight 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
+            </div>
+            <div class="shimmer-text" style="font-size: var(--font-size-md); font-weight: 400;">Thinking...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">When to use</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
+      <li>When AI is processing a request and the user needs visual feedback</li>
+      <li>Before displaying a response to indicate work is in progress</li>
+      <li>To set expectations during longer processing times</li>
+    </ul>
+  </div>
+
+  <!-- GENERATED CONTENT -->
+  <div class="page" id="page-input-assisted">
+    <h1 class="page-title">Generated Content</h1>
+    <p class="page-subtitle">AI generates form field values based on context, order history, or user patterns.</p>
+
+    <div class="section-title">Interactive Preview</div>
+    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+      <div style="display: flex; width: 320px; flex-direction: column; align-items: flex-start; gap: var(--space-5);">
+
+        <button onclick="fillWithAI()" class="btn" style="margin-bottom: var(--space-4);">
+          Fill with AI
+        </button>
+
+        <div style="width: 100%; display: flex; flex-direction: column; gap: var(--space-1);">
+          <label style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary);">Ship From Address</label>
+          <input id="input-address" type="text" placeholder="Enter address..."
+            oninput="removeGlow(this)"
+            style="width: 100%; padding: var(--space-3); border: 1px solid var(--border-light); border-radius: var(--radius-xs); font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; color: var(--text-primary); outline: none; transition: all 0.3s; height: 32px;">
+        </div>
+
+        <div style="width: 100%; display: flex; flex-direction: column; gap: var(--space-1);">
+          <label style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary);">Carrier</label>
+          <div style="position: relative; width: 100%;">
+            <select id="input-carrier"
+              onchange="removeGlow(this)"
+              style="width: 100%; padding: var(--space-3); padding-right: var(--space-10); border: 1px solid var(--border-light); border-radius: var(--radius-xs); font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; color: var(--text-primary); outline: none; transition: all 0.3s; background: var(--base-white); appearance: none; -webkit-appearance: none; -moz-appearance: none; height: 32px; line-height: 1;">
+              <option value="">Select carrier...</option>
+              <option value="usps">USPS</option>
+              <option value="ups">UPS</option>
+              <option value="fedex">FedEx</option>
+            </select>
+            <svg id="carrier-arrow" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="position: absolute; right: var(--space-3); top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-secondary); transition: color 0.3s, opacity 0.3s;">
+              <path d="M7 10l5 5 5-5z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div style="width: 100%; display: flex; flex-direction: column; gap: var(--space-1);">
+          <label style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary);">Package Weight</label>
+          <div style="position: relative; width: 100%;">
+            <input id="input-weight" type="number" placeholder="0"
+              oninput="removeGlow(this)"
+              style="width: 100%; padding: var(--space-3); padding-right: var(--space-10); border: 1px solid var(--border-light); border-radius: var(--radius-xs); font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; color: var(--text-primary); outline: none; transition: all 0.3s; height: 32px;">
+            <span id="weight-suffix" style="position: absolute; right: var(--space-3); top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-secondary); font-size: var(--font-size-sm); transition: color 0.3s, opacity 0.3s;">lb</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section-title">When to use</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
+      <li>When AI can predict field values based on order history or patterns</li>
+      <li>To auto-fill shipping details from previously used addresses</li>
+      <li>When user preferences can be applied to speed up form completion</li>
+    </ul>
+  </div>
+
+  <!-- PROMPT CHIPS -->
+  <div class="page" id="page-prompt-chips">
+    <h1 class="page-title">Prompt Chips</h1>
+    <p class="page-subtitle">Suggested follow-up queries that help users continue the conversation.</p>
+
+    <div class="section-title">Example</div>
+    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+      <div class="prompt-chips">
+        <button class="prompt-chip">Check carrier status</button>
+        <button class="prompt-chip">View affected shipments</button>
+        <button class="prompt-chip">Contact support</button>
+      </div>
+    </div>
+
+    <div class="section-title">When to use</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
+      <li>After clarification responses to offer specific paths</li>
+      <li>After limitation messages to suggest related queries</li>
+      <li>To guide users toward actionable next questions</li>
+    </ul>
+
+    <div class="section-title">Guidelines</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6;">
+      <li>Keep text concise (3-5 words max)</li>
+      <li>Use sentence case</li>
+      <li>Offer 2-4 options maximum</li>
+      <li>Make each option distinct and actionable</li>
+    </ul>
+  </div>
+
+  <!-- BUTTONS & CTAs -->
+  <div class="page" id="page-buttons-ctas">
+    <h1 class="page-title">Buttons & CTAs</h1>
+    <p class="page-subtitle">Action buttons that navigate users to specific pages or trigger system actions.</p>
+
+    <div class="section-title">Example</div>
+    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+      <button class="btn">Go to Labels</button>
+    </div>
+
+    <div class="section-title">When to use</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
+      <li>For deep links to specific pages or features</li>
+      <li>For support handoffs and escalations</li>
+      <li>For capability boundary routing</li>
+      <li>When the action takes the user outside the chat</li>
+    </ul>
+
+    <div class="section-title">Guidelines</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6;">
+      <li>Use action verbs (Go to, View, Contact, Get)</li>
+      <li>Keep text clear and destination-focused</li>
+      <li>Use buttons instead of prompt chips for navigation</li>
+      <li>Limit to 1-3 button options per response</li>
+    </ul>
+  </div>
+
+</main>
+
+<script>
+  const assistExamples = [
+    { query: "Where do I find my API keys?", rows: [
+      { label: "Answer", text: "You can find API keys in Settings." },
+      { label: "Guidance", text: "Settings → Developer → API Keys" },
+      { label: "Next step", btn: "Open API Keys" }
+    ]},
+    { query: "How do I void a label?", rows: [
+      { label: "Answer", text: "You can void a label within 30 days of purchase." },
+      { label: "Guidance", text: "Go to Shipments → find the label → click Void" },
+      { label: "Next step", btn: "Go to Shipments" }
+    ]},
+    { query: "Why can't I connect my store?", rows: [
+      { label: "Answer", text: "This is usually an auth or permissions issue." },
+      { label: "Guidance", text: "Check store credentials and reconnect in Settings → Stores" },
+      { label: "Next step", btn: "Go to Store Settings" }
+    ]},
+    { query: "Find orders from John Smith last week.", rows: [
+      { label: "Answer", text: "Found 3 orders from John Smith." },
+      { label: "Guidance", text: "Showing results from June 1–7" },
+      { label: "Next step", btn: "View all orders" }
+    ]},
+    { query: "What product cost me the most?", rows: [
+      { label: "Answer", text: "Your highest cost product was Priority Mail at $142." },
+      { label: "Guidance", text: "Based on orders from the last 30 days" },
+      { label: "Next step", btn: "View cost report" }
+    ]},
+    { query: "Can you fix this carrier outage?", rows: [
+      { label: "Answer", text: "I'm not able to fix carrier outages directly." },
+      { label: "Guidance", text: "Check the carrier status page for updates" },
+      { label: "Next step", btn: "Get Support" }
+    ]}
+  ];
+
+  const clarificationExamples = [
+    { title: "Shipping Costs", route: "Route after clarification: Assist or Configure",
+      query: "Help me improve shipping costs",
+      message: "I can help improve shipping costs. What would you like to look at first?",
+      chips: ["Compare rates", "Review shipping zones", "Reduce packaging costs", "Balance delivery speed and cost"]
+    },
+    { title: "Fix this issue", route: "Route after clarification: Assist or Escalation",
+      query: "Fix this issue",
+      message: "I'd like to help. Can you tell me more about what's happening?",
+      chips: ["Label not printing", "Store not connecting", "Order not syncing", "Carrier error"]
+    },
+    { title: "Create a rule", route: "Route after clarification: Configure",
+      query: "Create a rule",
+      message: "Sure! What should this rule do?",
+      chips: ["Route orders by carrier", "Apply insurance automatically", "Filter by order weight", "Set default packaging"]
+    },
+    { title: "Help with labels", route: "Route after clarification: Assist",
+      query: "Help with labels",
+      message: "Happy to help with labels. What do you need?",
+      chips: ["Void a label", "Reprint a label", "Fix a label error", "Bulk print labels"]
+    },
+    { title: "Optimize my workflow", route: "Route after clarification: Configure or Insight",
+      query: "Optimize my workflow",
+      message: "I can help optimize your workflow. Where would you like to start?",
+      chips: ["Automate order routing", "Reduce manual steps", "Speed up label creation", "Review carrier performance"]
+    }
+  ];
+
+  const configureExamples = [
+    { query: "Create a rule to use UPS Ground for orders over $50",
+      confirmIntent: "Here is a draft of your automation rule based on the order total threshold you requested:",
+      planPreview: `<strong>Rule Name:</strong> UPS Ground for High-Value Orders (or any name you prefer).<br><br><strong>Criteria:</strong> Order Total → Is Greater Than → [Enter Dollar Amount].<br><br><strong>Actions:</strong> Set Carrier/Service/Package → UPS → UPS Ground → Package`,
+      nextSteps: ["Apply rule", "Cancel"]
+    },
+    { query: "Change these orders to FedEx Ground",
+      confirmIntent: "I'll update the selected orders to use FedEx Ground. Here's a summary of what will change:",
+      planPreview: `<strong>Orders affected:</strong> 12 orders currently assigned to other carriers.<br><br><strong>Change:</strong> Carrier → FedEx → FedEx Ground.<br><br><strong>Note:</strong> Rate differences may apply. Review before confirming.`,
+      nextSteps: ["Confirm update", "Cancel"]
+    }
+  ];
+
+  const cbExamples = [
+    { query: "Can you fix this carrier outage?", note: "Limitation message", type: "chips",
+      response: "I can't fix a carrier outage directly, but I can help you check carrier status or choose another service.",
+      items: ["Check carrier status", "View affected shipments", "Contact support"]
+    },
+    { query: "Refund all of these labels for me.", note: "Deep Link", type: "btns",
+      response: "I can't refund these automatically here. You can review eligible labels and start the refund process from the Labels page.",
+      items: ["Go to Labels"]
+    },
+    { query: "Talk to support for me.", note: "Support handoff", type: "btns",
+      response: "I can't contact support from here, but you can continue in Help Center to get support.",
+      items: ["Get Support"]
+    }
+  ];
+
+  let assistViewMode = 'anatomy';
+
+  function setAssistView(mode) {
+    assistViewMode = mode;
+    document.querySelectorAll('.view-toggle .toggle-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    const currentIdx = parseInt(document.querySelector('#assist-examples-list .example-item.active').dataset.example);
+    renderAssistPreview(currentIdx);
+  }
+
+  function renderAssistPreview(idx) {
+    const ex = assistExamples[idx];
+
+    document.getElementById('assist-user-query').textContent = ex.query;
+
+    ex.rows.forEach(row => {
+      if (row.label === 'Answer') {
+        document.getElementById('assist-answer').textContent = row.text;
+      } else if (row.label === 'Guidance') {
+        document.getElementById('assist-guidance').textContent = row.text;
+      } else if (row.label === 'Next step' && row.btn) {
+        document.getElementById('assist-nextstep').textContent = row.btn;
+      }
+    });
+  }
+
+  let clarificationViewMode = 'anatomy';
+
+  function switchClarificationView(mode) {
+    clarificationViewMode = mode;
+    const segAnatomy = document.getElementById('seg-anatomy');
+    const segExample = document.getElementById('seg-example');
+
+    if (mode === 'anatomy') {
+      segAnatomy.style.background = 'var(--grey-050)';
+      segExample.style.background = 'var(--base-white)';
+    } else {
+      segAnatomy.style.background = 'var(--base-white)';
+      segExample.style.background = 'var(--grey-050)';
+    }
+
+    const currentIdx = parseInt(document.querySelector('#clarification-examples-list .example-item.active').dataset.clarify);
+    renderClarificationPreview(currentIdx);
+  }
+
+  function renderClarificationPreview(idx) {
+    const ex = clarificationExamples[idx];
+
+    let chips = ex.chips.map(c => `<button class="prompt-chip">${c}</button>`).join('');
+    document.getElementById('clarification-preview').innerHTML = `
+      <div style="overflow:hidden">
+        <div class="user-query-right">${ex.query}</div>
+      </div>
+      <div class="ai-message">${ex.message}</div>
+      <div class="prompt-chips">${chips}</div>
+      <div class="chat-input-mock"><span class="plus">+</span><span class="send">↑</span></div>
+    `;
+  }
+
+  function renderConfigurePreview(idx) {
+    const ex = configureExamples[idx];
+    let btns = ex.nextSteps.map(s => `<button class="btn">${s}</button>`).join('');
+    document.getElementById('configure-preview').innerHTML = `
+      <div class="configure-query"><span>User:</span><strong>${ex.query}</strong></div>
+      <div class="configure-response-row">
+        <div class="configure-label">Confirm Intent</div>
+        <div class="configure-content">${ex.confirmIntent}</div>
+      </div>
+      <div class="configure-response-row">
+        <div class="configure-label">Plan, Preview</div>
+        <div class="configure-content">${ex.planPreview}</div>
+      </div>
+      <div class="configure-response-row">
+        <div class="configure-label">Next step</div>
+        <div class="configure-content">
+          <div class="btn-group">${btns}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderCBPreview(idx) {
+    const ex = cbExamples[idx];
+    let itemsHtml = '';
+    if (ex.type === 'chips') {
+      const chips = ex.items.map(item => `<button class="prompt-chip">${item}</button>`).join('');
+      itemsHtml = `<div class="prompt-chips">${chips}</div>`;
+    } else {
+      const btns = ex.items.map(item => `<button class="btn">${item}</button>`).join('');
+      itemsHtml = `<div class="btn-chips">${btns}</div>`;
+    }
+
+    document.getElementById('cb-preview').innerHTML = `
+      <div style="overflow:hidden">
+        <div class="user-query-right">${ex.query}</div>
+      </div>
+      <div class="ai-message">${ex.response}</div>
+      ${itemsHtml}
+      <div class="chat-input-mock"><span class="plus">+</span><span class="send">↑</span></div>
+    `;
+  }
+
+  const insightExamples = [
+    { title: "Savings Insight",
+      desc: "Use when AI identifies a cost-saving opportunity and prompts the user to explore potential savings.",
+      html: `
+        <div>
+          <img src="img/Insight/image 32.png" alt="Savings Insight" style="width:100%;height:auto;display:block;" />
+        </div>`
+    },
+    { title: "Label Failures",
+      desc: "Use when AI detects a problem or risk the user may not have noticed.",
+      html: `<div style="font-size:var(--font-size-sm);color:var(--text-secondary)">Label failure detection and alerting visualization.</div>`
+    },
+    { title: "Opportunity Insight",
+      desc: "Use when AI detects a workflow or automation opportunity.",
+      html: `<div style="font-size:var(--font-size-sm);color:var(--text-secondary)">Workflow optimization and automation opportunity detection.</div>`
+    }
+  ];
+
+  function renderInsightPreview(idx) {
+    const ex = insightExamples[idx];
+    document.getElementById('insight-preview').innerHTML = `
+      <div style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-5)">${ex.desc}</div>
+      ${ex.html}
+    `;
+  }
+
+  const groupMap = {
+    'assist': 'response-patterns', 'insight': 'response-patterns',
+    'configure': 'response-patterns', 'response-patterns': 'response-patterns',
+    'clarification': 'guardrails', 'capability-boundary': 'guardrails',
+    'escalation': 'guardrails', 'guardrails': 'guardrails',
+    'chain-of-thought': 'ui-patterns', 'feedback-bar': 'ui-patterns', 'ai-thinking': 'ui-patterns', 'input-assisted': 'ui-patterns', 'prompt-chips': 'ui-patterns', 'buttons-ctas': 'ui-patterns', 'ui-patterns': 'ui-patterns'
+  };
+
+  document.querySelectorAll('[data-insight]').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('[data-insight]').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      renderInsightPreview(parseInt(item.dataset.insight));
+    });
+  });
+
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('open'));
+    const page = document.getElementById('page-' + pageId);
+    if (page) page.classList.add('active');
+    document.querySelectorAll(`[data-page="${pageId}"]`).forEach(n => n.classList.add('active'));
+    const group = groupMap[pageId];
+    if (group) {
+      const groupEl = document.getElementById('group-' + group);
+      if (groupEl) groupEl.classList.add('open');
+      if (pageId === group) {
+        document.querySelectorAll(`[data-group="${group}"]`).forEach(n => n.classList.add('active'));
+      }
+    }
+  }
+
+  document.querySelectorAll('.nav-item[data-page]').forEach(item => {
+    item.addEventListener('click', () => showPage(item.dataset.page));
+  });
+
+  document.querySelectorAll('#assist-examples-list .example-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('#assist-examples-list .example-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      renderAssistPreview(parseInt(item.dataset.example));
+    });
+  });
+
+  document.querySelectorAll('[data-clarify]').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('[data-clarify]').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      renderClarificationPreview(parseInt(item.dataset.clarify));
+    });
+  });
+
+  document.querySelectorAll('[data-configure]').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('[data-configure]').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      renderConfigurePreview(parseInt(item.dataset.configure));
+    });
+  });
+
+  document.querySelectorAll('[data-cb]').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('[data-cb]').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      renderCBPreview(parseInt(item.dataset.cb));
+    });
+  });
+
+  function toggleAccordion(header) {
+    const body = header.nextElementSibling;
+    header.classList.toggle('open');
+    body.classList.toggle('open');
+  }
+
+  function toggleCOTStep(stepNum) {
+    const step = document.getElementById(`cot-step-${stepNum}`);
+    const content = step.querySelector('.cot-content');
+    const chevron = step.querySelector('.cot-chevron');
+
+    if (content.style.maxHeight === '0px' || content.style.maxHeight === '') {
+      content.style.maxHeight = content.scrollHeight + 'px';
+      chevron.style.transform = 'rotate(180deg)';
+    } else {
+      content.style.maxHeight = '0px';
+      chevron.style.transform = 'rotate(0deg)';
+    }
+  }
+
+  let currentFeedbackSelection = null;
+
+  function selectFeedback(type) {
+    const defaultState = document.getElementById('feedback-default');
+    const selectedState = document.getElementById('feedback-selected');
+    const selectedIcon = document.getElementById('selected-icon');
+
+    // Update current selection
+    currentFeedbackSelection = type;
+
+    // Update icon based on selection
+    if (type === 'up') {
+      selectedIcon.innerHTML = '<path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>';
+      // Show selected state with Add Feedback button
+      defaultState.style.display = 'none';
+      selectedState.style.display = 'flex';
+    } else {
+      selectedIcon.innerHTML = '<path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>';
+      // Auto-open feedback modal for negative feedback
+      defaultState.style.display = 'none';
+      selectedState.style.display = 'flex';
+      openFeedbackModal();
+    }
+  }
+
+  function deselectFeedback() {
+    // Only allow deselecting before feedback is submitted
+    const btn = document.getElementById('add-feedback-btn');
+    if (btn.disabled) return; // Can't deselect after submission
+
+    // Go back to default state
+    document.getElementById('feedback-default').style.display = 'flex';
+    document.getElementById('feedback-selected').style.display = 'none';
+    closeFeedbackModal();
+    currentFeedbackSelection = null;
+  }
+
+  function openFeedbackModal() {
+    document.getElementById('feedback-modal').style.display = 'block';
+  }
+
+  function closeFeedbackModal() {
+    document.getElementById('feedback-modal').style.display = 'none';
+  }
+
+  function submitFeedback() {
+    const feedbackText = document.getElementById('feedback-text').value;
+    console.log('Feedback submitted:', feedbackText);
+    closeFeedbackModal();
+
+    // Disable the Add Feedback button and change text
+    const btn = document.getElementById('add-feedback-btn');
+    btn.disabled = true;
+    btn.textContent = 'Feedback submitted';
+    btn.style.cursor = 'not-allowed';
+    btn.style.opacity = '0.6';
+    btn.style.color = 'var(--text-secondary)';
+
+    document.getElementById('feedback-text').value = '';
+  }
+
+  function restartFeedback() {
+    // Reset to default state
+    document.getElementById('feedback-default').style.display = 'flex';
+    document.getElementById('feedback-selected').style.display = 'none';
+    document.getElementById('feedback-modal').style.display = 'none';
+    document.getElementById('feedback-text').value = '';
+    currentFeedbackSelection = null;
+
+    // Re-enable Add Feedback button
+    const btn = document.getElementById('add-feedback-btn');
+    btn.disabled = false;
+    btn.textContent = 'Add Feedback';
+    btn.style.cursor = 'pointer';
+    btn.style.opacity = '1';
+    btn.style.color = 'var(--text-primary)';
+  }
+
+  function toggleCompletedCOT() {
+    const details = document.getElementById('cot-completed-details');
+    const chevron = document.getElementById('completed-chevron');
+
+    if (details.style.maxHeight === '0px' || details.style.maxHeight === '') {
+      details.style.maxHeight = details.scrollHeight + 'px';
+      chevron.style.transform = 'rotate(180deg)';
+    } else {
+      details.style.maxHeight = '0px';
+      chevron.style.transform = 'rotate(0deg)';
+    }
+  }
+
+  function toggleLoadingCOT() {
+    const details = document.getElementById('cot-loading-details');
+    const chevron = document.getElementById('loading-chevron');
+
+    if (details.style.maxHeight === '0px' || details.style.maxHeight === '') {
+      details.style.maxHeight = details.scrollHeight + 'px';
+      chevron.style.transform = 'rotate(180deg)';
+    } else {
+      details.style.maxHeight = '0px';
+      chevron.style.transform = 'rotate(0deg)';
+    }
+  }
+
+  function fillWithAI() {
+    const addressInput = document.getElementById('input-address');
+    const carrierInput = document.getElementById('input-carrier');
+    const weightInput = document.getElementById('input-weight');
+    const carrierArrow = document.getElementById('carrier-arrow');
+    const weightSuffix = document.getElementById('weight-suffix');
+
+    // Clear values first
+    addressInput.value = '';
+    addressInput.placeholder = '';
+    carrierInput.value = '';
+    weightInput.value = '';
+    weightInput.placeholder = '';
+
+    // Immediately highlight all inputs with indigo styling and shimmer placeholder
+    addressInput.style.border = '1px solid var(--indigo-600)';
+    addressInput.style.background = 'linear-gradient(90deg, var(--indigo-050) 0%, var(--indigo-100) 50%, var(--indigo-050) 100%)';
+    addressInput.style.backgroundSize = '200% 100%';
+    addressInput.style.animation = 'shimmer 2s ease-in-out infinite';
+    addressInput.dataset.aiGenerated = 'true';
+
+    carrierInput.style.border = '1px solid var(--indigo-600)';
+    carrierInput.style.background = 'linear-gradient(90deg, var(--indigo-050) 0%, var(--indigo-100) 50%, var(--indigo-050) 100%)';
+    carrierInput.style.backgroundSize = '200% 100%';
+    carrierInput.style.animation = 'shimmer 2s ease-in-out infinite';
+    carrierInput.style.color = 'transparent';
+    carrierInput.dataset.aiGenerated = 'true';
+
+    weightInput.style.border = '1px solid var(--indigo-600)';
+    weightInput.style.background = 'linear-gradient(90deg, var(--indigo-050) 0%, var(--indigo-100) 50%, var(--indigo-050) 100%)';
+    weightInput.style.backgroundSize = '200% 100%';
+    weightInput.style.animation = 'shimmer 2s ease-in-out infinite';
+    weightInput.dataset.aiGenerated = 'true';
+
+    // Hide icons during shimmer
+    carrierArrow.style.opacity = '0';
+    weightSuffix.style.opacity = '0';
+
+    // Fill all fields at the same time after 1500ms
+    setTimeout(() => {
+      addressInput.value = '123 Main St, Austin, TX 78701';
+      addressInput.style.background = 'var(--indigo-050)';
+      addressInput.style.backgroundSize = '';
+      addressInput.style.animation = 'none';
+      addressInput.style.color = 'var(--indigo-600)';
+
+      carrierInput.value = 'usps';
+      carrierInput.style.background = 'var(--indigo-050)';
+      carrierInput.style.backgroundSize = '';
+      carrierInput.style.animation = 'none';
+      carrierInput.style.color = 'var(--indigo-600)';
+      carrierArrow.style.color = 'var(--indigo-600)';
+      carrierArrow.style.opacity = '1';
+
+      weightInput.value = '2.5';
+      weightInput.style.background = 'var(--indigo-050)';
+      weightInput.style.backgroundSize = '';
+      weightInput.style.animation = 'none';
+      weightInput.style.color = 'var(--indigo-600)';
+      weightSuffix.style.color = 'var(--indigo-600)';
+      weightSuffix.style.opacity = '1';
+    }, 1500);
+  }
+
+  function removeGlow(input) {
+    if (input.dataset.aiGenerated === 'true') {
+      input.style.border = '1px solid var(--border-light)';
+      input.style.background = 'var(--base-white)';
+      input.style.backgroundSize = '';
+      input.style.animation = 'none';
+      input.style.color = 'var(--text-primary)';
+      input.dataset.aiGenerated = 'false';
+
+      // Reset icon colors for carrier and weight
+      if (input.id === 'input-carrier') {
+        const arrow = document.getElementById('carrier-arrow');
+        arrow.style.color = 'var(--text-secondary)';
+        arrow.style.opacity = '1';
+      }
+      if (input.id === 'input-weight') {
+        const suffix = document.getElementById('weight-suffix');
+        suffix.style.color = 'var(--text-secondary)';
+        suffix.style.opacity = '1';
+      }
+    }
+  }
+
+  function resetInputs() {
+    const addressInput = document.getElementById('input-address');
+    const carrierInput = document.getElementById('input-carrier');
+    const weightInput = document.getElementById('input-weight');
+    const carrierArrow = document.getElementById('carrier-arrow');
+    const weightSuffix = document.getElementById('weight-suffix');
+
+    // Clear values
+    addressInput.value = '';
+    carrierInput.value = '';
+    weightInput.value = '';
+
+    // Reset all styling
+    const inputs = [addressInput, carrierInput, weightInput];
+    inputs.forEach(input => {
+      input.style.border = '1px solid var(--border-light)';
+      input.style.background = 'var(--base-white)';
+      input.style.backgroundSize = '';
+      input.style.animation = 'none';
+      input.style.color = 'var(--text-primary)';
+      input.dataset.aiGenerated = 'false';
+
+      if (input.tagName === 'INPUT') {
+        if (input.id === 'input-address') {
+          input.placeholder = 'Enter address...';
+        } else if (input.id === 'input-weight') {
+          input.placeholder = '0';
+        }
+      }
+    });
+
+    // Reset icons
+    carrierArrow.style.color = 'var(--text-secondary)';
+    carrierArrow.style.opacity = '1';
+    weightSuffix.style.color = 'var(--text-secondary)';
+    weightSuffix.style.opacity = '1';
+  }
+
+  renderAssistPreview(0);
+  renderClarificationPreview(0);
+  renderConfigurePreview(0);
+  renderCBPreview(0);
+  renderInsightPreview(0);
+  showPage('principles');
+</script>
+</body>
+</html>

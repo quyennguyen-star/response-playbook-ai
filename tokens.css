@@ -1,0 +1,434 @@
+/* ============================================
+   ADL FOUNDATIONS — Design Tokens
+   Generated from Figma Variables
+   ============================================ */
+
+:root {
+
+  /* ---- GLOBAL PRIMITIVES: Grey ---- */
+  --grey-050: #F7F8FA;
+  --grey-100: #F0F2F5;
+  --grey-200: #E1E4E8;
+  --grey-300: #C5CAD3;
+  --grey-400: #A4ABB6;
+  --grey-500: #848B96;
+  --grey-600: #656C76;
+  --grey-700: #484F59;
+  --grey-800: #2C323A;
+  --grey-900: #181B21;
+  --grey-950: #0A0B0D;
+
+  /* ---- GLOBAL PRIMITIVES: Red ---- */
+  --red-050: #FEF2F2;
+  --red-100: #FFE2E2;
+  --red-200: #FFC9C9;
+  --red-300: #FFA8A8;
+  --red-400: #FF7A7A;
+  --red-500: #FF4D4D;
+  --red-600: #E60000;
+  --red-700: #CC0000;
+  --red-800: #A30000;
+  --red-900: #7A0000;
+  --red-950: #4D0000;
+
+  /* ---- GLOBAL PRIMITIVES: Yellow ---- */
+  --yellow-050: #FFF7E5;
+  --yellow-100: #FFF0CC;
+  --yellow-200: #FEE5A6;
+  --yellow-300: #FED676;
+  --yellow-400: #FFC440;
+  --yellow-500: #F1AB17;
+  --yellow-600: #D48F00;
+  --yellow-700: #A16A00;
+  --yellow-800: #855500;
+  --yellow-900: #5D3A00;
+  --yellow-950: #331E00;
+
+  /* ---- GLOBAL PRIMITIVES: Green ---- */
+  --green-050: #F0FDF4;
+  --green-100: #DCFCE7;
+  --green-200: #BBF7D0;
+  --green-300: #86EFAC;
+  --green-400: #4ADE80;
+  --green-500: #22C55E;
+  --green-600: #16A34A;
+  --green-700: #15803D;
+  --green-800: #166534;
+  --green-900: #14532D;
+  --green-950: #052E16;
+
+  /* ---- ADL GREEN (Custom) ---- */
+  --adl-green-050: #F0FDF4;
+  --adl-green-100: #DCFCE7;
+  --adl-green-200: #BBF7D0;
+  --adl-green-300: #86EFAC;
+  --adl-green-400: #4ADE80;
+  --adl-green-500: #22C55E;
+  --adl-green-600: #16A34A;
+  --adl-green-700: #15803D;
+  --adl-green-800: #166534;
+  --adl-green-900: #14532D;
+  --adl-green-950: #052E16;
+
+  /* ---- GLOBAL PRIMITIVES: Blue ---- */
+  --blue-050: #EDF6FF;
+  --blue-100: #DBECFE;
+  --blue-200: #BFDFFE;
+  --blue-300: #93CCFD;
+  --blue-400: #60AFFA;
+  --blue-500: #3B8EF6;
+  --blue-600: #256FEB;
+  --blue-700: #1D5AD8;
+  --blue-800: #1E49AF;
+  --blue-900: #1E418A;
+  --blue-950: #172954;
+
+  /* ---- GLOBAL PRIMITIVES: Indigo ---- */
+  --indigo-050: #F7F7FF;
+  --indigo-100: #EEF0FF;
+  --indigo-200: #DADEFF;
+  --indigo-300: #B6BDFF;
+  --indigo-400: #8791FF;
+  --indigo-500: #636EFF;
+  --indigo-600: #4D55E6;
+  --indigo-700: #3D3CC2;
+  --indigo-800: #2F2699;
+  --indigo-900: #221469;
+  --indigo-950: #11003A;
+
+  /* ---- GLOBAL PRIMITIVES: Purple ---- */
+  --purple-050: #F6F2FF;
+  --purple-100: #EEE8FF;
+  --purple-200: #DFD4FF;
+  --purple-300: #CAB1FF;
+  --purple-400: #BB96FF;
+  --purple-500: #AA70FA;
+  --purple-600: #9F52F7;
+  --purple-700: #7F1EE3;
+  --purple-800: #6A18BF;
+  --purple-900: #57169C;
+  --purple-950: #360B6A;
+
+  /* ---- GLOBAL PRIMITIVES: Base ---- */
+  --base-white: #FFFFFF;
+
+  /* ---- GLOBAL PRIMITIVES: Opacity ---- */
+  --opacity-transparent: rgba(255, 255, 255, 0);
+  --opacity-white-10: rgba(255, 255, 255, 0.1);
+  --opacity-white-20: rgba(255, 255, 255, 0.2);
+  --opacity-950-5: rgba(10, 11, 13, 0.05);
+  --opacity-950-10: rgba(10, 11, 13, 0.1);
+  --opacity-950-60: rgba(10, 11, 13, 0.6);
+
+  /* ---- BRAND PRIMITIVES: Cobalt ---- */
+  --brand-dark-cobalt: #081A8F;
+  --brand-mid-cobalt: #1A2DC7;
+  --brand-cobalt: #2C3FFF;
+  --brand-cobalt-80: #808CFF;
+  --brand-cobalt-60: #ABB2FF;
+  --brand-cobalt-40: #D5D9FF;
+  --brand-cobalt-20: #E9EBFF;
+
+  /* ---- BRAND PRIMITIVES: Cyan ---- */
+  --brand-mid-cyan: #0082C6;
+  --brand-cyan: #00AAFF;
+  --brand-cyan-70: #4DC4FF;
+  --brand-mid-cyan-70: #4DA8D7;
+  --brand-cyan-50: #80D5FF;
+  --brand-mid-cyan-50: #80C1E3;
+  --brand-cyan-25: #BFEAFF;
+  --brand-mid-cyan-25: #BFE0F1;
+  --brand-cyan-10: #E6F7FF;
+  --brand-mid-cyan-10: #E6F3F9;
+
+  /* ---- BRAND PRIMITIVES: Red ---- */
+  --brand-dark-red: #760000;
+  --brand-mid-red: #C40000;
+  --brand-red: #FF0000;
+  --brand-red-80: #FF827D;
+  --brand-red-60: #FFAAAA;
+  --brand-red-40: #FFD2D2;
+  --brand-red-20: #FFE6EB;
+
+  /* ---- BRAND PRIMITIVES: Orange ---- */
+  --brand-dark-orange: #B03800;
+  --brand-mid-orange: #D84400;
+  --brand-orange: #FF4F00;
+  --brand-orange-75: #FF7B40;
+  --brand-orange-50: #FFBDA0;
+  --brand-orange-25: #FFD3BF;
+  --brand-orange-10: #FFEDE6;
+
+  /* ---- BRAND PRIMITIVES: Marigold ---- */
+  --brand-marigold: #FFB400;
+  --brand-marigold-70: #FFCB4D;
+  --brand-marigold-50: #FFDA80;
+  --brand-marigold-25: #FFECBF;
+  --brand-marigold-10: #FFF8E6;
+
+  /* ---- BRAND PRIMITIVES: Green ---- */
+  --brand-dark-green: #00873B;
+  --brand-mid-green: #00B750;
+  --brand-bright-green: #00E664;
+  --brand-bright-green-80: #40EC8B;
+  --brand-mid-green-80: #66D496;
+  --brand-bright-green-60: #80F3B1;
+  --brand-mid-green-60: #99E2B9;
+  --brand-bright-green-40: #BFF9D8;
+  --brand-mid-green-40: #CCF1DC;
+  --brand-bright-green-20: #E5FCEF;
+  --brand-mid-green-20: #E5F8ED;
+
+  /* ---- BRAND PRIMITIVES: Indigo ---- */
+  --brand-deep-indigo: #11003A;
+  --brand-indigo: #5C50FF;
+  --brand-indigo-80: #9D96FF;
+  --brand-indigo-60: #BEB9FF;
+  --brand-indigo-40: #DEDCFF;
+  --brand-indigo-20: #EEEDFF;
+
+  /* ---- SEMANTIC: Surface ---- */
+  --surface-background: var(--grey-050);
+  --surface-container: var(--base-white);
+  --surface-dark: var(--grey-900);
+  --surface-darker: var(--grey-950);
+  --surface-disabled: var(--grey-100);
+  --surface-overlay: var(--opacity-950-60);
+  --surface-transparent: var(--opacity-transparent);
+
+  /* ---- SEMANTIC: Border ---- */
+  --border-light: var(--grey-200);
+  --border-medium: var(--grey-400);
+  --border-dark: var(--grey-700);
+  --border-disabled: var(--grey-300);
+  --border-error: var(--red-700);
+
+  /* ---- SEMANTIC: Text ---- */
+  --text-primary: var(--grey-950);
+  --text-secondary: var(--grey-600);
+  --text-inverse: var(--base-white);
+  --text-disabled: var(--grey-500);
+  --text-link: var(--blue-700);
+
+  /* ---- SEMANTIC: Icon ---- */
+  --icon-primary: var(--grey-950);
+  --icon-secondary: var(--grey-600);
+  --icon-inverse: var(--base-white);
+  --icon-disabled: var(--grey-500);
+
+  /* ---- SEMANTIC: Status / Neutral ---- */
+  --status-neutral-white: var(--base-white);
+  --status-neutral-lightest: var(--grey-050);
+  --status-neutral-lighter: var(--grey-100);
+  --status-neutral-light: var(--grey-300);
+  --status-neutral-medium: var(--grey-700);
+  --status-neutral-dark: var(--grey-900);
+
+  /* ---- SEMANTIC: Status / Alert ---- */
+  --status-alert-lightest: var(--red-050);
+  --status-alert-lighter: var(--red-100);
+  --status-alert-light: var(--red-300);
+  --status-alert-medium: var(--red-700);
+  --status-alert-dark: var(--red-900);
+
+  /* ---- SEMANTIC: Status / Success ---- */
+  --status-success-lightest: var(--green-050);
+  --status-success-lighter: var(--green-100);
+  --status-success-light: var(--green-300);
+  --status-success-medium: var(--green-700);
+  --status-success-dark: var(--green-900);
+
+  /* ---- SEMANTIC: Status / Warning ---- */
+  --status-warning-lightest: var(--yellow-050);
+  --status-warning-lighter: var(--yellow-100);
+  --status-warning-light: var(--yellow-300);
+  --status-warning-medium: var(--yellow-500);
+  --status-warning-dark: var(--yellow-900);
+
+  /* ---- SEMANTIC: Status / Inform ---- */
+  --status-inform-lightest: var(--blue-050);
+  --status-inform-lighter: var(--blue-100);
+  --status-inform-light: var(--blue-300);
+  --status-inform-medium: var(--blue-700);
+  --status-inform-dark: var(--blue-900);
+
+  /* ---- SEMANTIC: Status / Upgrade ---- */
+  --status-upgrade-lightest: var(--purple-050);
+  --status-upgrade-lighter: var(--purple-100);
+  --status-upgrade-light: var(--purple-300);
+  --status-upgrade-medium: var(--purple-700);
+  --status-upgrade-dark: var(--purple-900);
+
+  /* ---- SEMANTIC: Effects ---- */
+  --effect-focus: var(--blue-400);
+  --effect-focus-error: var(--red-400);
+
+  /* ---- SEMANTIC: Assisted ---- */
+  --assisted-lightest: var(--indigo-050);
+  --assisted-light: var(--indigo-100);
+  --assisted-medium: var(--indigo-600);
+
+  /* ---- RADIUS ---- */
+  --radius-none: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* ---- SPACING ---- */
+  --space-0: 0px;
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 6px;
+  --space-4: 8px;
+  --space-5: 12px;
+  --space-6: 16px;
+  --space-7: 20px;
+  --space-8: 24px;
+  --space-9: 28px;
+  --space-10: 32px;
+  --space-11: 40px;
+  --space-12: 48px;
+  --space-14: 64px;
+  --space-16: 80px;
+  --space-18: 96px;
+  --space-20: 128px;
+  --space-24: 160px;
+  --space-28: 192px;
+  --space-32: 256px;
+
+  /* ---- WIDTHS ---- */
+  --width-3xs: 240px;
+  --width-2xs: 320px;
+  --width-xs: 384px;
+  --width-sm: 480px;
+  --width-md: 560px;
+  --width-lg: 640px;
+  --width-xl: 768px;
+  --width-2xl: 1024px;
+  --width-3xl: 1280px;
+  --width-4xl: 1440px;
+  --width-5xl: 1600px;
+  --width-6xl: 1920px;
+  --paragraph-max-width: 720px;
+
+  /* ---- TYPOGRAPHY: Font Size ---- */
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 32px;
+  --font-size-3xl: 48px;
+  --font-size-4xl: 64px;
+
+  /* ---- TYPOGRAPHY: Line Height ---- */
+  --line-height-xs: 12px;
+  --line-height-sm: 14px;
+  --line-height-md: 16px;
+  --line-height-lg: 20px;
+  --line-height-xl: 24px;
+  --line-height-2xl: 32px;
+  --line-height-3xl: 40px;
+  --line-height-4xl: 48px;
+  --line-height-5xl: 64px;
+
+  /* ---- TYPOGRAPHY: Font Family ---- */
+  --font-family-heading: 'Figtree', sans-serif;
+  --font-family-body: 'Figtree', sans-serif;
+
+  /* ---- TYPOGRAPHY: Font Weight ---- */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+}
+
+/* ============================================
+   TYPOGRAPHY STYLES
+   ============================================ */
+
+/* Heading One: 32px / Semibold / 40px line-height */
+.heading-one,
+h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-3xl);
+}
+
+/* Heading Two: 20px / Semibold / 32px line-height */
+.heading-two,
+h2 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-2xl);
+}
+
+/* Heading Three: 16px / Semibold / 24px line-height */
+.heading-three,
+h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-xl);
+}
+
+/* Heading Four: 14px / Semibold / 24px line-height */
+.heading-four,
+h4 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-xl);
+}
+
+/* Label: 14px / Semibold / 20px line-height */
+.label {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-lg);
+}
+
+/* Large Paragraph: 16px / Regular / 24px line-height */
+.large-paragraph {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-xl);
+}
+
+/* Large Paragraph Bold: 16px / Semibold / 24px line-height */
+.large-paragraph-bold {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-xl);
+}
+
+/* Paragraph: 14px / Regular / 20px line-height */
+.paragraph,
+p {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-lg);
+}
+
+/* Paragraph Bold: 14px / Semibold / 20px line-height */
+.paragraph-bold {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-lg);
+}
+
+/* Small: 12px / Regular / 16px line-height */
+.small {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-md);
+}
+
+/* Small Bold: 12px / Semibold / 16px line-height */
+.small-bold {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-md);
+}
