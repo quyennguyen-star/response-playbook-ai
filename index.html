@@ -289,6 +289,20 @@
       }
     }
 
+    /* CLARIFICATION CARD */
+    .clarification-card {
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      background: var(--base-white);
+      overflow: hidden;
+      width: 357px;
+    }
+    .clarification-card__image { width: 100%; line-height: 0; }
+    .clarification-card__image img { width: 100%; height: auto; display: block; }
+    .clarification-card__body { padding: var(--space-6); }
+    .clarification-card__title { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-3); }
+    .clarification-card__desc { font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.5; }
+
     .feedback-btn:hover {
       background: var(--grey-100) !important;
     }
@@ -784,6 +798,7 @@
         <div class="nav-item" data-page="input-assisted">Generated Content</div>
         <div class="nav-item" data-page="prompt-chips">Prompt Chips</div>
         <div class="nav-item" data-page="buttons-ctas">Buttons & CTAs</div>
+        <div class="nav-item" data-page="clarification-card">Clarification Card</div>
       </div>
       <a class="nav-item" href="./storybook/" target="_blank" style="margin-top: var(--space-8); border-top: 1px solid var(--grey-200); padding-top: var(--space-5);">
         <span style="display: flex; align-items: center; gap: var(--space-2);">
@@ -1795,6 +1810,42 @@
       <li>Keep text clear and destination-focused</li>
       <li>Use buttons instead of prompt chips for navigation</li>
       <li>Limit to 1-3 button options per response</li>
+    </ul>
+  </div>
+
+  <!-- CLARIFICATION CARD -->
+  <div class="page" id="page-clarification-card">
+    <h1 class="page-title">Clarification Card</h1>
+    <p class="page-subtitle">A card component that visually represents a clarification flow — used when AI needs to narrow an ambiguous request before choosing a response pattern.</p>
+
+    <div class="section-title">Example</div>
+    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+      <div class="clarification-card-demo">
+        <div class="clarification-card">
+          <div class="clarification-card__image">
+            <img src="img/clarificationcard.svg" alt="Clarification Card" />
+          </div>
+          <div class="clarification-card__body">
+            <div class="clarification-card__title">Clarification</div>
+            <div class="clarification-card__desc">Narrows broad, ambiguous, or incomplete requests before choosing a response pattern.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">When to use</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
+      <li>The user's request could go in multiple directions</li>
+      <li>Required information is missing before AI can respond</li>
+      <li>The AI needs the user to choose a path before proceeding</li>
+    </ul>
+
+    <div class="section-title">Guidelines</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6;">
+      <li>Ask one clarifying question — not multiple at once</li>
+      <li>Offer 2–4 concrete options when possible</li>
+      <li>Acknowledge the user's intent before asking</li>
+      <li>Keep the question short and focused</li>
     </ul>
   </div>
 

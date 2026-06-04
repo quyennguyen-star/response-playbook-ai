@@ -5,6 +5,7 @@ import { FeedbackBar } from './components/FeedbackBar';
 import { AIThinking } from './components/AIThinking';
 import { ResponseLabel } from './components/ResponseLabel';
 import { PromptChip } from './components/PromptChip';
+import { ClarificationCard } from './components/ClarificationCard';
 
 // Import all CSS
 import './components/Button.css';
@@ -12,6 +13,7 @@ import './components/FeedbackBar.css';
 import './components/AIThinking.css';
 import './components/ResponseLabel.css';
 import './components/PromptChip.css';
+import './components/ClarificationCard.css';
 
 // Export components globally so they can be used from HTML
 window.PlaybookComponents = {
@@ -20,6 +22,7 @@ window.PlaybookComponents = {
   AIThinking,
   ResponseLabel,
   PromptChip,
+  ClarificationCard,
   React,
   createRoot
 };
