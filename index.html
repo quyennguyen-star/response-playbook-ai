@@ -80,8 +80,8 @@
     .nav-group.open { display: block; }
 
     /* MAIN */
-    .main { margin-left: var(--sidebar-width); flex: 1; }
-    .page { display: none; padding: var(--space-8); max-width: 1088px; }
+    .main { margin-left: var(--sidebar-width); flex: 1; display: flex; justify-content: center; }
+    .page { display: none; padding: var(--space-8); max-width: 1088px; width: 100%; }
     .page.active { display: block; }
     .page-title { font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-2); }
     .page-subtitle {
@@ -201,41 +201,52 @@
       gap: var(--space-2);
       background: var(--base-white);
       border: none;
+      border-right: 1px solid var(--border-light);
       border-radius: 0;
       padding: var(--space-4);
     }
     .example-item,
     .clarification-item {
-      padding: var(--space-5) var(--space-6);
+      position: relative;
+      padding: var(--space-4) var(--space-5);
       cursor: pointer;
-      border-left: 4px solid transparent;
-      transition: all 0.15s;
+      transition: background 0.12s;
       background: transparent;
-      border: 1px solid transparent;
       border-radius: var(--radius-sm);
     }
     .example-item:hover,
     .clarification-item:hover {
-      background: var(--grey-050);
-      border-color: transparent;
+      background: var(--grey-100);
     }
     .example-item.active,
     .clarification-item.active {
-      background: var(--grey-050);
-      border: 1px solid transparent;
-      border-left: 4px solid var(--indigo-950);
+      background: var(--grey-100);
     }
-    .example-item-title { font-size: var(--font-size-md); font-weight: 500; color: var(--text-primary); }
+    .example-item.active::before,
+    .clarification-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 55%;
+      background: var(--grey-950);
+      border-radius: 9999px;
+    }
+    .example-item-title { font-size: var(--font-size-md); font-weight: 400; color: var(--text-primary); }
     .example-item.active .example-item-title,
-    .clarification-item.active { color: var(--indigo-950); font-weight: 600; }
+    .clarification-item.active { color: var(--text-primary); font-weight: 600; }
     .example-item-desc {
       display: none;
     }
     .example-preview,
     .clarification-right {
-      padding: var(--space-8) var(--space-10);
+      padding: var(--space-10);
       background: var(--grey-050);
-      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     /* ANATOMY VIEW */
@@ -295,13 +306,150 @@
       border-radius: var(--radius-sm);
       background: var(--base-white);
       overflow: hidden;
-      width: 357px;
     }
-    .clarification-card__image { width: 100%; line-height: 0; }
-    .clarification-card__image img { width: 100%; height: auto; display: block; }
-    .clarification-card__body { padding: var(--space-6); }
-    .clarification-card__title { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-3); }
-    .clarification-card__desc { font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.5; }
+    .clarification-card__header {
+      padding: var(--space-6) var(--space-6) 0;
+    }
+    .clarification-card__step {
+      font-size: var(--font-size-xs);
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+    .clarification-card__body { padding: var(--space-5) var(--space-6) 0; }
+    .clarification-card__question {
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-primary);
+      margin-bottom: var(--space-1);
+      line-height: 1.5;
+    }
+    .clarification-card__subtitle {
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-4);
+    }
+    .clarification-card__options {
+      display: flex; flex-direction: column; gap: var(--space-1);
+      margin-bottom: var(--space-4);
+    }
+    .clarification-card__option {
+      display: flex; align-items: center; gap: var(--space-3);
+      width: 100%; text-align: left;
+      padding: var(--space-3) var(--space-3);
+      border: none; border-radius: var(--radius-xs);
+      background: var(--base-white);
+      font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; font-weight: 400;
+      color: var(--text-primary); cursor: pointer;
+      transition: background 0.12s;
+    }
+    .clarification-card__option--selected { font-weight: 500; }
+    .clarification-card__checkbox {
+      width: 16px; height: 16px; flex-shrink: 0;
+      border: 1px solid var(--border-medium); border-radius: 3px;
+      background: var(--base-white);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.12s;
+    }
+    .clarification-card__option--selected .clarification-card__checkbox {
+      background: var(--indigo-950); border-color: var(--indigo-950);
+    }
+    .clarification-card__option--selected .clarification-card__checkbox::after {
+      content: '';
+      width: 9px; height: 5px;
+      border-left: 2px solid white; border-bottom: 2px solid white;
+      transform: rotate(-45deg) translateY(-1px);
+      display: block;
+    }
+    .clarification-card__radio-options {
+      display: flex; flex-direction: column; gap: 0;
+      margin-bottom: var(--space-4);
+    }
+    .clarification-card__radio-option {
+      display: flex; align-items: center; gap: var(--space-4);
+      width: 100%; text-align: left;
+      padding: var(--space-2) 0;
+      border: none; background: none;
+      cursor: pointer;
+      font-family: 'Figtree', sans-serif;
+    }
+    .clarification-card__radio-circle {
+      width: 16px; height: 16px; flex-shrink: 0;
+      border: 1.5px solid var(--border-medium); border-radius: 50%;
+      background: var(--base-white);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.12s;
+    }
+    .clarification-card__radio-option--selected .clarification-card__radio-circle {
+      background: var(--grey-950); border-color: var(--grey-950);
+    }
+    .clarification-card__radio-option--selected .clarification-card__radio-circle::after {
+      content: '';
+      width: 7px; height: 4px;
+      border-left: 1.5px solid white; border-bottom: 1.5px solid white;
+      transform: rotate(-45deg);
+      display: block;
+      position: relative;
+      top: -1px;
+    }
+    .clarification-card__radio-text {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .clarification-card__radio-title {
+      font-size: var(--font-size-sm); font-weight: 400; color: var(--text-primary);
+    }
+    .clarification-card__radio-desc {
+      font-size: var(--font-size-sm); font-weight: 400; color: var(--text-secondary); line-height: 1.4;
+    }
+
+    .clarification-card__input {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
+      color: var(--text-primary);
+      box-sizing: border-box;
+      outline: none;
+      background: var(--base-white);
+      transition: border-color 0.12s;
+    }
+    .clarification-card__input:focus { border-color: var(--grey-400); }
+    .clarification-card__input::placeholder { color: var(--text-secondary); }
+    .clarification-card__footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-6);
+    }
+    .clarification-card__back {
+      display: flex; align-items: center; gap: var(--space-2);
+      background: none; border: none;
+      height: 32px; padding: 0;
+      font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
+      color: var(--text-secondary); cursor: pointer;
+    }
+    .clarification-card__back:hover { color: var(--text-primary); }
+    .clarification-card__next {
+      background: var(--indigo-950); color: var(--base-white);
+      border: none; border-radius: var(--radius-sm);
+      height: 32px; padding: 0 var(--space-6);
+      font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
+      font-weight: 500; cursor: pointer;
+      transition: opacity 0.12s;
+    }
+    .clarification-card__next:hover:not(:disabled) { opacity: 0.88; }
+    .clarification-card__next:disabled {
+      background: var(--grey-200); color: var(--grey-400); cursor: not-allowed;
+    }
+
+    .preview-box {
+      background: var(--grey-050);
+      padding: var(--space-10);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-10);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 300px;
+    }
 
     .feedback-btn:hover {
       background: var(--grey-100) !important;
@@ -329,6 +477,8 @@
       transition: all 0.15s;
     }
     .btn:hover { border-color: var(--border-medium); }
+    .btn--filled { background: var(--indigo-950); color: var(--base-white); border-color: var(--indigo-950); }
+    .btn--filled:hover { background: var(--indigo-900); border-color: var(--indigo-900); }
 
     /* CHAT PREVIEW */
     .chat-container {
@@ -704,7 +854,7 @@
 
     /* CB SPECIFIC */
     .ai-response-text { font-size: var(--font-size-sm); margin-bottom: var(--space-5); }
-    .btn-chips { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-5); }
+    .btn-chips { display: flex; flex-direction: row; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-5); }
     .like-row { display: flex; gap: var(--space-4); margin-bottom: var(--space-5); }
     .like-btn { font-size: 14px; cursor: pointer; opacity: 0.5; }
 
@@ -1290,6 +1440,9 @@
         <div class="example-item" data-clarify="4">
           <div class="example-item-title">Optimize my workflow</div>
         </div>
+        <div class="example-item" data-clarify="5">
+          <div class="example-item-title">Clarification card</div>
+        </div>
       </div>
       <div class="example-preview">
         <div id="clarification-preview"></div>
@@ -1360,65 +1513,16 @@
       </div>
     </div>
     <div class="section-title">Examples</div>
-
-    <!-- Example 1: Billing Issue -->
-    <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-secondary); margin-bottom: var(--space-3);">Billing or sensitive issue</div>
-    <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-10); margin-bottom: var(--space-10); background: var(--grey-050); max-width: 600px;">
-      <div style="overflow: hidden; margin-bottom: var(--space-6);">
-        <div class="user-query-right">I need help with my billing issue</div>
+    <div class="examples-layout">
+      <div class="examples-list" id="escalation-examples-list">
+        <div class="example-item active" data-escalation="0">
+          <div class="example-item-title">Billing issue</div>
+        </div>
+        <div class="example-item" data-escalation="1">
+          <div class="example-item-title">Direct support request</div>
+        </div>
       </div>
-
-      <div class="ai-message" style="margin-bottom: var(--space-6);">
-        Here's the Help Center where you can contact support:
-      </div>
-
-      <div style="margin-bottom: var(--space-6);">
-        <button class="btn" style="display: inline-flex; align-items: center; gap: var(--space-2);">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
-          </svg>
-          Navigate to Help Center
-        </button>
-      </div>
-
-      <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.6; margin-bottom: var(--space-6);">
-        From there you can browse help articles or reach out to Support directly via chat or email.
-      </div>
-
-      <div class="like-row">
-        <span class="like-btn">👍</span>
-        <span class="like-btn">👎</span>
-      </div>
-    </div>
-
-    <!-- Example 2: Direct Support Request -->
-    <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-secondary); margin-bottom: var(--space-3);">Direct support request</div>
-    <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-10); margin-bottom: var(--space-10); background: var(--grey-050); max-width: 600px;">
-      <div style="overflow: hidden; margin-bottom: var(--space-6);">
-        <div class="user-query-right">I need support</div>
-      </div>
-
-      <div class="ai-message" style="margin-bottom: var(--space-6);">
-        Here's where you can get help:
-      </div>
-
-      <div style="margin-bottom: var(--space-6);">
-        <button class="btn" style="display: inline-flex; align-items: center; gap: var(--space-2);">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
-          </svg>
-          Get Support
-        </button>
-      </div>
-
-      <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.6; margin-bottom: var(--space-6);">
-        You can reach our support team via chat or email through the Help Center.
-      </div>
-
-      <div class="like-row">
-        <span class="like-btn">👍</span>
-        <span class="like-btn">👎</span>
-      </div>
+      <div class="example-preview" id="escalation-preview"></div>
     </div>
   </div>
 
@@ -1462,7 +1566,7 @@
     <p class="page-subtitle">Shows AI reasoning steps as the response is being generated.</p>
 
     <div class="section-title">Loading State</div>
-    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+    <div class="preview-box">
       <div style="max-width: 600px;">
         <!-- Loading with thinking indicator - Collapsed -->
         <div id="cot-loading-summary" style="cursor: pointer;" onclick="toggleLoadingCOT()">
@@ -1523,7 +1627,7 @@
     </div>
 
     <div class="section-title">Completed State</div>
-    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+    <div class="preview-box">
       <div style="max-width: 600px;">
         <!-- Collapsed Summary -->
         <div id="cot-completed-summary" style="cursor: pointer;" onclick="toggleCompletedCOT()">
@@ -1591,8 +1695,7 @@
     <h1 class="page-title">Feedback Bar</h1>
     <p class="page-subtitle">A component to collect user feedback on AI responses.</p>
 
-    <div class="section-title">Interactive Preview</div>
-    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10); position: relative; min-height: 400px; display: flex; align-items: center; justify-content: center;">
+    <div class="preview-box" style="position: relative; min-height: 400px; align-items: center;">
       <!-- Restart Button -->
       <button onclick="restartFeedback()" style="position: absolute; top: var(--space-4); right: var(--space-4); background: var(--base-white); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: var(--space-2) var(--space-4); font-size: var(--font-size-xs); color: var(--text-secondary); cursor: pointer; font-family: 'Figtree', sans-serif; font-weight: 500; display: flex; align-items: center; gap: var(--space-2);">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1631,7 +1734,7 @@
       </div>
 
       <!-- Feedback Modal -->
-      <div id="feedback-modal" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--base-white); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); z-index: 10;">
+      <div id="feedback-modal" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--base-white); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); z-index: 10;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
           <h3 style="font-size: var(--font-size-lg); font-weight: 600; color: var(--text-primary);">Feedback</h3>
           <button onclick="closeFeedbackModal()" style="background: transparent; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center;">
@@ -1642,9 +1745,9 @@
           </button>
         </div>
         <label style="display: block; font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-2);">What could have been better?</label>
-        <textarea id="feedback-text" style="width: 300px; height: 80px; padding: var(--space-3); border: 1px solid var(--border-light); border-radius: var(--radius-xs); font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; color: var(--text-primary); resize: none; margin-bottom: var(--space-4); box-sizing: border-box; outline: none;" placeholder="Share your feedback..."></textarea>
+        <textarea id="feedback-text" style="width: 300px; height: 80px; padding: var(--space-3); border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; color: var(--text-primary); resize: none; margin-bottom: var(--space-4); box-sizing: border-box; outline: none;" placeholder="Share your feedback..."></textarea>
         <div style="display: flex; justify-content: flex-end;">
-          <button onclick="submitFeedback()" style="background: var(--green-700); color: var(--base-white); border: none; border-radius: var(--radius-xs); padding: var(--space-2) var(--space-5); font-size: var(--font-size-sm); font-weight: 600; cursor: pointer; font-family: 'Figtree', sans-serif;">
+          <button onclick="submitFeedback()" style="background: var(--indigo-950); color: var(--base-white); border: none; border-radius: var(--radius-sm); padding: var(--space-2) var(--space-5); font-size: var(--font-size-sm); font-weight: 500; cursor: pointer; font-family: 'Figtree', sans-serif;">
             Submit
           </button>
         </div>
@@ -1664,8 +1767,7 @@
     <h1 class="page-title">AI Thinking</h1>
     <p class="page-subtitle">Visual indicators that show AI is processing a request.</p>
 
-    <div class="section-title">Interactive Preview</div>
-    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+    <div class="preview-box">
       <div style="max-width: 100%;">
         <div style="padding: var(--space-14); position: relative;">
           <!-- Animated dots - single set that changes color -->
@@ -1694,8 +1796,7 @@
     <h1 class="page-title">Generated Content</h1>
     <p class="page-subtitle">AI generates form field values based on context, order history, or user patterns.</p>
 
-    <div class="section-title">Interactive Preview</div>
-    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+    <div class="preview-box">
       <div style="display: flex; width: 320px; flex-direction: column; align-items: flex-start; gap: var(--space-5);">
 
         <button onclick="fillWithAI()" class="btn" style="margin-bottom: var(--space-4);">
@@ -1752,8 +1853,7 @@
     <h1 class="page-title">Prompt Chips</h1>
     <p class="page-subtitle">Suggested follow-up queries that help users continue the conversation.</p>
 
-    <div class="section-title">Example</div>
-    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+    <div class="preview-box">
       <div class="prompt-chips">
         <button class="prompt-chip">Check carrier status</button>
         <button class="prompt-chip">View affected shipments</button>
@@ -1782,8 +1882,7 @@
     <h1 class="page-title">Buttons & CTAs</h1>
     <p class="page-subtitle">Action buttons that navigate users to specific pages or trigger system actions.</p>
 
-    <div class="section-title">Example</div>
-    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
+    <div class="preview-box">
       <button class="btn">Go to Labels</button>
     </div>
 
@@ -1809,15 +1908,52 @@
     <h1 class="page-title">Clarification Card</h1>
     <p class="page-subtitle">A card component that visually represents a clarification flow — used when AI needs to narrow an ambiguous request before choosing a response pattern.</p>
 
-    <div class="section-title">Example</div>
-    <div style="background: var(--grey-050); padding: var(--space-10); border-radius: var(--radius-sm); margin-bottom: var(--space-10);">
-      <div class="clarification-card-demo">
-        <div class="clarification-card">
-          <div class="clarification-card__image">
-            <img src="img/clarificationcard.svg" alt="Clarification Card" />
+    <div class="preview-box">
+        <div class="clarification-card" id="clarify-card-radio" style="width: 357px;">
+          <div class="clarification-card__header">
+            <span class="clarification-card__step">Step 2 of 4</span>
+          </div>
+          <div class="clarification-card__body">
+            <div class="clarification-card__question">What do you want to filter by?</div>
+            <div class="clarification-card__radio-options" id="clarification-radio-options">
+              <button class="clarification-card__radio-option" onclick="selectRadioOption(this, 'date')">
+                <span class="clarification-card__radio-circle"></span>
+                <span class="clarification-card__radio-text">
+                  <span class="clarification-card__radio-title">Date range</span>
+                  <!-- <span class="clarification-card__radio-desc">Filter orders by a specific time period</span> -->
+                </span>
+              </button>
+              <button class="clarification-card__radio-option" onclick="selectRadioOption(this, 'carrier')">
+                <span class="clarification-card__radio-circle"></span>
+                <span class="clarification-card__radio-text">
+                  <span class="clarification-card__radio-title">Carrier or service</span>
+                  <!-- <span class="clarification-card__radio-desc">Filter by shipping carrier or service type</span> -->
+                </span>
+              </button>
+              <button class="clarification-card__radio-option" onclick="selectRadioOption(this, 'status')">
+                <span class="clarification-card__radio-circle"></span>
+                <span class="clarification-card__radio-text">
+                  <span class="clarification-card__radio-title">Order status</span>
+                  <!-- <span class="clarification-card__radio-desc">Filter by shipped, pending, or failed</span> -->
+                </span>
+              </button>
+              <button class="clarification-card__radio-option" onclick="selectRadioOption(this, 'cost')">
+                <span class="clarification-card__radio-circle"></span>
+                <span class="clarification-card__radio-text">
+                  <span class="clarification-card__radio-title">Cost threshold</span>
+                  <!-- <span class="clarification-card__radio-desc">Filter orders above or below a spend amount</span> -->
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="clarification-card__footer">
+            <button class="clarification-card__back">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              Back
+            </button>
+            <button class="clarification-card__next" disabled>Next</button>
           </div>
         </div>
-      </div>
     </div>
 
     <div class="section-title">When to use</div>
@@ -1828,13 +1964,26 @@
     </ul>
 
     <div class="section-title">Guidelines</div>
-    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6;">
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
       <li>Ask one clarifying question — not multiple at once</li>
       <li>Offer 2–4 concrete options when possible</li>
       <li>Acknowledge the user's intent before asking</li>
       <li>Keep the question short and focused</li>
     </ul>
+
+    <div class="section-title">When to use what</div>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--border-light); border-radius: var(--radius-sm); margin-bottom: var(--space-10); overflow: hidden;">
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">Clarification card</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6;">Multiple structured choices or a higher-risk decision.</div>
+      </div>
+      <div style="padding: var(--space-6);">
+        <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">Prompt chips</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6;">Optional next steps after the AI has already responded.</div>
+      </div>
+    </div>
   </div>
+
 
 </main>
 
@@ -1897,6 +2046,12 @@
       query: "Optimize my workflow",
       message: "I can help optimize your workflow. Where would you like to start?",
       chips: ["Automate order routing", "Reduce manual steps", "Speed up label creation", "Review carrier performance"]
+    },
+    { title: "Clarification card", route: "Route after clarification: Assist or Configure",
+      type: "card",
+      query: "Help me fix my shipments",
+      question: "What do you want help with?",
+      options: ["Delayed shipments", "Failed label creation", "Tracking not updating", "Carrier exceptions"]
     }
   ];
 
@@ -1976,6 +2131,33 @@
   function renderClarificationPreview(idx) {
     const ex = clarificationExamples[idx];
 
+    if (ex.type === 'card') {
+      const options = ex.options.map((o, i) => `
+        <button class="clarification-card__radio-option" onclick="selectRadioOption(this, '${i}')">
+          <span class="clarification-card__radio-circle"></span>
+          <span class="clarification-card__radio-text"><span class="clarification-card__radio-title">${o}</span></span>
+        </button>`).join('');
+      document.getElementById('clarification-preview').innerHTML = `
+        <div style="overflow:hidden;margin-bottom:var(--space-4)">
+          <div class="user-query-right">${ex.query}</div>
+        </div>
+        <div class="clarification-card" style="width:100%">
+          <div class="clarification-card__body">
+            <div class="clarification-card__question">${ex.question}</div>
+            <div class="clarification-card__radio-options">${options}</div>
+          </div>
+          <div class="clarification-card__footer">
+            <button class="clarification-card__back">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              Back
+            </button>
+            <button class="clarification-card__next" disabled>Next</button>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
     let chips = ex.chips.map(c => `<button class="prompt-chip">${c}</button>`).join('');
     document.getElementById('clarification-preview').innerHTML = `
       <div style="overflow:hidden">
@@ -2030,6 +2212,41 @@
     `;
   }
 
+  const escalationExamples = [
+    {
+      query: "I need help with my billing issue",
+      response: "Here's the Help Center where you can contact support:",
+      btn: "Navigate to Help Center",
+      followup: "From there you can browse help articles or reach out to Support directly via chat or email."
+    },
+    {
+      query: "I need support",
+      response: "Here's where you can get help:",
+      btn: "Get Support",
+      followup: "You can reach our support team via chat or email through the Help Center."
+    }
+  ];
+
+  function renderEscalationPreview(idx) {
+    const ex = escalationExamples[idx];
+    document.getElementById('escalation-preview').innerHTML = `
+      <div class="user-bubble"><span>User:</span>${ex.query}</div>
+      <div class="ai-message" style="margin-bottom:var(--space-4)">${ex.response}</div>
+      <div style="margin-bottom:var(--space-4)">
+        <button class="btn">${ex.btn}</button>
+      </div>
+      <div style="font-size:var(--font-size-sm);color:var(--text-primary);line-height:1.6;margin-bottom:var(--space-4)">${ex.followup}</div>
+      <div style="display:flex;gap:var(--space-2)">
+        <button class="feedback-btn" style="background:transparent;border:none;cursor:pointer;padding:var(--space-2);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);transition:background 0.15s ease;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-secondary)"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+        </button>
+        <button class="feedback-btn" style="background:transparent;border:none;cursor:pointer;padding:var(--space-2);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);transition:background 0.15s ease;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-secondary)"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+        </button>
+      </div>
+    `;
+  }
+
   const insightExamples = [
     { title: "Savings Insight",
       desc: "Use when AI identifies a cost-saving opportunity and prompts the user to explore potential savings.",
@@ -2061,7 +2278,7 @@
     'configure': 'response-patterns', 'response-patterns': 'response-patterns',
     'clarification': 'guardrails', 'capability-boundary': 'guardrails',
     'escalation': 'guardrails', 'guardrails': 'guardrails',
-    'chain-of-thought': 'ui-patterns', 'feedback-bar': 'ui-patterns', 'ai-thinking': 'ui-patterns', 'input-assisted': 'ui-patterns', 'prompt-chips': 'ui-patterns', 'buttons-ctas': 'ui-patterns', 'ui-patterns': 'ui-patterns'
+    'chain-of-thought': 'ui-patterns', 'feedback-bar': 'ui-patterns', 'ai-thinking': 'ui-patterns', 'input-assisted': 'ui-patterns', 'prompt-chips': 'ui-patterns', 'buttons-ctas': 'ui-patterns', 'clarification-card': 'ui-patterns', 'ui-patterns': 'ui-patterns'
   };
 
   document.querySelectorAll('[data-insight]').forEach(item => {
@@ -2072,7 +2289,7 @@
     });
   });
 
-  function showPage(pageId) {
+  function showPage(pageId, pushState = true) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('open'));
@@ -2087,7 +2304,14 @@
         document.querySelectorAll(`[data-group="${group}"]`).forEach(n => n.classList.add('active'));
       }
     }
+    if (pushState) history.pushState({ page: pageId }, '', '#' + pageId);
+    resetPageInteractions();
   }
+
+  window.addEventListener('popstate', (e) => {
+    const pageId = e.state?.page || location.hash.slice(1) || 'principles';
+    showPage(pageId, false);
+  });
 
   document.querySelectorAll('.nav-item[data-page]').forEach(item => {
     item.addEventListener('click', () => showPage(item.dataset.page));
@@ -2374,12 +2598,125 @@
     weightSuffix.style.opacity = '1';
   }
 
+  document.querySelectorAll('[data-escalation]').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('[data-escalation]').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      renderEscalationPreview(parseInt(item.dataset.escalation));
+    });
+  });
+
   renderAssistPreview(0);
   renderClarificationPreview(0);
   renderConfigurePreview(0);
   renderCBPreview(0);
   renderInsightPreview(0);
-  showPage('principles');
+  renderEscalationPreview(0);
+
+  const initialPage = location.hash.slice(1) || 'principles';
+  showPage(initialPage, false);
+
+  function selectRadioOption(btn, value) {
+    btn.classList.toggle('clarification-card__radio-option--selected');
+    const card = btn.closest('.clarification-card');
+    const hasSelection = card.querySelectorAll('.clarification-card__radio-option--selected').length > 0;
+    const nextBtn = card.querySelector('.clarification-card__next');
+    if (nextBtn) nextBtn.disabled = !hasSelection;
+  }
+
+  function resetPageInteractions() {
+    // Feedback bar
+    const defaultState = document.getElementById('feedback-default');
+    const selectedState = document.getElementById('feedback-selected');
+    const feedbackModal = document.getElementById('feedback-modal');
+    if (defaultState) { defaultState.style.display = 'flex'; }
+    if (selectedState) { selectedState.style.display = 'none'; }
+    if (feedbackModal) { feedbackModal.style.display = 'none'; }
+
+    // Generated content / AI fill
+    ['input-address', 'input-carrier', 'input-weight'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.value = '';
+      el.style.border = '1px solid var(--border-light)';
+      el.style.background = id === 'input-carrier' ? 'var(--base-white)' : '';
+      el.style.backgroundSize = '';
+      el.style.animation = '';
+      el.style.color = 'var(--text-primary)';
+      if (id === 'input-address') el.placeholder = 'Enter address...';
+      if (id === 'input-weight') el.placeholder = '0';
+      delete el.dataset.aiGenerated;
+    });
+    const carrierArrow = document.getElementById('carrier-arrow');
+    const weightSuffix = document.getElementById('weight-suffix');
+    if (carrierArrow) { carrierArrow.style.opacity = ''; carrierArrow.style.color = 'var(--text-secondary)'; }
+    if (weightSuffix) { weightSuffix.style.opacity = ''; weightSuffix.style.color = 'var(--text-secondary)'; }
+
+    // Chain of thought panels
+    const loadingDetails = document.getElementById('cot-loading-details');
+    const completedDetails = document.getElementById('cot-completed-details');
+    const loadingChevron = document.getElementById('loading-chevron');
+    const completedChevron = document.getElementById('completed-chevron');
+    if (loadingDetails) { loadingDetails.style.maxHeight = '0'; }
+    if (completedDetails) { completedDetails.style.maxHeight = '0'; }
+    if (loadingChevron) { loadingChevron.style.transform = ''; }
+    if (completedChevron) { completedChevron.style.transform = ''; }
+
+    // Clarification card checkbox options
+    document.querySelectorAll('.clarification-card__option--selected').forEach(el => el.classList.remove('clarification-card__option--selected'));
+
+    // Clarification card radio options + reset Next button
+    document.querySelectorAll('.clarification-card__radio-option--selected').forEach(el => el.classList.remove('clarification-card__radio-option--selected'));
+    document.querySelectorAll('.clarification-card__next').forEach(btn => { btn.disabled = true; });
+
+    // Clarification card text input
+    const clarifyInput = document.getElementById('clarification-card-input');
+    if (clarifyInput) clarifyInput.value = '';
+  }
+
+  function selectClarifyOption(btn, value) {
+    document.querySelectorAll('#clarification-card-options .clarification-card__option').forEach(b => {
+      b.classList.remove('clarification-card__option--selected');
+    });
+    btn.classList.add('clarification-card__option--selected');
+    document.getElementById('clarification-card-input').value = '';
+  }
+
+  function clarifyNext() {
+    var selected = document.querySelector('#clarification-card-options .clarification-card__option--selected');
+    var input = document.getElementById('clarification-card-input').value.trim();
+    var label = selected ? selected.textContent.trim() : input;
+    if (!label) {
+      document.getElementById('clarification-card-input').focus();
+      return;
+    }
+    document.getElementById('clarification-confirm-label').textContent = '"' + label + '"';
+    document.querySelector('.clarification-card').style.display = 'none';
+    document.getElementById('clarification-card-confirm-state').style.display = 'block';
+  }
+
+  function clarifyBack() {
+    document.querySelectorAll('#clarification-card-options .clarification-card__option').forEach(b => {
+      b.classList.remove('clarification-card__option--selected');
+    });
+    document.getElementById('clarification-card-input').value = '';
+  }
+
+  function clarifyBackToOptions() {
+    document.querySelector('.clarification-card').style.display = 'block';
+    document.getElementById('clarification-card-confirm-state').style.display = 'none';
+  }
+
+  function clarifyConfirm() {
+    document.getElementById('clarification-confirm-label').textContent = '';
+    document.querySelector('.clarification-card').style.display = 'block';
+    document.getElementById('clarification-card-confirm-state').style.display = 'none';
+    document.querySelectorAll('#clarification-card-options .clarification-card__option').forEach(b => {
+      b.classList.remove('clarification-card__option--selected');
+    });
+    document.getElementById('clarification-card-input').value = '';
+  }
 </script>
+
 </body>
 </html>

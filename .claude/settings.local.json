@@ -30,7 +30,8 @@
       "Bash(npx vite *)",
       "Bash(gh repo *)",
       "WebFetch(domain:mantine.dev)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(python3 *)"
     ]
   },
   "enableAllProjectMcpServers": true,

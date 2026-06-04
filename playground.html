@@ -3,12 +3,449 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mantine Playground — Stamps.com Grey Theme</title>
+  <title>Playground — AI Response Playbook</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Figtree', sans-serif;
+      background: var(--base-white);
+      color: var(--text-primary);
+      font-size: var(--font-size-md);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      height: 48px; flex-shrink: 0;
+      background: var(--base-white);
+      border-bottom: 1px solid var(--border-light);
+      display: flex; align-items: center;
+      padding: 0 var(--space-6); gap: var(--space-4);
+    }
+    .topbar__back {
+      display: flex; align-items: center; gap: var(--space-2);
+      font-size: var(--font-size-sm); color: var(--text-secondary);
+      text-decoration: none; cursor: pointer;
+      transition: color 0.12s;
+    }
+    .topbar__back:hover { color: var(--text-primary); }
+    .topbar__title { font-size: var(--font-size-sm); font-weight: 600; }
+    .topbar__spacer { flex: 1; }
+
+    /* LAYOUT */
+    .layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* LEFT RAIL */
+    .rail {
+      width: 220px; flex-shrink: 0;
+      border-right: 1px solid var(--border-light);
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+      background: var(--base-white);
+    }
+    .rail__section {
+      padding: var(--space-4) var(--space-4) var(--space-2);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .rail__item {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      cursor: pointer;
+      font-size: var(--font-size-sm);
+      color: var(--text-primary);
+      border-radius: var(--radius-sm);
+      margin: 0 var(--space-2);
+      transition: background 0.12s;
+      position: relative;
+    }
+    .rail__item:hover { background: var(--grey-100); }
+    .rail__item.active {
+      background: var(--grey-100);
+    }
+    .rail__item.active::before {
+      content: '';
+      position: absolute; left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 3px; height: 55%;
+      background: var(--grey-950);
+      border-radius: 9999px;
+    }
+    .rail__item-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* CANVAS */
+    .canvas {
+      flex: 1;
+      background: var(--grey-050);
+      display: flex; align-items: center; justify-content: center;
+      overflow: auto;
+      padding: var(--space-10);
+    }
+
+    /* ── COMPONENT STYLES ────────────────────────────────── */
+
+    /* Clarification Card */
+    .clarification-card {
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      background: var(--base-white);
+      overflow: hidden;
+      width: 357px;
+    }
+    .clarification-card__header { padding: 12px 16px 0; }
+    .clarification-card__step { font-size: 11px; color: var(--text-secondary); }
+    .clarification-card__body { padding: 10px 16px 0; }
+    .clarification-card__question { font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4); }
+    .clarification-card__radio-options { display: flex; flex-direction: column; gap: 0; margin-bottom: var(--space-4); }
+    .clarification-card__radio-option {
+      display: flex; align-items: center; gap: 12px;
+      width: 100%; text-align: left; padding: 6px 0;
+      border: none; background: none; cursor: pointer;
+      font-family: 'Figtree', sans-serif; font-size: var(--font-size-sm);
+      color: var(--text-primary);
+    }
+    .clarification-card__radio-circle {
+      width: 16px; height: 16px; flex-shrink: 0;
+      border: 1.5px solid var(--border-medium); border-radius: 50%;
+      background: var(--base-white);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.12s;
+    }
+    .clarification-card__radio-option--selected .clarification-card__radio-circle {
+      background: var(--grey-950); border-color: var(--grey-950);
+    }
+    .clarification-card__radio-option--selected .clarification-card__radio-circle::after {
+      content: ''; width: 7px; height: 4px;
+      border-left: 1.5px solid white; border-bottom: 1.5px solid white;
+      transform: rotate(-45deg); display: block; position: relative; top: -1px;
+    }
+    .clarification-card__footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px;
+    }
+    .clarification-card__back {
+      display: flex; align-items: center; gap: 6px;
+      background: none; border: none; height: 32px; padding: 0;
+      font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
+      color: var(--text-secondary); cursor: pointer;
+    }
+    .clarification-card__next {
+      background: var(--indigo-950); color: var(--base-white);
+      border: none; border-radius: var(--radius-sm);
+      height: 32px; padding: 0 16px;
+      font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
+      font-weight: 500; cursor: pointer;
+    }
+    .clarification-card__next:disabled {
+      background: var(--grey-200); color: var(--grey-400); cursor: not-allowed;
+    }
+
+    /* Feedback Bar */
+    .feedback-bar { display: flex; align-items: center; gap: 6px; }
+    .feedback-btn {
+      background: transparent; border: none; cursor: pointer;
+      padding: 6px; display: flex; align-items: center;
+      border-radius: 4px; color: var(--text-secondary); transition: background 0.15s;
+    }
+    .feedback-btn:hover { background: var(--grey-100); color: var(--text-primary); }
+    .feedback-add-btn {
+      background: var(--base-white); border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm); padding: 4px 12px;
+      font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
+      font-weight: 500; color: var(--text-primary); cursor: pointer;
+    }
+
+    /* Prompt Chips */
+    .prompt-chips-demo { display: flex; flex-wrap: wrap; gap: 8px; }
+    .prompt-chip {
+      padding: 6px 14px;
+      border: 1px solid var(--border-light);
+      border-radius: 9999px;
+      background: var(--base-white);
+      font-size: var(--font-size-sm);
+      font-family: 'Figtree', sans-serif;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .prompt-chip:hover { background: var(--grey-050); }
+
+    /* AI Thinking */
+    @keyframes convergeTop {
+      0%, 100% { transform: translate(-50%, 0); }
+      25% { transform: translate(-50%, 4px); }
+      50% { transform: translate(-50%, 0); }
+      75% { transform: translate(-50%, 4px); }
+    }
+    @keyframes convergeLeft {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(4px, -4px); }
+      50% { transform: translate(0, 0); }
+      75% { transform: translate(4px, -4px); }
+    }
+    @keyframes convergeRight {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(-4px, -4px); }
+      50% { transform: translate(0, 0); }
+      75% { transform: translate(-4px, -4px); }
+    }
+    @keyframes colorChange {
+      0%, 25% { background: var(--grey-400); }
+      50%, 75% { background: var(--grey-950); }
+      100% { background: var(--grey-400); }
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .shimmer-text {
+      background: linear-gradient(90deg, var(--grey-400) 0%, var(--grey-600) 25%, var(--grey-950) 50%, var(--grey-600) 75%, var(--grey-400) 100%);
+      background-size: 200% auto; color: transparent;
+      -webkit-background-clip: text; background-clip: text;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+
+    /* Response labels */
+    .response-label {
+      display: inline-block;
+      background: var(--indigo-100); color: var(--indigo-600);
+      font-size: 11px; font-weight: 400;
+      padding: 4px 12px; border-radius: var(--radius-sm);
+      white-space: nowrap; text-align: center; min-width: 100px;
+    }
+
+    /* Button */
+    .demo-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      background: var(--base-white);
+      font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
+      font-weight: 500; cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    /* Chat message */
+    .chat-bubble-user {
+      align-self: flex-end;
+      background: var(--grey-100);
+      border: 1px solid var(--border-light);
+      padding: 8px 12px;
+      border-radius: 18px 18px 4px 18px;
+      font-size: var(--font-size-sm);
+      max-width: 65%;
+    }
+
+    /* Assist response */
+    .assist-demo { width: 400px; display: flex; flex-direction: column; gap: 12px; }
+    .user-bubble-demo {
+      background: var(--grey-100); border-radius: var(--radius-sm);
+      padding: 12px; font-size: var(--font-size-sm); line-height: 1.5;
+    }
+    .response-row-demo {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .response-text-demo { font-size: var(--font-size-sm); flex: 1; }
+  </style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/playground/main.jsx"></script>
+
+<header class="topbar">
+  <a class="topbar__back" href="index.html">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    Back
+  </a>
+  <span style="color: var(--border-light);">|</span>
+  <span class="topbar__title">Playground</span>
+  <div class="topbar__spacer"></div>
+</header>
+
+<div class="layout">
+
+  <!-- LEFT RAIL -->
+  <nav class="rail">
+    <div class="rail__section">Response Patterns</div>
+    <div class="rail__item active" data-demo="clarification-card" onclick="selectDemo(this)">
+      <span class="rail__item-dot" style="background: var(--indigo-200);"></span>
+      Clarification Card
+    </div>
+    <div class="rail__item" data-demo="assist" onclick="selectDemo(this)">
+      <span class="rail__item-dot" style="background: var(--blue-200);"></span>
+      Assist
+    </div>
+    <div class="rail__item" data-demo="prompt-chips" onclick="selectDemo(this)">
+      <span class="rail__item-dot" style="background: var(--grey-300);"></span>
+      Prompt Chips
+    </div>
+
+    <div class="rail__section" style="margin-top: var(--space-4);">UI Patterns</div>
+    <div class="rail__item" data-demo="feedback-bar" onclick="selectDemo(this)">
+      <span class="rail__item-dot" style="background: var(--green-200);"></span>
+      Feedback Bar
+    </div>
+    <div class="rail__item" data-demo="ai-thinking" onclick="selectDemo(this)">
+      <span class="rail__item-dot" style="background: var(--grey-300);"></span>
+      AI Thinking
+    </div>
+    <div class="rail__item" data-demo="response-label" onclick="selectDemo(this)">
+      <span class="rail__item-dot" style="background: var(--indigo-200);"></span>
+      Response Label
+    </div>
+    <div class="rail__item" data-demo="button" onclick="selectDemo(this)">
+      <span class="rail__item-dot" style="background: var(--grey-300);"></span>
+      Buttons & CTAs
+    </div>
+  </nav>
+
+  <!-- CANVAS -->
+  <div class="canvas" id="canvas"></div>
+
+</div>
+
+<script>
+  const demos = {
+    'clarification-card': () => `
+      <div class="clarification-card">
+        <div class="clarification-card__header">
+          <span class="clarification-card__step">Step 2 of 4</span>
+        </div>
+        <div class="clarification-card__body">
+          <div class="clarification-card__question">What do you want to filter by?</div>
+          <div class="clarification-card__radio-options">
+            ${['Date range','Carrier or service','Order status','Cost threshold'].map(o => `
+              <button class="clarification-card__radio-option" onclick="pgToggleOption(this)">
+                <span class="clarification-card__radio-circle"></span>
+                <span>${o}</span>
+              </button>`).join('')}
+          </div>
+        </div>
+        <div class="clarification-card__footer">
+          <button class="clarification-card__back">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Back
+          </button>
+          <button class="clarification-card__next" id="pg-next" disabled>Next</button>
+        </div>
+      </div>`,
+
+    'assist': () => `
+      <div class="assist-demo">
+        <div class="user-bubble-demo"><span style="color:var(--text-secondary);margin-right:6px;">User:</span>Where do I find my API keys?</div>
+        <div class="response-row-demo">
+          <div class="response-label">Answer</div>
+          <div class="response-text-demo">You can find API keys in Settings.</div>
+        </div>
+        <div class="response-row-demo">
+          <div class="response-label">Guidance</div>
+          <div class="response-text-demo">Settings → Developer → API Keys</div>
+        </div>
+        <div class="response-row-demo">
+          <div class="response-label">Next step</div>
+          <button class="demo-btn">Open API Keys</button>
+        </div>
+      </div>`,
+
+    'prompt-chips': () => `
+      <div style="max-width:480px;text-align:center;">
+        <div style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-5);">
+          Your delayed shipment rate is higher than usual this week, mostly from UPS Ground.
+        </div>
+        <div class="prompt-chips-demo" style="justify-content:center;">
+          ${['Show affected shipments','Compare to last week','Create an automation','Explain why this happened'].map(c => `<button class="prompt-chip">${c}</button>`).join('')}
+        </div>
+      </div>`,
+
+    'feedback-bar': () => `
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-6);">
+        <div style="font-size:var(--font-size-sm);color:var(--text-secondary);">Default state</div>
+        <div class="feedback-bar">
+          <button class="feedback-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+          </button>
+          <button class="feedback-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+          </button>
+        </div>
+        <div style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-top:var(--space-4);">After selection</div>
+        <div class="feedback-bar">
+          <button class="feedback-btn" style="color:var(--text-primary);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+          </button>
+          <button class="feedback-add-btn">Add Feedback</button>
+        </div>
+      </div>`,
+
+    'ai-thinking': () => `
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-8);">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="position:relative;width:12px;height:12px;">
+            <div style="width:4px;height:4px;border-radius:50%;position:absolute;top:0;left:50%;animation:convergeTop 3s ease-in-out infinite,colorChange 3s ease-in-out infinite;"></div>
+            <div style="width:4px;height:4px;border-radius:50%;position:absolute;bottom:0;left:0;animation:convergeLeft 3s ease-in-out infinite,colorChange 3s ease-in-out infinite;"></div>
+            <div style="width:4px;height:4px;border-radius:50%;position:absolute;bottom:0;right:0;animation:convergeRight 3s ease-in-out infinite,colorChange 3s ease-in-out infinite;"></div>
+          </div>
+          <span class="shimmer-text" style="font-size:var(--font-size-md);">Thinking...</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="position:relative;width:12px;height:12px;">
+            <div style="width:4px;height:4px;border-radius:50%;position:absolute;top:0;left:50%;animation:convergeTop 3s ease-in-out infinite,colorChange 3s ease-in-out infinite;"></div>
+            <div style="width:4px;height:4px;border-radius:50%;position:absolute;bottom:0;left:0;animation:convergeLeft 3s ease-in-out infinite,colorChange 3s ease-in-out infinite;"></div>
+            <div style="width:4px;height:4px;border-radius:50%;position:absolute;bottom:0;right:0;animation:convergeRight 3s ease-in-out infinite,colorChange 3s ease-in-out infinite;"></div>
+          </div>
+          <span class="shimmer-text" style="font-size:var(--font-size-md);">Analyzing your request</span>
+        </div>
+      </div>`,
+
+    'response-label': () => `
+      <div style="display:flex;flex-direction:column;gap:var(--space-4);align-items:center;">
+        ${[['Answer','var(--indigo-100)','var(--indigo-600)'],['Guidance','var(--blue-100)','var(--blue-700)'],['Next step','var(--green-100)','var(--green-700)']].map(([l,bg,c]) => `
+          <div style="background:${bg};color:${c};font-size:11px;font-weight:400;padding:4px 12px;border-radius:var(--radius-sm);min-width:100px;text-align:center;">${l}</div>
+        `).join('')}
+      </div>`,
+
+    'button': () => `
+      <div style="display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:center;justify-content:center;">
+        <button class="demo-btn" style="background:var(--grey-950);color:white;border-color:var(--grey-950);">Primary</button>
+        <button class="demo-btn">Default</button>
+        <button class="demo-btn" style="background:var(--grey-100);border-color:var(--grey-200);">Secondary</button>
+        <button class="demo-btn" style="border:none;box-shadow:none;color:var(--text-secondary);">Ghost</button>
+        <button class="demo-btn" disabled style="opacity:0.4;cursor:not-allowed;">Disabled</button>
+      </div>`,
+  };
+
+  function selectDemo(el) {
+    document.querySelectorAll('.rail__item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    const key = el.dataset.demo;
+    document.getElementById('canvas').innerHTML = demos[key]();
+  }
+
+  function pgToggleOption(btn) {
+    btn.classList.toggle('clarification-card__radio-option--selected');
+    const card = btn.closest('.clarification-card');
+    const hasSelection = card.querySelectorAll('.clarification-card__radio-option--selected').length > 0;
+    const next = document.getElementById('pg-next');
+    if (next) { next.disabled = !hasSelection; }
+  }
+
+  // Init
+  document.getElementById('canvas').innerHTML = demos['clarification-card']();
+</script>
 </body>
 </html>

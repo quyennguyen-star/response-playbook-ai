@@ -3,53 +3,81 @@
   border-radius: var(--radius-sm);
   background: var(--base-white);
   overflow: hidden;
-  width: 357px;
-}
-
-.clarification-card__image {
-  width: 100%;
-  line-height: 0;
-}
-
-.clarification-card__image img {
-  width: 100%;
-  height: auto;
-  display: block;
+  max-width: 480px;
 }
 
 .clarification-card__body {
   padding: var(--space-6);
 }
 
-.clarification-card__title {
+.clarification-card__question {
   font-size: var(--font-size-md);
-  font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
-  margin-bottom: var(--space-3);
-}
-
-.clarification-card__desc {
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  line-height: 1.5;
   margin-bottom: var(--space-5);
+  line-height: 1.5;
 }
 
-.clarification-card__btn {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-2) var(--space-5);
+.clarification-card__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.clarification-card__option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--space-3) var(--space-5);
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-sm);
   background: var(--base-white);
   font-size: var(--font-size-sm);
   font-family: 'Figtree', sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--text-primary);
   cursor: pointer;
-  transition: border-color 0.15s;
+  transition: background 0.12s, border-color 0.12s;
 }
 
-.clarification-card__btn:hover {
+.clarification-card__option:hover {
+  background: var(--grey-050);
   border-color: var(--border-medium);
+}
+
+.clarification-card__option--selected {
+  background: var(--grey-050);
+  border-color: var(--indigo-950);
+  border-left-width: 3px;
+  font-weight: 500;
+  color: var(--indigo-950);
+}
+
+.clarification-card__confirm {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-light);
+}
+
+.clarification-card__confirm-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.clarification-card__confirm-btn {
+  background: none;
+  border: none;
+  font-size: var(--font-size-sm);
+  font-family: 'Figtree', sans-serif;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.clarification-card__confirm-btn:hover {
+  color: var(--text-primary);
 }

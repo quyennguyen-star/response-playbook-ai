@@ -135,13 +135,17 @@
 }
 
 .feedback-modal__submit {
-  background: var(--green-700);
+  background: var(--indigo-950);
   color: var(--base-white);
   border: none;
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-sm);
   padding: var(--space-2) var(--space-5);
   font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   font-family: 'Figtree', sans-serif;
+}
+
+.feedback-modal__textarea {
+  border-radius: var(--radius-sm);
 }
