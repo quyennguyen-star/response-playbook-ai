@@ -16,7 +16,16 @@
       "Bash(git add *)",
       "Bash(git commit *)",
       "Bash(git push *)",
-      "Bash(git reset *)"
+      "Bash(git reset *)",
+      "Bash(cp -r img _site/)",
+      "Bash(cp -r storybook-static/* _site/storybook/)",
+      "Bash(gh auth *)",
+      "Bash(curl -s \"https://api.github.com/repos/quyennguyen-star/response-playbook-ai/actions/runs?per_page=1\")",
+      "Bash(curl -s \"https://quyennguyen-star.github.io/response-playbook-ai/storybook/\")",
+      "Bash(curl -s \"https://api.github.com/repos/quyennguyen-star/response-playbook-ai/actions/runs/26970997122/jobs\")",
+      "Bash(curl -s \"https://quyennguyen-star.github.io/response-playbook-ai/\")",
+      "Bash(curl -I \"https://quyennguyen-star.github.io/response-playbook-ai/storybook/index.html\")",
+      "Bash(npm uninstall *)"
     ]
   },
   "enableAllProjectMcpServers": true,

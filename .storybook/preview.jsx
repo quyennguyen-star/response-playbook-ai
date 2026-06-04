@@ -1,7 +1,4 @@
 import '../tokens.css';
-import { initialize, mswLoader } from 'msw-storybook-addon';
-
-initialize({ onUnhandledRequest: 'bypass' });
 
 /** @type { import('@storybook/react-vite').Preview } */
 const preview = {
@@ -17,7 +14,6 @@ const preview = {
       test: "todo"
     }
   },
-  loaders: [mswLoader],
 };
 
 export default preview;
