@@ -26,7 +26,11 @@
       "Bash(curl -s \"https://quyennguyen-star.github.io/response-playbook-ai/\")",
       "Bash(curl -I \"https://quyennguyen-star.github.io/response-playbook-ai/storybook/index.html\")",
       "Bash(npm uninstall *)",
-      "Bash(npm list *)"
+      "Bash(npm list *)",
+      "Bash(npx vite *)",
+      "Bash(gh repo *)",
+      "WebFetch(domain:mantine.dev)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   },
   "enableAllProjectMcpServers": true,

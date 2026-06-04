@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build -o storybook-static",
-    "build-components": "vite build --config vite.config.build.js"
+    "build-components": "vite build --config vite.config.build.js",
+    "build-playground": "vite build --config vite.config.playground.js --base /response-playbook-ai/playground/"
   },
   "repository": {
     "type": "git",
@@ -40,5 +41,20 @@
     "storybook": "^10.4.2",
     "vite": "^8.0.16",
     "vitest": "^4.1.8"
+  },
+  "dependencies": {
+    "@mantine/carousel": "^9.3.0",
+    "@mantine/charts": "^9.3.0",
+    "@mantine/code-highlight": "^9.3.0",
+    "@mantine/core": "^9.3.0",
+    "@mantine/dates": "^9.3.0",
+    "@mantine/dropzone": "^9.3.0",
+    "@mantine/form": "^9.3.0",
+    "@mantine/hooks": "^9.3.0",
+    "@mantine/modals": "^9.3.0",
+    "@mantine/notifications": "^9.3.0",
+    "@mantine/spotlight": "^9.3.0",
+    "embla-carousel-react": "^8.6.0",
+    "recharts": "^3.8.1"
   }
 }
