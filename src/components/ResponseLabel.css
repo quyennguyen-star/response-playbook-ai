@@ -1,0 +1,30 @@
+.response-label {
+  display: inline-block;
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  text-align: center;
+  min-width: 100px;
+}
+
+.response-label--default {
+  background: var(--indigo-100);
+  color: var(--indigo-600);
+}
+
+.response-label--answer {
+  background: var(--indigo-100);
+  color: var(--indigo-600);
+}
+
+.response-label--guidance {
+  background: var(--blue-100);
+  color: var(--blue-700);
+}
+
+.response-label--action {
+  background: var(--green-100);
+  color: var(--green-700);
+}

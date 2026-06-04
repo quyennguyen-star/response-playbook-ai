@@ -5,7 +5,22 @@
       "Bash(gh api *)",
       "WebFetch(domain:www.figma.com)",
       "WebFetch(domain:www.prompt-kit.com)",
-      "Bash(sips *)"
+      "Bash(sips *)",
+      "Bash(npm init *)",
+      "Bash(npx storybook@latest *)",
+      "Bash(npm install *)",
+      "Bash(npx storybook *)",
+      "Bash(npx msw *)",
+      "Bash(npx vitest *)",
+      "Bash(npm run *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git reset *)"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "figma"
+  ]
 }

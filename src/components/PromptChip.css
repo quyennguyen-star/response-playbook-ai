@@ -1,0 +1,18 @@
+.prompt-chip {
+  display: inline-block;
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid var(--border-light);
+  border-radius: 9999px;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  background: var(--base-white);
+  transition: background 0.15s;
+  max-width: fit-content;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.prompt-chip:hover {
+  background: var(--grey-050);
+}
