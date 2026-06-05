@@ -30,13 +30,30 @@
     body {
       font-family: 'Figtree', sans-serif; background: var(--base-white);
       color: var(--text-primary); font-size: var(--font-size-md);
-      line-height: 1.5; display: flex;
+      line-height: 1.5; display: flex; flex-direction: column;
     }
+
+    /* TOP BAR */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; height: 64px; z-index: 200;
+      background: var(--base-white);
+      display: flex; align-items: center; gap: var(--space-1);
+      padding: 0 24px;
+    }
+    .topbar__logo { height: 28px; width: auto; margin-right: var(--space-5); display: block; }
+    .topbar__link {
+      font-size: var(--font-size-md); font-weight: 400;
+      color: var(--text-secondary); text-decoration: none;
+      padding: var(--space-2) var(--space-5); border-radius: var(--radius-xs);
+      transition: color 0.12s, background 0.12s; cursor: pointer; white-space: nowrap;
+    }
+    .topbar__link:hover { color: var(--text-primary); background: var(--grey-100); }
+    .topbar__link.active { color: var(--text-primary); font-weight: 500; }
 
     /* SIDEBAR */
     .sidebar {
-      width: var(--sidebar-width); min-height: 100vh; background: var(--base-white);
-      position: fixed; top: 0; left: 0; display: flex; flex-direction: column;
+      width: var(--sidebar-width); height: calc(100vh - 64px); background: var(--base-white);
+      position: fixed; top: 64px; left: 0; display: flex; flex-direction: column;
       z-index: 100; padding: var(--space-5);
     }
     .sidebar-inner {
@@ -48,7 +65,20 @@
       padding: var(--space-5);
     }
     .sidebar-logo-text { font-size: var(--font-size-md); font-weight: 600; }
-    .sidebar-nav { padding: var(--space-5) 0; flex: 1; overflow-y: auto; }
+    .sidebar-nav { padding: var(--space-4) 0; flex: 1; overflow-y: auto; }
+    .nav-section-label {
+      font-size: var(--font-size-xs); font-weight: 600;
+      color: var(--text-secondary); text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: var(--space-5) var(--space-5) var(--space-2);
+      margin-top: var(--space-2);
+    }
+    .nav-section-label:first-child { margin-top: 0; }
+    .nav-item--parent { cursor: pointer; }
+    .nav-children { display: none; margin-left: var(--space-8); border-left: 1px solid var(--grey-200); padding-left: var(--space-1); padding-bottom: var(--space-1); }
+    .nav-children.open { display: block; }
+    .nav-item--child { font-size: var(--font-size-sm); color: var(--text-secondary); }
+    .nav-item--child.active { color: var(--indigo-950); font-weight: 500; }
     
     .nav-item {
       display: block;
@@ -80,7 +110,7 @@
     .nav-group.open { display: block; }
 
     /* MAIN */
-    .main { margin-left: var(--sidebar-width); flex: 1; display: flex; justify-content: center; }
+    .main { margin-left: var(--sidebar-width); margin-top: 64px; flex: 1; display: flex; justify-content: center; overflow-y: auto; height: calc(100vh - 64px); }
     .page { display: none; padding: var(--space-8); max-width: 1088px; width: 100%; }
     .page.active { display: block; }
     .page-title { font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-2); }
@@ -229,7 +259,7 @@
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 3px;
+      width: 4px;
       height: 55%;
       background: var(--grey-950);
       border-radius: 9999px;
@@ -429,7 +459,7 @@
     .clarification-card__back:hover { color: var(--text-primary); }
     .clarification-card__next {
       background: var(--indigo-950); color: var(--base-white);
-      border: none; border-radius: var(--radius-sm);
+      border: none; border-radius: var(--radius-xs);
       height: 32px; padding: 0 var(--space-6);
       font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
       font-weight: 500; cursor: pointer;
@@ -437,7 +467,7 @@
     }
     .clarification-card__next:hover:not(:disabled) { opacity: 0.88; }
     .clarification-card__next:disabled {
-      background: var(--grey-200); color: var(--grey-400); cursor: not-allowed;
+      background: var(--grey-100); color: var(--grey-500); border-color: var(--grey-200); cursor: not-allowed; box-shadow: none;
     }
 
     .preview-box {
@@ -449,6 +479,19 @@
       justify-content: center;
       align-items: center;
       min-height: 300px;
+    }
+
+    /* TYPING TEXT */
+    .typing-cursor {
+      display: inline-block;
+      font-size: var(--font-size-md);
+      color: var(--text-primary);
+      animation: blink 0.8s step-start infinite;
+      margin-left: 1px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
 
     .feedback-btn:hover {
@@ -477,6 +520,14 @@
       transition: all 0.15s;
     }
     .btn:hover { border-color: var(--border-medium); }
+    .btn:disabled, .btn[disabled] {
+      background: var(--grey-100);
+      color: var(--grey-500);
+      border-color: var(--grey-200);
+      cursor: not-allowed;
+      box-shadow: none;
+      opacity: 1;
+    }
     .btn--filled { background: var(--indigo-950); color: var(--base-white); border-color: var(--indigo-950); }
     .btn--filled:hover { background: var(--indigo-900); border-color: var(--indigo-900); }
 
@@ -921,123 +972,69 @@
 </head>
 <body>
 
+<header class="topbar">
+  <img src="img/Logos/Askmono.svg" alt="Logo" class="topbar__logo" />
+  <a class="topbar__link active" data-cat="principles" onclick="switchCat('principles'); return false;" href="#">Principles</a>
+  <a class="topbar__link" data-cat="response-patterns" onclick="switchCat('response-patterns'); return false;" href="#">Response Patterns</a>
+  <a class="topbar__link" data-cat="ui-patterns" onclick="switchCat('ui-patterns'); return false;" href="#">UI Patterns</a>
+</header>
+
 <nav class="sidebar">
   <div class="sidebar-inner">
-    <div class="sidebar-logo">
-      <img src="img/Logos/Askmono.svg" alt="Logo" style="height: 24px; width: auto;" />
-    </div>
-    <div class="sidebar-nav">
-      <div class="nav-item" data-page="principles">Principles</div>
-      <div class="nav-item parent" data-page="response-patterns" data-group="response-patterns">Response Patterns</div>
-      <div class="nav-group" id="group-response-patterns">
-        <div class="nav-item" data-page="assist">Assist</div>
-        <div class="nav-item" data-page="insight">Insight</div>
-        <div class="nav-item" data-page="configure">Configure</div>
-      </div>
-      <div class="nav-item parent" data-page="guardrails" data-group="guardrails">Guardrails</div>
-      <div class="nav-group" id="group-guardrails">
-        <div class="nav-item" data-page="clarification">Clarification</div>
-        <div class="nav-item" data-page="capability-boundary">Capability Boundary</div>
-        <div class="nav-item" data-page="escalation">Escalation</div>
-      </div>
-      <div class="nav-item parent" data-page="ui-patterns" data-group="ui-patterns">UI Patterns</div>
-      <div class="nav-group" id="group-ui-patterns">
-        <div class="nav-item" data-page="chain-of-thought">Chain of Thought</div>
-        <div class="nav-item" data-page="feedback-bar">Feedback Bar</div>
-        <div class="nav-item" data-page="ai-thinking">AI Thinking</div>
-        <div class="nav-item" data-page="input-assisted">Generated Content</div>
-        <div class="nav-item" data-page="prompt-chips">Prompt Chips</div>
-        <div class="nav-item" data-page="buttons-ctas">Buttons & CTAs</div>
-        <div class="nav-item" data-page="clarification-card">Clarification Card</div>
-      </div>
-    </div>
+    <div class="sidebar-nav" id="sidebar-nav"></div>
   </div>
 </nav>
 
 <main class="main">
 
   <!-- PRINCIPALS -->
-  <div class="page active" id="page-principles">
-    <img src="img/Image.png" alt="Principles Header" class="principles-hero-image" />
-    <div class="accordion">
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <span>1. Lead with value</span>
-          <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-          </svg>
-        </div>
-        <div class="accordion-body">
-          <p>Start with the most useful thing: the answer, insight, recommendation, confirmation, or limitation.</p>
-          <p>Ask: What does the user need to know first?</p>
-        </div>
+  <div class="page active" id="page-principles" style="padding:0;">
+    <!-- Header -->
+    <div style="text-align:center; padding: var(--space-12) var(--space-8) var(--space-10); max-width: 640px; margin: 0 auto;">
+      <h1 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-4);">Principles</h1>
+      <p style="font-size: var(--font-size-md); color: var(--text-secondary); line-height: 1.6;">Use these principles to make responses clear, useful, and consistent across patterns.</p>
+    </div>
+
+    <!-- 4-column principle cards -->
+    <div style="display: grid; grid-template-columns: repeat(4,1fr); gap: var(--space-4); padding: 0 var(--space-8); margin-bottom: var(--space-8); max-width: 1088px; margin-left: auto; margin-right: auto;">
+      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6); background: var(--base-white);">
+        <div style="font-size: var(--font-size-xs); color: var(--text-primary); font-weight: 600; background: var(--grey-100); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: var(--space-4);">01</div>
+        <div style="font-size: var(--font-size-md); font-weight: 600; margin-bottom: var(--space-4);">Lead with value</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6;">Open with the most useful part of the response before adding context or detail.</div>
       </div>
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <span>2. Make the next step clear</span>
-          <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-          </svg>
-        </div>
-        <div class="accordion-body">
-          <p>Every response should help the user continue with a path, CTA, review step, follow-up, or support route.</p>
-          <p>Ask: What should the user do next?</p>
-        </div>
+      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6); background: var(--base-white);">
+        <div style="font-size: var(--font-size-xs); color: var(--text-primary); font-weight: 600; background: var(--grey-100); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: var(--space-4);">02</div>
+        <div style="font-size: var(--font-size-md); font-weight: 600; margin-bottom: var(--space-4);">Make the next step clear</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6;">Every response should help the user continue with a path, CTA, review step, follow-up, or support route.</div>
       </div>
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <span>3. Keep the user in control</span>
-          <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-          </svg>
-        </div>
-        <div class="accordion-body">
-          <p>When AI prepares or applies something, the user should understand what will happen and be able to review before changes are made.</p>
-          <p>Ask: Does the user need to review or confirm this?</p>
-        </div>
+      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6); background: var(--base-white);">
+        <div style="font-size: var(--font-size-xs); color: var(--text-primary); font-weight: 600; background: var(--grey-100); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: var(--space-4);">03</div>
+        <div style="font-size: var(--font-size-md); font-weight: 600; margin-bottom: var(--space-4);">Controls in the workflow</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6;">AI can guide, draft, or recommend, but users should review and act in the product workflow where the change belongs.</div>
       </div>
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <span>4. Build trust when it matters</span>
-          <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-          </svg>
-        </div>
-        <div class="accordion-body">
-          <p>Use data, sources, context, previews, or fallback when the response affects decisions, cost, settings, support, or account-specific outcomes.</p>
-          <p>Ask: What does the user need to trust this?</p>
-        </div>
+      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6); background: var(--base-white);">
+        <div style="font-size: var(--font-size-xs); color: var(--text-primary); font-weight: 600; background: var(--grey-100); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: var(--space-4);">04</div>
+        <div style="font-size: var(--font-size-md); font-weight: 600; margin-bottom: var(--space-4);">Trust when it matters</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6;">Use data, sources, previews, or fallback paths when the response affects decisions, settings, support, or account outcomes.</div>
       </div>
     </div>
-    <div class="common-response-parts">
-      <div class="common-response-header">
-        <div class="section-title">Common Response Parts</div>
-        <p class="section-subtitle">Not every response needs every part. The structure should match the user's intent and risk level.</p>
-      </div>
-      <div class="common-response-cards">
-        <div class="response-part-card">
-          <div class="response-part-title">Main Message</div>
-          <div class="response-part-desc">The primary answer, insight, confirmation, or limitation.</div>
+
+    <!-- Common Response Parts -->
+    <div style="background: var(--grey-050); padding: 80px var(--space-8) 48px;">
+      <div style="max-width: 1088px; margin: 0 auto;">
+        <!-- Top: centered heading -->
+        <div style="text-align: center; margin-bottom: var(--space-10);">
+          <h2 style="font-size: 24px; font-weight: var(--font-weight-semibold); margin-bottom: var(--space-4); line-height: 1.2;">Common Response Parts</h2>
+          <p style="font-size: var(--font-size-md); color: var(--text-secondary); line-height: 1.6; white-space: nowrap; margin: 0 auto;">Not every response needs every part. The structure should match the user's intent and risk level.</p>
         </div>
-        <div class="response-part-card">
-          <div class="response-part-title">Guidance</div>
-          <div class="response-part-desc">Path, steps, instructions, or supporting detail.</div>
-        </div>
-        <div class="response-part-card">
-          <div class="response-part-title">Supporting source / data</div>
-          <div class="response-part-desc">Evidence that helps users trust the response.</div>
-        </div>
-        <div class="response-part-card">
-          <div class="response-part-title">Action</div>
-          <div class="response-part-desc">CTA, deep link, review step, or next move.</div>
-        </div>
-        <div class="response-part-card">
-          <div class="response-part-title">Fallback / Escalation</div>
-          <div class="response-part-desc">Safe path when AI cannot complete or resolve the request.</div>
-        </div>
-        <div class="response-part-card">
-          <div class="response-part-title">Feedback</div>
-          <div class="response-part-desc">User rating or response-quality signal.</div>
+        <!-- SVG cards -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-3); max-width: 600px; margin: 0 auto; padding: 4px 8px 16px;">
+          <img src="img/common-parts-main-message.svg" alt="Main Message" style="width:100%;display:block;" />
+          <img src="img/common-parts-guidance.svg" alt="Guidance" style="width:100%;display:block;" />
+          <img src="img/common-parts-source.svg" alt="Supporting source / data" style="width:100%;display:block;" />
+          <img src="img/common-parts-action.svg" alt="Action" style="width:100%;display:block;" />
+          <img src="img/common-parts-fallback.svg" alt="Fallback / Escalation" style="width:100%;display:block;" />
+          <img src="img/common-parts-feedback.svg" alt="Feedback" style="width:100%;display:block;" />
         </div>
       </div>
     </div>
@@ -1985,6 +1982,38 @@
   </div>
 
 
+  <!-- TYPING TEXT -->
+  <div class="page" id="page-typing-text">
+    <h1 class="page-title">Typing Text</h1>
+    <p class="page-subtitle">Animates AI-generated text as it streams character by character, giving users a sense of the response being composed in real time.</p>
+
+    <div class="preview-box">
+      <div style="max-width: 520px; width: 100%;">
+        <div style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-5);">User:</div>
+        <div style="background: var(--grey-100); border-radius: var(--radius-sm); padding: var(--space-4) var(--space-5); font-size: var(--font-size-md); margin-bottom: var(--space-6);">Show me my top shipping cost this month.</div>
+        <div style="font-size: var(--font-size-md); line-height: 1.7;" id="typing-text-output"></div>
+        <div style="margin-top: var(--space-6); display: flex; gap: var(--space-3);">
+          <button class="btn" onclick="restartTyping()">Replay</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">When to use</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.8; margin-bottom: var(--space-10);">
+      <li>When streaming a response token by token from the AI model</li>
+      <li>To signal that the AI is actively generating — not loading</li>
+      <li>For short to medium-length responses where the effect feels natural</li>
+    </ul>
+
+    <div class="section-title">Guidelines</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.8; margin-bottom: var(--space-10);">
+      <li>Keep the cursor blinking to indicate active generation</li>
+      <li>Do not use for tables, structured data, or very long responses</li>
+      <li>Remove the cursor immediately when the response completes</li>
+      <li>Pair with a skeleton or spinner for the initial loading state before text begins</li>
+    </ul>
+  </div>
+
 </main>
 
 <script>
@@ -2273,13 +2302,84 @@
     `;
   }
 
-  const groupMap = {
-    'assist': 'response-patterns', 'insight': 'response-patterns',
-    'configure': 'response-patterns', 'response-patterns': 'response-patterns',
-    'clarification': 'guardrails', 'capability-boundary': 'guardrails',
-    'escalation': 'guardrails', 'guardrails': 'guardrails',
-    'chain-of-thought': 'ui-patterns', 'feedback-bar': 'ui-patterns', 'ai-thinking': 'ui-patterns', 'input-assisted': 'ui-patterns', 'prompt-chips': 'ui-patterns', 'buttons-ctas': 'ui-patterns', 'clarification-card': 'ui-patterns', 'ui-patterns': 'ui-patterns'
+  // ── Sidebar config per category ──────────────────────────────
+  const sidebarConfig = {
+    'principles': [],
+    'response-patterns': [
+      { page: 'response-patterns', label: 'Overview' },
+      { page: 'assist',    label: 'Assist' },
+      { page: 'insight',   label: 'Insight' },
+      { page: 'configure', label: 'Configure' },
+      { page: 'guardrails', label: 'Guardrails', children: [
+        { page: 'clarification',       label: 'Clarification' },
+        { page: 'capability-boundary', label: 'Capability Boundary' },
+        { page: 'escalation',          label: 'Escalation' },
+      ]},
+    ],
+    'guardrails': [],
+    'ui-patterns': [
+      { page: 'chain-of-thought',   label: 'Chain of Thought' },
+      { page: 'feedback-bar',       label: 'Feedback Bar' },
+      { page: 'ai-thinking',        label: 'AI Thinking' },
+      { page: 'input-assisted',     label: 'Generated Content' },
+      { page: 'prompt-chips',       label: 'Prompt Chips' },
+      { page: 'buttons-ctas',       label: 'Buttons & CTAs' },
+      { page: 'clarification-card', label: 'Clarification Card' },
+      { page: 'typing-text',        label: 'Typing Text' },
+    ],
   };
+
+  // Map every page back to its category
+  const pageToCategory = {
+    'principles': 'principles',
+    'response-patterns': 'response-patterns',
+    'guardrails': 'response-patterns',
+    'ui-patterns': 'ui-patterns',
+  };
+  Object.entries(sidebarConfig).forEach(([cat, items]) => {
+    items.forEach(item => {
+      pageToCategory[item.page] = cat;
+      if (item.children) item.children.forEach(c => { pageToCategory[c.page] = cat; });
+    });
+  });
+
+  let currentCat = 'principles';
+
+  function renderSidebar(cat, activePage) {
+    const items = sidebarConfig[cat] || [];
+    const isChildActive = (item) => item.children && item.children.some(c => c.page === activePage);
+    document.getElementById('sidebar-nav').innerHTML = items.map(item => {
+      if (!item.children) {
+        return `<div class="nav-item${item.page === activePage ? ' active' : ''}" data-page="${item.page}" onclick="showPage('${item.page}')">${item.label}</div>`;
+      }
+      const open = item.page === activePage || isChildActive(item);
+      const children = item.children.map(c =>
+        `<div class="nav-item nav-item--child${c.page === activePage ? ' active' : ''}" data-page="${c.page}" onclick="showPage('${c.page}')">${c.label}</div>`
+      ).join('');
+      return `
+        <div class="nav-item nav-item--parent${item.page === activePage ? ' active' : ''}" data-page="${item.page}" onclick="toggleNavParent(this,'${item.page}')">
+          ${item.label}
+        </div>
+        <div class="nav-children${open ? ' open' : ''}">${children}</div>`;
+    }).join('');
+  }
+
+  function switchCat(cat) {
+    currentCat = cat;
+    document.querySelectorAll('.topbar__link[data-cat]').forEach(l =>
+      l.classList.toggle('active', l.dataset.cat === cat));
+    const defaultPage = sidebarConfig[cat]?.[0]?.page || cat;
+    renderSidebar(cat, defaultPage);
+    showPage(defaultPage);
+  }
+
+  function toggleNavParent(el, pageId) {
+    const children = el.nextElementSibling;
+    children.classList.toggle('open', !children.classList.contains('open'));
+    showPage(pageId);
+  }
+
+  const groupMap = {};
 
   document.querySelectorAll('[data-insight]').forEach(item => {
     item.addEventListener('click', () => {
@@ -2290,22 +2390,26 @@
   });
 
   function showPage(pageId, pushState = true) {
+    // Sync topbar + sidebar
+    const cat = pageToCategory[pageId] || currentCat;
+    currentCat = cat;
+    document.querySelectorAll('.topbar__link[data-cat]').forEach(l =>
+      l.classList.toggle('active', l.dataset.cat === cat));
+    renderSidebar(cat, pageId);
+
+    // Hide sidebar and shift main for Principles (no sub-nav)
+    const hasSidebar = (sidebarConfig[cat] || []).length > 0;
+    document.querySelector('.sidebar').style.display = hasSidebar ? '' : 'none';
+    document.querySelector('.main').style.marginLeft = hasSidebar ? '' : '0';
+
+    // Show page
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('open'));
     const page = document.getElementById('page-' + pageId);
     if (page) page.classList.add('active');
-    document.querySelectorAll(`[data-page="${pageId}"]`).forEach(n => n.classList.add('active'));
-    const group = groupMap[pageId];
-    if (group) {
-      const groupEl = document.getElementById('group-' + group);
-      if (groupEl) groupEl.classList.add('open');
-      if (pageId === group) {
-        document.querySelectorAll(`[data-group="${group}"]`).forEach(n => n.classList.add('active'));
-      }
-    }
+
     if (pushState) history.pushState({ page: pageId }, '', '#' + pageId);
     resetPageInteractions();
+    if (pageId === 'typing-text') setTimeout(runTyping, 200);
   }
 
   window.addEventListener('popstate', (e) => {
@@ -2612,6 +2716,33 @@
   renderCBPreview(0);
   renderInsightPreview(0);
   renderEscalationPreview(0);
+
+  // ── TYPING TEXT ─────────────────────────────────────────────
+  let _typingTimer = null;
+  const _typingFull = "Your highest shipping cost this month was Priority Mail at $142.00, accounting for 34% of total shipping spend.\n\nTop carriers by cost:\n1. USPS Priority Mail — $142.00\n2. FedEx Ground — $98.50\n3. UPS Ground — $74.20";
+
+  function runTyping() {
+    const el = document.getElementById('typing-text-output');
+    if (!el) return;
+    el.innerHTML = '';
+    clearInterval(_typingTimer);
+    // Split into tokens: words and newlines
+    const tokens = _typingFull.split(/(\n)/);
+    const words = [];
+    tokens.forEach(t => t === '\n' ? words.push('\n') : t.split(' ').forEach((w, i, arr) => { words.push(w); if (i < arr.length - 1) words.push(' '); }));
+    let i = 0;
+    _typingTimer = setInterval(() => {
+      if (i < words.length) {
+        if (words[i] === '\n') el.innerHTML += '<br>';
+        else el.innerHTML += words[i];
+        i++;
+      } else {
+        clearInterval(_typingTimer);
+      }
+    }, 30);
+  }
+
+  function restartTyping() { runTyping(); }
 
   const initialPage = location.hash.slice(1) || 'principles';
   showPage(initialPage, false);

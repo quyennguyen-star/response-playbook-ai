@@ -36,7 +36,15 @@
       "Bash(sed -n '33,692p' \"/Users/quyen.nguyen/Desktop/AI Playbook/surface_interaction.html\")",
       "Read(//tmp/**)",
       "Bash(git checkout *)",
-      "Bash(git stash *)"
+      "Bash(git stash *)",
+      "Bash(git revert *)",
+      "Skill(update-config)",
+      "Bash(code *)",
+      "Bash(rsvg-convert \"/Users/quyen.nguyen/Desktop/AI Playbook/reference images/Hero.svg\" -o /tmp/hero_preview.png)",
+      "Bash(qlmanage -t -s 800 -o /tmp \"/Users/quyen.nguyen/Desktop/AI Playbook/reference images/Hero.svg\")",
+      "Bash(qlmanage -t -s 500 -o /tmp \"/Users/quyen.nguyen/Desktop/AI Playbook/reference images/common parts/pro-blocks/marketing-ui/app-integration/Container.svg\")",
+      "Bash(sort -t'\"' -k2 -rn)",
+      "Bash(qlmanage -t -s 400 -o /tmp \"/Users/quyen.nguyen/Desktop/AI Playbook/reference images/common parts/pro-blocks/marketing-ui/app-integration/Container-4.svg\")"
     ]
   },
   "enableAllProjectMcpServers": true,
