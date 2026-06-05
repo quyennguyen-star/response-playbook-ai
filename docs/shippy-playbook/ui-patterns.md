@@ -79,7 +79,7 @@ Action buttons that navigate users to specific pages or trigger system actions.
 
 ---
 
-## Clarification Card
+## Refinement Card
 
 A card component that presents structured choices when the AI needs the user to decide before moving forward.
 

@@ -54,7 +54,7 @@
     .sidebar {
       width: var(--sidebar-width); height: calc(100vh - 64px); background: var(--base-white);
       position: fixed; top: 64px; left: 0; display: flex; flex-direction: column;
-      z-index: 100; padding: var(--space-5);
+      z-index: 100; padding: var(--space-6);
     }
     .sidebar-inner {
       border-radius: var(--radius-sm);
@@ -62,7 +62,7 @@
     }
     .sidebar-logo {
       display: flex; align-items: center; gap: var(--space-4);
-      padding: var(--space-5);
+      padding: var(--space-6);
     }
     .sidebar-logo-text { font-size: var(--font-size-md); font-weight: 600; }
     .sidebar-nav { padding: var(--space-4) 0; flex: 1; overflow-y: auto; }
@@ -224,6 +224,33 @@
       border: 1px solid var(--border-light);
       overflow: hidden;
     }
+    .explorer-shell {
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: var(--space-10);
+    }
+    .explorer-titlebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-6);
+      height: 48px;
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--border-light);
+      background: var(--base-white);
+    }
+    .explorer-titlebar__title {
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-primary);
+      flex: 1;
+    }
+    .explorer-body {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      overflow: hidden;
+    }
     .examples-list,
     .clarification-left {
       display: flex;
@@ -238,7 +265,7 @@
     .example-item,
     .clarification-item {
       position: relative;
-      padding: var(--space-4) var(--space-5);
+      padding: 12px;
       min-height: 40px;
       display: flex;
       align-items: center;
@@ -336,46 +363,46 @@
     }
 
     /* CLARIFICATION CARD */
-    .clarification-card {
+    .refinement-card {
       background: var(--base-white);
       border-radius: var(--radius-sm);
       box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06);
       overflow: hidden;
       width: 340px;
     }
-    .clarification-card__header {
-      padding: var(--space-5) var(--space-5) var(--space-5);
+    .refinement-card__header {
+      padding: var(--space-6);
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: var(--space-3);
     }
-    .clarification-card__header-left { flex: 1; }
-    .clarification-card__close {
-      background: var(--grey-050); border: none; cursor: pointer;
+    .refinement-card__header-left { flex: 1; }
+    .refinement-card__close {
+      background: transparent; border: none; cursor: pointer;
       color: var(--text-secondary); padding: var(--space-2); border-radius: var(--radius-xs);
       display: flex; align-items: center; flex-shrink: 0;
       transition: background 0.12s;
     }
-    .clarification-card__close:hover { background: var(--grey-100); color: var(--text-primary); }
-    .clarification-card__step {
+    .refinement-card__close:hover { background: var(--grey-100); color: var(--text-primary); }
+    .refinement-card__step {
       font-size: var(--font-size-xs);
       color: var(--text-secondary);
       font-weight: 400;
       margin-bottom: var(--space-2);
     }
-    .clarification-card__question {
+    .refinement-card__question {
       font-size: var(--font-size-md);
       font-weight: var(--font-weight-semibold);
       color: var(--text-primary);
       line-height: 1.4;
     }
-    .clarification-card__hint {
+    .refinement-card__hint {
       font-size: var(--font-size-xs);
       color: var(--text-secondary);
       margin-top: var(--space-1);
     }
-    .clarification-card__body { padding: 0 var(--space-5); }
+    .refinement-card__body { padding: 0 var(--space-6) var(--space-6); }
     /* Option row — shared */
     .cc-option {
       display: flex; align-items: center; gap: var(--space-3);
@@ -421,7 +448,7 @@
       display: block;
     }
     /* Ask row input */
-    .cc-ask { padding: var(--space-3) 0 0; }
+    .cc-ask { padding: var(--space-3) 0 0; margin: 0; }
     .cc-ask__inner {
       display: flex; align-items: center;
       height: 32px; padding: 0 var(--space-3);
@@ -451,19 +478,19 @@
     .cc-dot--future { width: 6px; }
     .cc-step-count { font-size: var(--font-size-xs); color: var(--grey-400); font-weight: 500; }
     /* Footer */
-    .clarification-card__footer {
+    .refinement-card__footer {
       display: flex; align-items: center; justify-content: space-between;
-      padding: var(--space-5);
+      padding: 0 var(--space-6) var(--space-6);
     }
-    .clarification-card__back {
+    .refinement-card__back {
       display: flex; align-items: center; gap: var(--space-2);
       background: none; border: none;
       height: 32px; padding: 0;
       font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
       color: var(--text-secondary); cursor: pointer;
     }
-    .clarification-card__back:hover { color: var(--text-primary); }
-    .clarification-card__next {
+    .refinement-card__back:hover { color: var(--text-primary); }
+    .refinement-card__next {
       background: var(--grey-950); color: var(--base-white);
       border: none; border-radius: var(--radius-xs);
       height: 32px; padding: 0 var(--space-6);
@@ -471,8 +498,8 @@
       font-weight: 500; cursor: pointer;
       transition: opacity 0.12s;
     }
-    .clarification-card__next:hover:not(:disabled) { background: #333; }
-    .clarification-card__next:disabled {
+    .refinement-card__next:hover:not(:disabled) { background: #333; }
+    .refinement-card__next:disabled {
       background: var(--border-light); color: var(--grey-400); cursor: not-allowed;
     }
 
@@ -1260,8 +1287,8 @@
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Link, CTA, follow-up, fallback, or escalation.</div>
       </div>
     </div>
-    <div class="section-title">Examples</div>
-    <div class="examples-layout">
+    <div class="explorer-shell">
+      <div class="explorer-body">
       <div class="examples-list" id="assist-examples-list">
         <div class="example-item active" data-example="0">
           <div class="example-item-title">Find / navigate</div>
@@ -1288,7 +1315,7 @@
           <div class="example-item-desc">"Can you fix this carrier outage?"</div>
         </div>
       </div>
-      <div class="example-preview">
+      <div class="example-preview" style="min-height:420px;">
         <div class="user-bubble">
           <span>User:</span>
           <strong id="assist-user-query">Where do I find my API keys?</strong>
@@ -1305,6 +1332,7 @@
           <div class="response-label">Next step</div>
           <button class="btn" id="assist-nextstep">Open API Keys</button>
         </div>
+      </div>
       </div>
     </div>
 
@@ -1369,8 +1397,9 @@
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">A CTA, deep link, review action, or follow-up.</div>
       </div>
     </div>
-    <div class="section-title">Examples</div>
-    <div class="examples-layout">
+    <div class="explorer-shell">
+
+      <div class="explorer-body">
       <div class="examples-list" id="insight-examples-list">
         <div class="example-item active" data-insight="0">
           <div class="example-item-title">Savings Insight</div>
@@ -1383,6 +1412,7 @@
         </div>
       </div>
       <div class="example-preview" id="insight-preview"></div>
+      </div>
     </div>
   </div>
 
@@ -1404,8 +1434,9 @@
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Manual configuration instructions, Follow-up options, Support details.</div>
       </div>
     </div>
-    <div class="section-title">Examples</div>
-    <div class="examples-layout">
+    <div class="explorer-shell">
+
+      <div class="explorer-body">
       <div class="examples-list" id="configure-examples-list">
         <div class="example-item active" data-configure="0">
           <div class="example-item-title">Create/Generate</div>
@@ -1415,6 +1446,7 @@
         </div>
       </div>
       <div class="example-preview" id="configure-preview"></div>
+      </div>
     </div>
   </div>
 
@@ -1441,9 +1473,9 @@
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Offer options</div>
       </div>
     </div>
-    <div class="section-title">Examples</div>
+    <div class="explorer-shell">
 
-    <div class="examples-layout">
+      <div class="explorer-body">
       <div class="examples-list" id="clarification-examples-list">
         <div class="example-item active" data-clarify="0">
           <div class="example-item-title">Improve shipping costs</div>
@@ -1463,6 +1495,7 @@
       </div>
       <div class="example-preview">
         <div id="clarification-preview"></div>
+      </div>
       </div>
     </div>
   </div>
@@ -1490,8 +1523,9 @@
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Offer next step</div>
       </div>
     </div>
-    <div class="section-title">Examples</div>
-    <div class="examples-layout">
+    <div class="explorer-shell">
+
+      <div class="explorer-body">
       <div class="examples-list" id="cb-examples-list">
         <div class="example-item active" data-cb="0">
           <div class="example-item-title">Limitation message</div>
@@ -1504,6 +1538,7 @@
         </div>
       </div>
       <div class="example-preview" id="cb-preview"></div>
+      </div>
     </div>
   </div>
 
@@ -1529,8 +1564,9 @@
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Route to support</div>
       </div>
     </div>
-    <div class="section-title">Examples</div>
-    <div class="examples-layout">
+    <div class="explorer-shell">
+
+      <div class="explorer-body">
       <div class="examples-list" id="escalation-examples-list">
         <div class="example-item active" data-escalation="0">
           <div class="example-item-title">Billing issue</div>
@@ -1538,8 +1574,12 @@
         <div class="example-item" data-escalation="1">
           <div class="example-item-title">Direct support request</div>
         </div>
+        <div class="example-item" data-escalation="2">
+          <div class="example-item-title">Unresolved after retry</div>
+        </div>
       </div>
       <div class="example-preview" id="escalation-preview"></div>
+      </div>
     </div>
   </div>
 
@@ -1583,22 +1623,14 @@
     <p class="page-subtitle">Shows AI reasoning steps as the response is being generated.</p>
 
     <div class="preview-box" style="position:relative;min-height:300px;">
-      <!-- Replay button -->
-      <button onclick="cotReplay()" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--base-white);border:1px solid var(--border-light);border-radius:var(--radius-xs);padding:var(--space-2) var(--space-4);font-size:var(--font-size-xs);color:var(--text-primary);cursor:pointer;font-family:'Figtree',sans-serif;font-weight:500;display:flex;align-items:center;gap:var(--space-2);">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="1 4 3 8 7 6"/></svg>
-        Restart
-      </button>
+      <button onclick="cotReplay()" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--base-white);border:1px solid var(--border-light);border-radius:var(--radius-xs);height:32px;padding:0 var(--space-4);font-size:var(--font-size-xs);color:var(--text-primary);cursor:pointer;font-family:'Figtree',sans-serif;font-weight:500;display:flex;align-items:center;gap:var(--space-2);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="1 4 3 8 7 6"/></svg>Restart</button>
 
       <div style="width: 360px;">
 
         <!-- LOADING STATE -->
         <div id="cot-combined-loading">
           <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-4); cursor:pointer;" onclick="cotToggleSteps()">
-            <div style="position: relative; width: 12px; height: 12px; flex-shrink: 0;">
-              <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; top: 0; left: 50%; animation: convergeTop 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
-              <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; bottom: 0; left: 0; animation: convergeLeft 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
-              <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; bottom: 0; right: 0; animation: convergeRight 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
-            </div>
+            <span id="cot-dots-slot"></span>
             <div id="cot-current-step" class="shimmer-text" style="font-size: var(--font-size-xs); font-weight: 400;"></div>
             <svg id="cot-steps-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.2s;flex-shrink:0;color:var(--grey-600);"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
@@ -1662,12 +1694,8 @@
     <h1 class="page-title">Feedback Bar</h1>
     <p class="page-subtitle">A component to collect user feedback on AI responses.</p>
 
-    <div class="preview-box" style="position: relative; min-height: 400px; align-items: center;">
-      <!-- Restart Button -->
-      <button onclick="restartFeedback()" style="position: absolute; top: var(--space-4); right: var(--space-4); background: var(--base-white); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: var(--space-2) var(--space-4); font-size: var(--font-size-xs); color: var(--text-primary); cursor: pointer; font-family: 'Figtree', sans-serif; font-weight: 500; display: flex; align-items: center; gap: var(--space-2);">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="1 4 3 8 7 6"/></svg>
-        Restart
-      </button>
+    <div class="preview-box" style="position:relative;min-height:400px;align-items:center;">
+      <button onclick="restartFeedback()" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--base-white);border:1px solid var(--border-light);border-radius:var(--radius-xs);height:32px;padding:0 var(--space-4);font-size:var(--font-size-xs);color:var(--text-primary);cursor:pointer;font-family:'Figtree',sans-serif;font-weight:500;display:flex;align-items:center;gap:var(--space-2);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="1 4 3 8 7 6"/></svg>Restart</button>
 
       <div style="position: relative; min-height: 32px;">
         <!-- Default State -->
@@ -1711,7 +1739,7 @@
         <label style="display: block; font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-2);">What could have been better?</label>
         <textarea id="feedback-text" style="width: 300px; height: 80px; padding: var(--space-3); border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; color: var(--text-primary); resize: none; margin-bottom: var(--space-4); box-sizing: border-box; outline: none; transition: border-color 0.12s;" onfocus="this.style.borderColor='var(--grey-600)'" onblur="this.style.borderColor='var(--border-light)'" placeholder="Share your feedback..."></textarea>
         <div style="display: flex; justify-content: flex-end;">
-          <button onclick="submitFeedback()" style="background: var(--indigo-950); color: var(--base-white); border: none; border-radius: var(--radius-xs); height: 32px; padding: 0 var(--space-5); font-size: var(--font-size-sm); font-weight: 500; cursor: pointer; font-family: 'Figtree', sans-serif;">
+          <button onclick="submitFeedback()" style="background: var(--indigo-950); color: var(--base-white); border: none; border-radius: var(--radius-xs); height: 32px; padding: 0 var(--space-6); font-size: var(--font-size-sm); font-weight: 500; cursor: pointer; font-family: 'Figtree', sans-serif;">
             Submit
           </button>
         </div>
@@ -1732,19 +1760,7 @@
     <p class="page-subtitle">Visual indicators that show AI is processing a request.</p>
 
     <div class="preview-box">
-      <div style="max-width: 100%;">
-        <div style="padding: var(--space-14); position: relative;">
-          <!-- Animated dots - single set that changes color -->
-          <div style="display: flex; justify-content: center; align-items: center; gap: var(--space-3);">
-            <div style="position: relative; width: 12px; height: 12px;">
-              <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; top: 0; left: 50%; animation: convergeTop 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
-              <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; bottom: 0; left: 0; animation: convergeLeft 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
-              <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; bottom: 0; right: 0; animation: convergeRight 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
-            </div>
-            <div class="shimmer-text" style="font-size: var(--font-size-md); font-weight: 400;">Thinking...</div>
-          </div>
-        </div>
-      </div>
+      <div id="ai-thinking-slot" style="display:flex;justify-content:center;align-items:center;gap:var(--space-3);"></div>
     </div>
 
     <div class="section-title">When to use</div>
@@ -1868,17 +1884,27 @@
   </div>
 
   <!-- CLARIFICATION CARD -->
-  <div class="page" id="page-clarification-card">
-    <h1 class="page-title">Clarification Card</h1>
+  <div class="page" id="page-refinement-card">
+    <h1 class="page-title">Refinement Card</h1>
     <p class="page-subtitle">A card component that visually represents a clarification flow. Use it when AI needs to narrow an ambiguous request before choosing a response pattern.</p>
 
-    <div style="display:flex;gap:var(--space-2);margin-bottom:var(--space-4);">
-      <button class="toggle-btn active" onclick="switchClarifyVariant('single', event)">Single select</button>
-      <button class="toggle-btn" onclick="switchClarifyVariant('multi', event)">Multi select</button>
-      <button class="toggle-btn" onclick="switchClarifyVariant('multistep', event)">Multi step</button>
-    </div>
-    <div class="preview-box" id="clarify-variant-preview" style="min-height:480px;">
-      <div class="clarification-card" id="clarify-card-radio"></div>
+    <div class="explorer-shell" style="margin-bottom:var(--space-10);">
+      <div class="explorer-body">
+        <div class="examples-list">
+          <div class="example-item active" onclick="switchClarifyVariant('single', event); document.querySelectorAll('#page-refinement-card .examples-list .example-item').forEach(i=>i.classList.remove('active')); this.classList.add('active');">
+            <div class="example-item-title">Single select</div>
+          </div>
+          <div class="example-item" onclick="switchClarifyVariant('multi', event); document.querySelectorAll('#page-refinement-card .examples-list .example-item').forEach(i=>i.classList.remove('active')); this.classList.add('active');">
+            <div class="example-item-title">Multi select</div>
+          </div>
+          <div class="example-item" onclick="switchClarifyVariant('multistep', event); document.querySelectorAll('#page-refinement-card .examples-list .example-item').forEach(i=>i.classList.remove('active')); this.classList.add('active');">
+            <div class="example-item-title">Multi step</div>
+          </div>
+        </div>
+        <div class="example-preview" id="clarify-variant-preview" style="min-height:480px;align-items:center;justify-content:center;">
+          <div class="refinement-card" id="clarify-card-radio"></div>
+        </div>
+      </div>
     </div>
 
     <div class="section-title">When to use</div>
@@ -1916,10 +1942,7 @@
     <p class="page-subtitle">Animates AI-generated text as it streams character by character, giving users a sense of the response being composed in real time.</p>
 
     <div class="preview-box" style="position:relative;min-height:420px;align-items:flex-start;padding-top:var(--space-12);">
-      <button onclick="restartTyping()" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--base-white);border:1px solid var(--border-light);border-radius:var(--radius-xs);padding:var(--space-2) var(--space-4);font-size:var(--font-size-xs);color:var(--text-primary);cursor:pointer;font-family:'Figtree',sans-serif;font-weight:500;display:flex;align-items:center;gap:var(--space-2);">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="1 4 3 8 7 6"/></svg>
-        Restart
-      </button>
+      <button onclick="restartTyping()" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--base-white);border:1px solid var(--border-light);border-radius:var(--radius-xs);height:32px;padding:0 var(--space-4);font-size:var(--font-size-xs);color:var(--text-primary);cursor:pointer;font-family:'Figtree',sans-serif;font-weight:500;display:flex;align-items:center;gap:var(--space-2);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="1 4 3 8 7 6"/></svg>Restart</button>
       <div style="max-width: 520px; width: 100%;">
         <div style="display:flex;justify-content:flex-end;margin-bottom:var(--space-6);"><div style="background:var(--grey-100);border-radius:var(--radius-sm);padding:var(--space-4) var(--space-5);font-size:var(--font-size-md);max-width:65%;">Show me my top shipping cost this month.</div></div>
         <div style="font-size: var(--font-size-md); line-height: 1.7; min-height: 160px;" id="typing-text-output"></div>
@@ -1942,6 +1965,26 @@
 </main>
 
 <script>
+  // ── AI component primitives ───────────────────────────────────────────────
+  function aiDots(inline = false) {
+    const tag = inline ? 'span' : 'div';
+    const style = inline
+      ? 'position:relative;width:12px;height:12px;display:inline-block;flex-shrink:0;'
+      : 'position:relative;width:12px;height:12px;flex-shrink:0;';
+    return `<${tag} style="${style}">
+      <${tag} style="width:4px;height:4px;border-radius:50%;position:absolute;top:0;left:50%;animation:convergeTop 2s ease-in-out infinite,colorChange 2s ease-in-out infinite;"></${tag}>
+      <${tag} style="width:4px;height:4px;border-radius:50%;position:absolute;bottom:0;left:0;animation:convergeLeft 2s ease-in-out infinite,colorChange 2s ease-in-out infinite;"></${tag}>
+      <${tag} style="width:4px;height:4px;border-radius:50%;position:absolute;bottom:0;right:0;animation:convergeRight 2s ease-in-out infinite,colorChange 2s ease-in-out infinite;"></${tag}>
+    </${tag}>`;
+  }
+
+  function shimmerText(text, size = 'var(--font-size-md)') {
+    return `<div class="shimmer-text" style="font-size:${size};font-weight:400;">${text}</div>`;
+  }
+
+  function aiThinking(text = 'Thinking...', size = 'var(--font-size-md)') {
+    return `<div style="display:flex;align-items:center;gap:var(--space-2);">${aiDots()}${shimmerText(text, size)}</div>`;
+  }
   const assistExamples = [
     { query: "Where do I find my API keys?", rows: [
       { label: "Answer", text: "You can find <strong>API keys</strong> in Settings." },
@@ -1986,7 +2029,7 @@
       message: "I'd like to help. Can you tell me more about what's happening?",
       chips: ["Label not printing", "Store not connecting", "Order not syncing", "Carrier error"]
     },
-    { title: "Create a rule", route: "Route after clarification: Configure. Use a clarification card to collect required inputs.",
+    { title: "Create a rule", route: "Route after clarification: Configure. Use a refinement card to collect required inputs.",
       query: "Create a rule",
       message: "Sure! What should this rule do?",
       chips: ["Route orders by carrier", "Apply insurance automatically", "Filter by order weight", "Set default packaging"],
@@ -2092,31 +2135,31 @@
 
     if (ex.type === 'card') {
       const options = ex.options.map((o, i) => `
-        <button class="clarification-card__radio-option" onclick="selectRadioOption(this, '${i}')">
-          <span class="clarification-card__radio-circle"></span>
-          <span class="clarification-card__radio-text"><span class="clarification-card__radio-title">${o}</span></span>
+        <button class="refinement-card__radio-option" onclick="selectRadioOption(this, '${i}')">
+          <span class="refinement-card__radio-circle"></span>
+          <span class="refinement-card__radio-text"><span class="refinement-card__radio-title">${o}</span></span>
         </button>`).join('');
       document.getElementById('clarification-preview').innerHTML = `
         <div style="overflow:hidden;margin-bottom:var(--space-4)">
           <div class="user-query-right">${ex.query}</div>
         </div>
-        <div class="clarification-card" style="width:100%">
-          <div class="clarification-card__header">
+        <div class="refinement-card" style="width:100%">
+          <div class="refinement-card__header">
             <span></span>
-            <button class="clarification-card__close" aria-label="Close">
+            <button class="refinement-card__close" aria-label="Close">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
           </div>
-          <div class="clarification-card__body">
-            <div class="clarification-card__question">${ex.question}</div>
-            <div class="clarification-card__radio-options">${options}</div>
+          <div class="refinement-card__body">
+            <div class="refinement-card__question">${ex.question}</div>
+            <div class="refinement-card__radio-options">${options}</div>
           </div>
-          <div class="clarification-card__footer">
-            <button class="clarification-card__back">
+          <div class="refinement-card__footer">
+            <button class="refinement-card__back">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
               Back
             </button>
-            <button class="clarification-card__next" disabled>Next</button>
+            <button class="refinement-card__next" disabled>Next</button>
           </div>
         </div>
       `;
@@ -2144,32 +2187,32 @@
     document.getElementById('clarify-chips').style.display = 'none';
     const card = ex.cardAfterChip;
     const options = card.options.map(o => `
-      <button class="clarification-card__radio-option" onclick="selectRadioOption(this)">
-        <span class="clarification-card__radio-circle"></span>
-        <span class="clarification-card__radio-text"><span class="clarification-card__radio-title">${o}</span></span>
+      <button class="refinement-card__radio-option" onclick="selectRadioOption(this)">
+        <span class="refinement-card__radio-circle"></span>
+        <span class="refinement-card__radio-text"><span class="refinement-card__radio-title">${o}</span></span>
       </button>`).join('');
     document.getElementById('clarify-card-slot').innerHTML = `
       <div style="overflow:hidden;margin-bottom:var(--space-2);">
         <div class="user-query-right">${chipLabel}</div>
       </div>
       <div class="ai-message" style="margin-bottom:var(--space-4);">Got it. To set up this rule, I need a few details first.</div>
-      <div class="clarification-card" style="width:100%;">
-        <div class="clarification-card__header">
-          <span class="clarification-card__step">Step 1 of 3</span>
-          <button class="clarification-card__close" onclick="hideClarifyCard()" aria-label="Close">
+      <div class="refinement-card" style="width:100%;">
+        <div class="refinement-card__header">
+          <span class="refinement-card__step">Step 1 of 3</span>
+          <button class="refinement-card__close" onclick="hideClarifyCard()" aria-label="Close">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
-        <div class="clarification-card__body">
-          <div class="clarification-card__question">${card.question}</div>
-          <div class="clarification-card__radio-options">
+        <div class="refinement-card__body">
+          <div class="refinement-card__question">${card.question}</div>
+          <div class="refinement-card__radio-options">
             ${options}
-            <input type="text" class="clarification-card__input" placeholder="Or type it here…" style="margin-top:var(--space-5);height:32px;border-radius:var(--radius-xs);border-color:var(--grey-300);" onfocus="this.style.borderColor='var(--grey-600)'" onblur="this.style.borderColor='var(--grey-300)'" />
+            <input type="text" class="refinement-card__input" placeholder="Or type it here…" style="margin-top:var(--space-5);height:32px;border-radius:var(--radius-xs);border-color:var(--grey-300);" onfocus="this.style.borderColor='var(--grey-600)'" onblur="this.style.borderColor='var(--grey-300)'" />
           </div>
         </div>
-        <div class="clarification-card__footer">
+        <div class="refinement-card__footer">
           <span></span>
-          <button class="clarification-card__next" disabled>Next</button>
+          <button class="refinement-card__next" disabled>Next</button>
         </div>
       </div>
     `;
@@ -2235,6 +2278,12 @@
       response: "Here's where you can get help:",
       btn: "Get Support",
       followup: "You can reach our support team via chat or email through the Help Center."
+    },
+    {
+      query: "I already tried reconnecting and it still won't connect",
+      response: "I wasn't able to resolve this automatically. Since the issue is still happening after the reconnect steps, your best next step is to contact support directly.",
+      btn: "Get Support",
+      followup: "Let them know you've already tried reconnecting — this will help them investigate faster."
     }
   ];
 
@@ -2303,7 +2352,7 @@
       { page: 'ai-thinking',        label: 'AI Thinking' },
       { page: 'buttons-ctas',       label: 'Buttons & CTAs' },
       { page: 'chain-of-thought',   label: 'Chain of Thought' },
-      { page: 'clarification-card', label: 'Clarification Card' },
+      { page: 'refinement-card', label: 'Refinement Card' },
       { page: 'feedback-bar',       label: 'Feedback Bar' },
       { page: 'input-assisted',     label: 'Generated Content' },
       { page: 'prompt-chips',       label: 'Prompt Chips' },
@@ -2780,6 +2829,12 @@
     });
   });
 
+  // Inject AI component primitives into slots
+  const cotDotsSlot = document.getElementById('cot-dots-slot');
+  if (cotDotsSlot) cotDotsSlot.innerHTML = aiDots(true);
+  const aiThinkingSlot = document.getElementById('ai-thinking-slot');
+  if (aiThinkingSlot) aiThinkingSlot.innerHTML = aiThinking('Thinking...');
+
   renderAssistPreview(0);
   renderClarificationPreview(0);
   renderConfigurePreview(0);
@@ -2791,25 +2846,40 @@
   let _typingTimer = null;
   const _typingFull = "Your highest shipping cost this month was Priority Mail at $142.00, accounting for 34% of total shipping spend.\n\nTop carriers by cost:\n1. USPS Priority Mail — $142.00\n2. FedEx Ground — $98.50\n3. UPS Ground — $74.20";
 
+  function _makeThinkingSpan() {
+    const span = document.createElement('span');
+    span.id = 'typing-thinking';
+    span.style.cssText = 'display:inline-flex;align-items:center;vertical-align:middle;transition:opacity 0.4s;margin-right:6px;';
+    span.innerHTML = aiDots(true);
+    return span;
+  }
+
   function runTyping() {
     const el = document.getElementById('typing-text-output');
     if (!el) return;
-    el.innerHTML = '';
     clearInterval(_typingTimer);
-    // Split into tokens: words and newlines
-    const tokens = _typingFull.split(/(\n)/);
-    const words = [];
-    tokens.forEach(t => t === '\n' ? words.push('\n') : t.split(' ').forEach((w, i, arr) => { words.push(w); if (i < arr.length - 1) words.push(' '); }));
-    let i = 0;
-    _typingTimer = setInterval(() => {
-      if (i < words.length) {
-        if (words[i] === '\n') el.innerHTML += '<br>';
-        else el.innerHTML += words[i];
-        i++;
-      } else {
-        clearInterval(_typingTimer);
-      }
-    }, 18);
+    el.innerHTML = '';
+    const thinking = _makeThinkingSpan();
+    el.appendChild(thinking);
+    setTimeout(() => {
+      thinking.style.opacity = '0';
+      setTimeout(() => {
+        thinking.remove();
+        const tokens = _typingFull.split(/(\n)/);
+        const words = [];
+        tokens.forEach(t => t === '\n' ? words.push('\n') : t.split(' ').forEach((w, i, arr) => { words.push(w); if (i < arr.length - 1) words.push(' '); }));
+        let i = 0;
+        _typingTimer = setInterval(() => {
+          if (i < words.length) {
+            if (words[i] === '\n') el.appendChild(document.createElement('br'));
+            else el.appendChild(document.createTextNode(words[i]));
+            i++;
+          } else {
+            clearInterval(_typingTimer);
+          }
+        }, 18);
+      }, 400);
+    }, 1500);
   }
 
   function restartTyping() { runTyping(); }
@@ -2818,10 +2888,10 @@
   showPage(initialPage, false);
 
   function selectRadioOption(btn, value) {
-    btn.classList.toggle('clarification-card__radio-option--selected');
-    const card = btn.closest('.clarification-card');
-    const hasSelection = card.querySelectorAll('.clarification-card__radio-option--selected').length > 0;
-    const nextBtn = card.querySelector('.clarification-card__next');
+    btn.classList.toggle('refinement-card__radio-option--selected');
+    const card = btn.closest('.refinement-card');
+    const hasSelection = card.querySelectorAll('.refinement-card__radio-option--selected').length > 0;
+    const nextBtn = card.querySelector('.refinement-card__next');
     if (nextBtn) nextBtn.disabled = !hasSelection;
   }
 
@@ -2895,12 +2965,12 @@
 
   function ccHeader(question, hint) {
     return `
-      <div class="clarification-card__header">
-        <div class="clarification-card__header-left">
-          <div class="clarification-card__question">${question}</div>
-          ${hint ? `<div class="clarification-card__hint">${hint}</div>` : ''}
+      <div class="refinement-card__header">
+        <div class="refinement-card__header-left">
+          <div class="refinement-card__question">${question}</div>
+          ${hint ? `<div class="refinement-card__hint">${hint}</div>` : ''}
         </div>
-        <button class="clarification-card__close" onclick="renderClarifyVariant()" aria-label="Close">${closeSVG}</button>
+        <button class="refinement-card__close" onclick="renderClarifyVariant()" aria-label="Close">${closeSVG}</button>
       </div>`;
   }
 
@@ -2911,25 +2981,25 @@
     if (clarifyVariant === 'single') {
       card.innerHTML = `
         ${ccHeader("What do you want to filter by?")}
-        <div class="clarification-card__body">
+        <div class="refinement-card__body">
           ${singleOpts.map((o,i) => ccOptionRow(o, i, 'single', false, `ccSelectSingle(this)`)).join('')}
           ${ccAskRow()}
         </div>
-        <div class="clarification-card__footer">
+        <div class="refinement-card__footer">
           <span></span>
-          <button class="clarification-card__next" disabled>Next</button>
+          <button class="refinement-card__next" disabled>Next</button>
         </div>`;
 
     } else if (clarifyVariant === 'multi') {
       card.innerHTML = `
         ${ccHeader("Which carrier issues do you want to flag?", "Select all that apply")}
-        <div class="clarification-card__body">
+        <div class="refinement-card__body">
           ${multiOpts.map((o,i) => ccOptionRow(o, i, 'multi', false, `ccSelectMulti(this)`)).join('')}
           ${ccAskRow()}
         </div>
-        <div class="clarification-card__footer">
+        <div class="refinement-card__footer">
           <span></span>
-          <button class="clarification-card__next" disabled>Apply</button>
+          <button class="refinement-card__next" disabled>Apply</button>
         </div>`;
 
     } else if (clarifyVariant === 'multistep') {
@@ -2938,19 +3008,19 @@
   }
 
   function ccSelectSingle(btn) {
-    const card = btn.closest('.clarification-card');
+    const card = btn.closest('.refinement-card');
     const wasSelected = btn.classList.contains('cc-option--selected');
     card.querySelectorAll('.cc-option--single').forEach(b => b.classList.remove('cc-option--selected'));
     if (!wasSelected) btn.classList.add('cc-option--selected');
     const hasSelection = card.querySelectorAll('.cc-option--selected').length > 0;
-    card.querySelector('.clarification-card__next').disabled = !hasSelection;
+    card.querySelector('.refinement-card__next').disabled = !hasSelection;
   }
 
   function ccSelectMulti(btn) {
     btn.classList.toggle('cc-option--selected');
-    const card = btn.closest('.clarification-card');
+    const card = btn.closest('.refinement-card');
     const hasSelection = card.querySelectorAll('.cc-option--selected').length > 0;
-    card.querySelector('.clarification-card__next').disabled = !hasSelection;
+    card.querySelector('.refinement-card__next').disabled = !hasSelection;
   }
 
   function renderMultiStepVariant() {
@@ -2970,29 +3040,27 @@
     const nextLabel = multiStepStep === total ? 'Finish' : 'Next';
 
     card.innerHTML = `
-      <div class="clarification-card__header">
-        <div class="clarification-card__header-left">
+      <div class="refinement-card__header">
+        <div class="refinement-card__header-left">
           ${dots}
-          <div class="clarification-card__question">${step.question}</div>
-          ${step.hint ? `<div class="clarification-card__hint">${step.hint}</div>` : ''}
+          <div class="refinement-card__question">${step.question}</div>
+          ${step.hint ? `<div class="refinement-card__hint">${step.hint}</div>` : ''}
         </div>
-        <button class="clarification-card__close" onclick="renderClarifyVariant()" aria-label="Close">${closeSVG}</button>
+        <button class="refinement-card__close" onclick="renderClarifyVariant()" aria-label="Close">${closeSVG}</button>
       </div>
-      <div class="clarification-card__body">
+      <div class="refinement-card__body">
         ${step.options.map((o,i) => ccOptionRow(o, i, isMulti ? 'multi' : 'single', false, isMulti ? 'ccSelectMulti(this)' : 'ccSelectSingle(this)')).join('')}
         ${ccAskRow()}
       </div>
-      <div class="clarification-card__footer">
-        <button class="clarification-card__back" onclick="multiStepNav(1)">Skip</button>
-        <button class="clarification-card__next" disabled onclick="multiStepNav(1)">${nextLabel}</button>
+      <div class="refinement-card__footer">
+        <button class="refinement-card__back" onclick="multiStepNav(1)">Skip</button>
+        <button class="refinement-card__next" disabled onclick="multiStepNav(1)">${nextLabel}</button>
       </div>`;
   }
 
   function switchClarifyVariant(variant, e) {
     clarifyVariant = variant;
     multiStepStep = 1;
-    document.querySelectorAll('#page-clarification-card .toggle-btn').forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
     renderClarifyVariant();
   }
 
@@ -3042,58 +3110,58 @@
     if (completedChevron) { completedChevron.style.transform = ''; }
 
     // Clarification card checkbox options
-    document.querySelectorAll('.clarification-card__option--selected').forEach(el => el.classList.remove('clarification-card__option--selected'));
+    document.querySelectorAll('.refinement-card__option--selected').forEach(el => el.classList.remove('refinement-card__option--selected'));
 
     // Clarification card radio options + reset Next button
-    document.querySelectorAll('.clarification-card__radio-option--selected').forEach(el => el.classList.remove('clarification-card__radio-option--selected'));
-    document.querySelectorAll('.clarification-card__next').forEach(btn => { btn.disabled = true; });
+    document.querySelectorAll('.refinement-card__radio-option--selected').forEach(el => el.classList.remove('refinement-card__radio-option--selected'));
+    document.querySelectorAll('.refinement-card__next').forEach(btn => { btn.disabled = true; });
 
     // Clarification card text input
-    const clarifyInput = document.getElementById('clarification-card-input');
+    const clarifyInput = document.getElementById('refinement-card-input');
     if (clarifyInput) clarifyInput.value = '';
   }
 
   function selectClarifyOption(btn, value) {
-    document.querySelectorAll('#clarification-card-options .clarification-card__option').forEach(b => {
-      b.classList.remove('clarification-card__option--selected');
+    document.querySelectorAll('#refinement-card-options .refinement-card__option').forEach(b => {
+      b.classList.remove('refinement-card__option--selected');
     });
-    btn.classList.add('clarification-card__option--selected');
-    document.getElementById('clarification-card-input').value = '';
+    btn.classList.add('refinement-card__option--selected');
+    document.getElementById('refinement-card-input').value = '';
   }
 
   function clarifyNext() {
-    var selected = document.querySelector('#clarification-card-options .clarification-card__option--selected');
-    var input = document.getElementById('clarification-card-input').value.trim();
+    var selected = document.querySelector('#refinement-card-options .refinement-card__option--selected');
+    var input = document.getElementById('refinement-card-input').value.trim();
     var label = selected ? selected.textContent.trim() : input;
     if (!label) {
-      document.getElementById('clarification-card-input').focus();
+      document.getElementById('refinement-card-input').focus();
       return;
     }
     document.getElementById('clarification-confirm-label').textContent = '"' + label + '"';
-    document.querySelector('.clarification-card').style.display = 'none';
-    document.getElementById('clarification-card-confirm-state').style.display = 'block';
+    document.querySelector('.refinement-card').style.display = 'none';
+    document.getElementById('refinement-card-confirm-state').style.display = 'block';
   }
 
   function clarifyBack() {
-    document.querySelectorAll('#clarification-card-options .clarification-card__option').forEach(b => {
-      b.classList.remove('clarification-card__option--selected');
+    document.querySelectorAll('#refinement-card-options .refinement-card__option').forEach(b => {
+      b.classList.remove('refinement-card__option--selected');
     });
-    document.getElementById('clarification-card-input').value = '';
+    document.getElementById('refinement-card-input').value = '';
   }
 
   function clarifyBackToOptions() {
-    document.querySelector('.clarification-card').style.display = 'block';
-    document.getElementById('clarification-card-confirm-state').style.display = 'none';
+    document.querySelector('.refinement-card').style.display = 'block';
+    document.getElementById('refinement-card-confirm-state').style.display = 'none';
   }
 
   function clarifyConfirm() {
     document.getElementById('clarification-confirm-label').textContent = '';
-    document.querySelector('.clarification-card').style.display = 'block';
-    document.getElementById('clarification-card-confirm-state').style.display = 'none';
-    document.querySelectorAll('#clarification-card-options .clarification-card__option').forEach(b => {
-      b.classList.remove('clarification-card__option--selected');
+    document.querySelector('.refinement-card').style.display = 'block';
+    document.getElementById('refinement-card-confirm-state').style.display = 'none';
+    document.querySelectorAll('#refinement-card-options .refinement-card__option').forEach(b => {
+      b.classList.remove('refinement-card__option--selected');
     });
-    document.getElementById('clarification-card-input').value = '';
+    document.getElementById('refinement-card-input').value = '';
   }
 </script>
 

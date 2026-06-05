@@ -73,7 +73,7 @@ Real examples from the playbook. These are the source of truth for how the AI as
 **Chips:** Label not printing / Store not connecting / Order not syncing / Carrier error
 *→ Routes to: Assist or Escalation*
 
-### Clarification Card Example
+### Refinement Card Example
 **User:** "Help me fix my shipments"
 **Card question:** "What do you want help with?"
 **Options:** Delayed shipments / Failed label creation / Tracking not updating / Carrier exceptions

@@ -14,7 +14,7 @@ Guardrails define when AI should pause, clarify, state a boundary, or route the 
 **Structure:**
 1. Acknowledge intent
 2. Ask clarifying question
-3. Offer options (as prompt chips or a clarification card)
+3. Offer options (as prompt chips or a refinement card)
 
 **Examples:**
 
@@ -28,7 +28,7 @@ Guardrails define when AI should pause, clarify, state a boundary, or route the 
 
 **Clarification card vs. prompt chips:**
 - Use **prompt chips** when the AI already understands intent and wants to help the user choose a next step (optional shortcuts)
-- Use a **clarification card** when multiple structured choices are needed or the decision has meaningful consequences (required before proceeding)
+- Use a **refinement card** when multiple structured choices are needed or the decision has meaningful consequences (required before proceeding)
 
 ---
 
