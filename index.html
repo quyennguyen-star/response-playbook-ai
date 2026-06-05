@@ -20,7 +20,7 @@
       --radius-xs: 4px; --radius-sm: 8px; --radius-md: 16px;
       --space-1: 2px; --space-2: 4px; --space-3: 6px; --space-4: 8px; --space-5: 12px;
       --space-6: 16px; --space-8: 24px; --space-10: 32px; --space-12: 48px;
-      --font-size-xs: 11px; --font-size-sm: 13px; --font-size-md: 14px;
+      --font-size-xs: 12px; --font-size-sm: 13px; --font-size-md: 14px;
       --font-size-lg: 16px; --font-size-xl: 20px; --font-size-2xl: 28px;
       --font-weight-medium: 500; --font-weight-semibold: 600; --font-weight-bold: 700;
       --sidebar-width: 256px;
@@ -57,7 +57,7 @@
       z-index: 100; padding: var(--space-5);
     }
     .sidebar-inner {
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-sm);
       flex: 1; display: flex; flex-direction: column; overflow: hidden;
     }
     .sidebar-logo {
@@ -142,7 +142,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-sm);
       overflow: hidden;
       margin-bottom: var(--space-10);
     }
@@ -239,6 +239,9 @@
     .clarification-item {
       position: relative;
       padding: var(--space-4) var(--space-5);
+      min-height: 40px;
+      display: flex;
+      align-items: center;
       cursor: pointer;
       transition: background 0.12s;
       background: transparent;
@@ -276,7 +279,9 @@
       background: var(--grey-050);
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
+      overflow-y: auto;
+      max-height: 480px;
     }
 
     /* ANATOMY VIEW */
@@ -332,122 +337,123 @@
 
     /* CLARIFICATION CARD */
     .clarification-card {
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-sm);
       background: var(--base-white);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06);
       overflow: hidden;
+      width: 340px;
     }
     .clarification-card__header {
-      padding: var(--space-6) var(--space-6) 0;
+      padding: var(--space-5) var(--space-5) var(--space-5);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-3);
     }
+    .clarification-card__header-left { flex: 1; }
+    .clarification-card__close {
+      background: var(--grey-050); border: none; cursor: pointer;
+      color: var(--text-secondary); padding: var(--space-2); border-radius: var(--radius-xs);
+      display: flex; align-items: center; flex-shrink: 0;
+      transition: background 0.12s;
+    }
+    .clarification-card__close:hover { background: var(--grey-100); color: var(--text-primary); }
     .clarification-card__step {
       font-size: var(--font-size-xs);
       color: var(--text-secondary);
       font-weight: 400;
+      margin-bottom: var(--space-2);
     }
-    .clarification-card__body { padding: var(--space-5) var(--space-6) 0; }
     .clarification-card__question {
       font-size: var(--font-size-md);
       font-weight: var(--font-weight-semibold);
       color: var(--text-primary);
-      margin-bottom: var(--space-1);
-      line-height: 1.5;
+      line-height: 1.4;
     }
-    .clarification-card__subtitle {
-      font-size: var(--font-size-sm);
+    .clarification-card__hint {
+      font-size: var(--font-size-xs);
       color: var(--text-secondary);
-      margin-bottom: var(--space-4);
+      margin-top: var(--space-1);
     }
-    .clarification-card__options {
-      display: flex; flex-direction: column; gap: var(--space-1);
-      margin-bottom: var(--space-4);
-    }
-    .clarification-card__option {
+    .clarification-card__body { padding: 0 var(--space-5); }
+    /* Option row — shared */
+    .cc-option {
       display: flex; align-items: center; gap: var(--space-3);
       width: 100%; text-align: left;
       padding: var(--space-3) var(--space-3);
-      border: none; border-radius: var(--radius-xs);
-      background: var(--base-white);
-      font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; font-weight: 400;
-      color: var(--text-primary); cursor: pointer;
-      transition: background 0.12s;
+      border-radius: var(--radius-xs);
+      border: 1.5px solid transparent;
+      background: transparent;
+      font-family: 'Figtree', sans-serif;
+      cursor: pointer;
+      transition: all 0.1s;
     }
-    .clarification-card__option--selected { font-weight: 500; }
-    .clarification-card__checkbox {
+    .cc-option:hover { background: var(--grey-050); }
+    .cc-option__left { width: 20px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+    .cc-option__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .cc-option__title { font-size: var(--font-size-md); font-weight: var(--font-weight-medium); color: var(--text-primary); line-height: 1.3; }
+    .cc-option__desc { font-size: var(--font-size-xs); color: var(--text-secondary); margin-top: var(--space-1); }
+    .cc-option__right { flex-shrink: 0; width: 20px; display: flex; justify-content: center; align-items: center; }
+    /* Single select — numbered + check on right */
+    .cc-option--single.cc-option--selected {
+      border-color: var(--grey-950);
+      background: var(--grey-050);
+    }
+    .cc-num { font-size: var(--font-size-xs); font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+    .cc-check { display: none; }
+    .cc-option--single.cc-option--selected .cc-check { display: flex; color: var(--text-primary); }
+    /* Multi select — checkbox on left */
+    .cc-checkbox {
       width: 16px; height: 16px; flex-shrink: 0;
-      border: 1px solid var(--border-medium); border-radius: 3px;
+      border: 1.5px solid var(--grey-300); border-radius: 4px;
       background: var(--base-white);
       display: flex; align-items: center; justify-content: center;
       transition: all 0.12s;
     }
-    .clarification-card__option--selected .clarification-card__checkbox {
-      background: var(--indigo-950); border-color: var(--indigo-950);
+    .cc-option--multi.cc-option--selected .cc-checkbox {
+      background: var(--grey-950); border-color: var(--grey-950);
     }
-    .clarification-card__option--selected .clarification-card__checkbox::after {
+    .cc-option--multi.cc-option--selected .cc-checkbox::after {
       content: '';
       width: 9px; height: 5px;
-      border-left: 2px solid white; border-bottom: 2px solid white;
+      border-left: 1.75px solid white; border-bottom: 1.75px solid white;
       transform: rotate(-45deg) translateY(-1px);
       display: block;
     }
-    .clarification-card__radio-options {
-      display: flex; flex-direction: column; gap: 0;
-      margin-bottom: var(--space-4);
-    }
-    .clarification-card__radio-option {
-      display: flex; align-items: center; gap: var(--space-4);
-      width: 100%; text-align: left;
-      padding: var(--space-2) 0;
-      border: none; background: none;
-      cursor: pointer;
-      font-family: 'Figtree', sans-serif;
-    }
-    .clarification-card__radio-circle {
-      width: 16px; height: 16px; flex-shrink: 0;
-      border: 1.5px solid var(--border-medium); border-radius: 50%;
-      background: var(--base-white);
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.12s;
-    }
-    .clarification-card__radio-option--selected .clarification-card__radio-circle {
-      background: var(--grey-950); border-color: var(--grey-950);
-    }
-    .clarification-card__radio-option--selected .clarification-card__radio-circle::after {
-      content: '';
-      width: 7px; height: 4px;
-      border-left: 1.5px solid white; border-bottom: 1.5px solid white;
-      transform: rotate(-45deg);
-      display: block;
-      position: relative;
-      top: -1px;
-    }
-    .clarification-card__radio-text {
-      display: flex; flex-direction: column; gap: 2px;
-    }
-    .clarification-card__radio-title {
-      font-size: var(--font-size-sm); font-weight: 400; color: var(--text-primary);
-    }
-    .clarification-card__radio-desc {
-      font-size: var(--font-size-sm); font-weight: 400; color: var(--text-secondary); line-height: 1.4;
-    }
-
-    .clarification-card__input {
-      width: 100%;
-      padding: var(--space-3) var(--space-4);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-sm);
-      font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
-      color: var(--text-primary);
-      box-sizing: border-box;
-      outline: none;
+    /* Ask row input */
+    .cc-ask { padding: var(--space-3) 0 0; }
+    .cc-ask__inner {
+      display: flex; align-items: center;
+      height: 32px; padding: 0 var(--space-3);
+      border-radius: var(--radius-xs);
+      border: 1.5px solid var(--grey-300);
       background: var(--base-white);
       transition: border-color 0.12s;
     }
-    .clarification-card__input:focus { border-color: var(--grey-400); }
-    .clarification-card__input::placeholder { color: var(--text-secondary); }
+    .cc-ask__inner:focus-within { border-color: var(--grey-600); }
+    .cc-ask__input {
+      flex: 1; border: none; outline: none; background: transparent;
+      font-size: var(--font-size-md); font-family: 'Figtree', sans-serif; color: var(--text-primary);
+    }
+    .cc-ask__input::placeholder { color: var(--grey-400); }
+    /* Progress dots */
+    .cc-dots {
+      display: flex; align-items: center; gap: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+    .cc-dot {
+      height: 3px; border-radius: 99px;
+      background: var(--border-light);
+      transition: all 0.2s;
+    }
+    .cc-dot--active { background: var(--grey-950); width: 16px; }
+    .cc-dot--done { background: var(--grey-950); width: 6px; }
+    .cc-dot--future { width: 6px; }
+    .cc-step-count { font-size: var(--font-size-xs); color: var(--grey-400); font-weight: 500; }
+    /* Footer */
     .clarification-card__footer {
       display: flex; align-items: center; justify-content: space-between;
-      padding: var(--space-6);
+      padding: var(--space-5);
     }
     .clarification-card__back {
       display: flex; align-items: center; gap: var(--space-2);
@@ -458,16 +464,16 @@
     }
     .clarification-card__back:hover { color: var(--text-primary); }
     .clarification-card__next {
-      background: var(--indigo-950); color: var(--base-white);
+      background: var(--grey-950); color: var(--base-white);
       border: none; border-radius: var(--radius-xs);
       height: 32px; padding: 0 var(--space-6);
       font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
       font-weight: 500; cursor: pointer;
       transition: opacity 0.12s;
     }
-    .clarification-card__next:hover:not(:disabled) { opacity: 0.88; }
+    .clarification-card__next:hover:not(:disabled) { background: #333; }
     .clarification-card__next:disabled {
-      background: var(--grey-100); color: var(--grey-500); border-color: var(--grey-200); cursor: not-allowed; box-shadow: none;
+      background: var(--border-light); color: var(--grey-400); cursor: not-allowed;
     }
 
     .preview-box {
@@ -480,6 +486,10 @@
       align-items: center;
       min-height: 300px;
     }
+
+    .cot-dot { background: var(--grey-300); border: none; transition: all 0.3s; }
+    .cot-dot--active { background: transparent !important; border: 1px solid var(--grey-400) !important; }
+    .cot-dot--done { background: var(--grey-600) !important; border: none !important; }
 
     /* TYPING TEXT */
     .typing-cursor {
@@ -504,8 +514,8 @@
     .btn {
       display: flex;
       min-width: 32px;
-      max-height: 32px;
-      padding: var(--space-3) var(--space-3);
+      height: 32px;
+      padding: 0 var(--space-3);
       justify-content: center;
       align-items: center;
       gap: var(--space-3);
@@ -522,7 +532,7 @@
     .btn:hover { border-color: var(--border-medium); }
     .btn:disabled, .btn[disabled] {
       background: var(--grey-100);
-      color: var(--grey-500);
+      color: var(--grey-400);
       border-color: var(--grey-200);
       cursor: not-allowed;
       box-shadow: none;
@@ -560,7 +570,7 @@
     .chat-like-icon {
       color: var(--grey-400); cursor: pointer; font-size: 18px; transition: color 0.15s;
     }
-    .chat-like-icon:hover { color: var(--grey-700); }
+    .chat-like-icon:hover { color: var(--text-primary); }
     .chat-input-area {
       border: 1px solid var(--border-light); border-radius: var(--radius-sm);
       padding: var(--space-4) var(--space-5); margin-top: var(--space-6);
@@ -569,7 +579,7 @@
     }
     .chat-input-icon { color: var(--grey-400); cursor: pointer; font-size: 18px; }
     .chat-disclaimer {
-      font-size: 11px; color: var(--grey-500);
+      font-size: 11px; color: var(--grey-400);
       text-align: center; margin-top: var(--space-3);
     }
 
@@ -842,7 +852,7 @@
     .clarification-title { font-size: var(--font-size-md); font-weight: 600; }
     .clarification-route { font-size: var(--font-size-xs); color: var(--text-secondary); }
     .user-query-right {
-      background: var(--grey-050); border: 1px solid var(--border-light);
+      background: var(--grey-100);
       border-radius: var(--radius-sm); padding: var(--space-3) var(--space-5);
       font-size: var(--font-size-sm); text-align: right;
       margin-bottom: var(--space-5); display: inline-block;
@@ -1048,7 +1058,7 @@
     <!-- Pattern Overview Cards -->
     <div class="rp-cards">
       <!-- Assist Card -->
-      <div style="background: var(--grey-100); padding: var(--space-6); border-radius: var(--radius-md); display: flex; flex-direction: column; height: 100%;">
+      <div style="background: var(--grey-100); padding: var(--space-6); border-radius: var(--radius-sm); display: flex; flex-direction: column; height: 100%;">
         <div style="background: var(--base-white); padding: var(--space-6); border-radius: var(--radius-sm); margin-bottom: var(--space-6); flex: 1; display: flex; flex-direction: column;">
           <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-5);">Assist</h3>
           <p style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5; margin-bottom: var(--space-8);">User asks for help, guidance, explanation, search, or support context.</p>
@@ -1086,7 +1096,7 @@
       </div>
 
       <!-- Insight Card -->
-      <div style="background: var(--grey-100); padding: var(--space-6); border-radius: var(--radius-md); display: flex; flex-direction: column; height: 100%;">
+      <div style="background: var(--grey-100); padding: var(--space-6); border-radius: var(--radius-sm); display: flex; flex-direction: column; height: 100%;">
         <div style="background: var(--base-white); padding: var(--space-6); border-radius: var(--radius-sm); margin-bottom: var(--space-6); flex: 1; display: flex; flex-direction: column;">
           <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-5);">Insight</h3>
           <p style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5; margin-bottom: var(--space-8);">AI surfaces a trend, issue, risk, or opportunity and recommends what to do next.</p>
@@ -1124,7 +1134,7 @@
       </div>
 
       <!-- Configure Card -->
-      <div style="background: var(--grey-100); padding: var(--space-6); border-radius: var(--radius-md); display: flex; flex-direction: column; height: 100%;">
+      <div style="background: var(--grey-100); padding: var(--space-6); border-radius: var(--radius-sm); display: flex; flex-direction: column; height: 100%;">
         <div style="background: var(--base-white); padding: var(--space-6); border-radius: var(--radius-sm); margin-bottom: var(--space-6); flex: 1; display: flex; flex-direction: column;">
           <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-5);">Configure</h3>
           <p style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5; margin-bottom: var(--space-8);">User wants to create, edit, apply, or generate something with AI.</p>
@@ -1297,34 +1307,43 @@
         </div>
       </div>
     </div>
-    <div class="section-title">Supported UI</div>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-10);">
-      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6);">
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Answer</div>
-        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
-          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Text response</div>
-          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Result summary</div>
-          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Limitation message</div>
-        </div>
-      </div>
-      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6);">
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Guidance</div>
-        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
-          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Path</div>
-          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Instructions</div>
-          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Numbered list</div>
-          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Checklist</div>
-        </div>
-      </div>
-      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6);">
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Next step</div>
-        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
-          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Button</div>
-          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Text link</div>
-          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Follow-up chips</div>
-          <div style="font-size: var(--font-size-sm); color: var(--text-primary);">Support handoff</div>
-        </div>
-      </div>
+
+
+    <h2 class="section-title" style="margin-top: var(--space-10);">Choosing the next step</h2>
+    <p style="font-size: var(--font-size-md); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-6);">Use the lightest next step that helps the user continue.</p>
+    <table class="uc-table" style="margin-bottom:var(--space-6);">
+      <thead>
+        <tr>
+          <th style="width:22%;">End with</th>
+          <th style="width:46%;">Use when</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:500;">Answer only</td>
+          <td>The answer fully resolves the user's request and no action is needed.</td>
+          <td style="color:var(--text-secondary);font-style:italic;">"Shipment status shows where the shipment is in the fulfillment and delivery process."</td>
+        </tr>
+        <tr>
+          <td style="font-weight:500;">CTA / deep link</td>
+          <td>There is one clear place the user should go or one clear action to take.</td>
+          <td><button class="btn btn--filled" style="pointer-events:none;">Open API Keys</button></td>
+        </tr>
+        <tr>
+          <td style="font-weight:500;">Prompt chips</td>
+          <td>The response is complete and the assistant is offering optional follow-up paths or lightweight ways to continue.</td>
+          <td><div style="display:flex;flex-wrap:wrap;gap:var(--space-2);"><button class="prompt-chip" style="pointer-events:none;">Compare rates</button><button class="prompt-chip" style="pointer-events:none;">Review zones</button><button class="prompt-chip" style="pointer-events:none;">Packaging costs</button></div></td>
+        </tr>
+        <tr>
+          <td style="font-weight:500;">Fallback / support route</td>
+          <td>AI cannot complete or confidently resolve the request.</td>
+          <td><div style="display:flex;flex-wrap:wrap;gap:var(--space-2);"><button class="btn" style="pointer-events:none;">Check carrier status</button><button class="btn" style="pointer-events:none;">Get support</button></div></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="background:var(--grey-050);border-radius:var(--radius-sm);padding:var(--space-5) var(--space-6);font-size:var(--font-size-sm);color:var(--text-secondary);line-height:1.7;margin-bottom:var(--space-10);">
+      <strong style="color:var(--text-primary);">Decision rule:</strong> If the answer resolves the request, stop there. If there is one clear action, use a CTA. If there are optional ways to continue after the response is complete, use prompt chips. If AI cannot resolve the request, use a fallback or support route.
     </div>
   </div>
 
@@ -1332,17 +1351,21 @@
   <div class="page" id="page-insight">
     <h1 class="page-title">Insight</h1>
     <p class="page-subtitle">Insight proactively surfaces a meaningful trend, issue, risk, opportunity, savings opportunity, or workflow improvement.</p>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
       <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">01 Insight</div>
-        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Observation based on a meaningful signal, trend, issue, or opportunity.</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">The proactive observation.</div>
       </div>
       <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Recommendation</div>
-        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">A suggested next step based on the insight.</div>
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Signal / Source</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">The data, documentation, or signal that explains why the insight is being shown.</div>
+      </div>
+      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Recommendation</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">What the AI suggests the user should do next.</div>
       </div>
       <div style="padding: var(--space-6);">
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Next step</div>
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">04 Next step</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">A CTA, deep link, review action, or follow-up.</div>
       </div>
     </div>
@@ -1419,7 +1442,7 @@
       </div>
     </div>
     <div class="section-title">Examples</div>
-    <p class="section-subtitle">Clarification is needed when the request could lead to multiple paths:</p>
+
     <div class="examples-layout">
       <div class="examples-list" id="clarification-examples-list">
         <div class="example-item active" data-clarify="0">
@@ -1436,9 +1459,6 @@
         </div>
         <div class="example-item" data-clarify="4">
           <div class="example-item-title">Optimize my workflow</div>
-        </div>
-        <div class="example-item" data-clarify="5">
-          <div class="example-item-title">Clarification card</div>
         </div>
       </div>
       <div class="example-preview">
@@ -1531,19 +1551,19 @@
     <!-- Pattern Cards Grid -->
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin-bottom: var(--space-10);">
       <!-- Clarification -->
-      <div style="background: var(--grey-050); border-radius: var(--radius-md); padding: var(--space-10); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-page="clarification" onclick="showPage('clarification')" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="background: var(--grey-050); border-radius: var(--radius-sm); padding: var(--space-10); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-page="clarification" onclick="showPage('clarification')" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
         <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Clarification</h3>
         <p style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.5;">Narrows broad, ambiguous, or incomplete requests before choosing a response pattern.</p>
       </div>
 
       <!-- Capability Boundary -->
-      <div style="background: var(--grey-050); border-radius: var(--radius-md); padding: var(--space-10); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-page="capability-boundary" onclick="showPage('capability-boundary')" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="background: var(--grey-050); border-radius: var(--radius-sm); padding: var(--space-10); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-page="capability-boundary" onclick="showPage('capability-boundary')" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
         <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Capability Boundary</h3>
         <p style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.5;">Explains when AI cannot complete a request and provides the safest next step.</p>
       </div>
 
       <!-- Escalation -->
-      <div style="background: var(--grey-050); border-radius: var(--radius-md); padding: var(--space-10); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-page="escalation" onclick="showPage('escalation')" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="background: var(--grey-050); border-radius: var(--radius-sm); padding: var(--space-10); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-page="escalation" onclick="showPage('escalation')" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
         <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Escalation</h3>
         <p style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.5;">Defines when AI should route the user to Help Center instead of continuing in the current flow.</p>
       </div>
@@ -1562,120 +1582,70 @@
     <h1 class="page-title">Chain of Thought</h1>
     <p class="page-subtitle">Shows AI reasoning steps as the response is being generated.</p>
 
-    <div class="section-title">Loading State</div>
-    <div class="preview-box">
-      <div style="max-width: 600px;">
-        <!-- Loading with thinking indicator - Collapsed -->
-        <div id="cot-loading-summary" style="cursor: pointer;" onclick="toggleLoadingCOT()">
-          <div style="display: flex; align-items: center; gap: var(--space-2);">
+    <div class="preview-box" style="position:relative;min-height:300px;">
+      <!-- Replay button -->
+      <button onclick="cotReplay()" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--base-white);border:1px solid var(--border-light);border-radius:var(--radius-xs);padding:var(--space-2) var(--space-4);font-size:var(--font-size-xs);color:var(--text-primary);cursor:pointer;font-family:'Figtree',sans-serif;font-weight:500;display:flex;align-items:center;gap:var(--space-2);">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="1 4 3 8 7 6"/></svg>
+        Restart
+      </button>
+
+      <div style="width: 360px;">
+
+        <!-- LOADING STATE -->
+        <div id="cot-combined-loading">
+          <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-4); cursor:pointer;" onclick="cotToggleSteps()">
             <div style="position: relative; width: 12px; height: 12px; flex-shrink: 0;">
               <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; top: 0; left: 50%; animation: convergeTop 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
               <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; bottom: 0; left: 0; animation: convergeLeft 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
               <div style="width: 4px; height: 4px; border-radius: 50%; position: absolute; bottom: 0; right: 0; animation: convergeRight 3s ease-in-out infinite, colorChange 3s ease-in-out infinite;"></div>
             </div>
-            <div style="font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: 400;">Analyzing the user's request</div>
-            <svg id="loading-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition: transform 0.2s ease; flex-shrink: 0; color: var(--grey-600);">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
+            <div id="cot-current-step" class="shimmer-text" style="font-size: var(--font-size-xs); font-weight: 400;"></div>
+            <svg id="cot-steps-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.2s;flex-shrink:0;color:var(--grey-600);"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
-        </div>
-
-        <!-- Expanded Details -->
-        <div id="cot-loading-details" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
-          <div style="padding-top: var(--space-4); padding-left: var(--space-2);">
-            <!-- Step 1 - Completed with detail -->
-            <div style="padding-left: 0;">
-              <div style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-1);">
-                <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--grey-600); flex-shrink: 0; margin-top: 6px;"></div>
-                <div style="flex: 1;">
-                  <div style="font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: 400;">Fetching order data</div>
-                </div>
+          <div id="cot-steps-container" style="max-height:0;overflow:hidden;transition:max-height 0.3s ease;padding-left: var(--space-2);">
+            <div id="cot-step1" style="opacity:0;transition:opacity 0.4s;">
+              <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);">
+                <div id="cot-dot1" class="cot-dot cot-dot--active" style="width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:6px;"></div>
+                <div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Fetching order data</div>
               </div>
-              <div style="margin-left: 1px; padding-left: var(--space-4); border-left: 2px solid var(--grey-200); font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.6; padding-bottom: var(--space-3);">
-                Retrieved 847 orders from the past 30 days.
-              </div>
+              <div style="margin-left:1px;padding-left:var(--space-4);border-left:2px solid var(--grey-200);font-size:var(--font-size-xs);color:var(--text-secondary);line-height:1.6;padding-bottom:var(--space-3);">Retrieved 847 orders from the past 30 days.</div>
             </div>
-
-            <!-- Step 2 - Completed with detail -->
-            <div style="padding-left: 0;">
-              <div style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-1);">
-                <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--grey-600); flex-shrink: 0; margin-top: 6px;"></div>
-                <div style="flex: 1;">
-                  <div style="font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: 400;">Analyzing patterns</div>
-                </div>
+            <div id="cot-step2" style="opacity:0;transition:opacity 0.4s;">
+              <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);">
+                <div id="cot-dot2" class="cot-dot" style="width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:6px;"></div>
+                <div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Analyzing patterns</div>
               </div>
-              <div style="margin-left: 1px; padding-left: var(--space-4); border-left: 2px solid var(--grey-200); font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.6; padding-bottom: var(--space-3);">
-                Identifying top products and shipping trends across regions.
-              </div>
+              <div style="margin-left:1px;padding-left:var(--space-4);border-left:2px solid var(--grey-200);font-size:var(--font-size-xs);color:var(--text-secondary);line-height:1.6;padding-bottom:var(--space-3);">Identifying top products and shipping trends across regions.</div>
             </div>
-
-            <!-- Step 3 - In Progress -->
-            <div style="padding-left: 0;">
-              <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
-                <div style="width: 4px; height: 4px; border-radius: 50%; border: 1px solid var(--grey-400); background: transparent; flex-shrink: 0; margin-top: 6px;"></div>
-                <div style="flex: 1;">
-                  <div class="shimmer-text" style="font-size: var(--font-size-xs); font-weight: 400;">Preparing summary</div>
-                </div>
+            <div id="cot-step3" style="opacity:0;transition:opacity 0.4s;">
+              <div style="display:flex;align-items:flex-start;gap:var(--space-2);">
+                <div id="cot-dot3" class="cot-dot" style="width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:6px;"></div>
+                <div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Preparing summary</div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="section-title">Completed State</div>
-    <div class="preview-box">
-      <div style="max-width: 600px;">
-        <!-- Collapsed Summary -->
-        <div id="cot-completed-summary" style="cursor: pointer;" onclick="toggleCompletedCOT()">
-          <div style="display: flex; align-items: center; gap: var(--space-2);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--grey-600); flex-shrink: 0;">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <div style="font-size: var(--font-size-xs); color: var(--text-secondary);">4 steps completed</div>
-            <svg id="completed-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition: transform 0.2s ease; flex-shrink: 0; color: var(--grey-600);">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
+        <!-- COMPLETED STATE (hidden initially) -->
+
+        <div id="cot-combined-completed" style="display:none;">
+          <div style="display:flex;align-items:center;gap:var(--space-2);cursor:pointer;" onclick="cotToggleCompleted()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--grey-600);flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>
+            <div style="font-size:var(--font-size-xs);color:var(--text-secondary);">3 steps completed</div>
+            <svg id="cot-done-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.2s;flex-shrink:0;color:var(--grey-600);"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div id="cot-done-details" style="max-height:0;overflow:hidden;transition:max-height 0.3s ease;">
+            <div style="padding-top:var(--space-4);padding-left:var(--space-2);">
+              <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);"><div style="width:4px;height:4px;border-radius:50%;background:var(--grey-600);flex-shrink:0;margin-top:6px;"></div><div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Fetching order data</div></div>
+              <div style="margin-left:1px;padding-left:var(--space-4);border-left:2px solid var(--grey-200);font-size:var(--font-size-xs);color:var(--text-secondary);line-height:1.6;padding-bottom:var(--space-3);">Retrieved 847 orders from the past 30 days.</div>
+              <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);"><div style="width:4px;height:4px;border-radius:50%;background:var(--grey-600);flex-shrink:0;margin-top:6px;"></div><div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Analyzing patterns</div></div>
+              <div style="margin-left:1px;padding-left:var(--space-4);border-left:2px solid var(--grey-200);font-size:var(--font-size-xs);color:var(--text-secondary);line-height:1.6;padding-bottom:var(--space-3);">Identifying top products and shipping trends across regions.</div>
+              <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);"><div style="width:4px;height:4px;border-radius:50%;background:var(--grey-600);flex-shrink:0;margin-top:6px;"></div><div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Preparing summary</div></div>
+              <div style="margin-left:1px;padding-left:var(--space-4);border-left:2px solid var(--grey-200);font-size:var(--font-size-xs);color:var(--text-secondary);line-height:1.6;">Compiling findings into a comprehensive report.</div>
+            </div>
           </div>
         </div>
 
-        <!-- Expanded Details -->
-        <div id="cot-completed-details" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
-          <div style="padding-top: var(--space-4); padding-left: var(--space-2);">
-            <!-- Step 1 -->
-            <div style="padding-left: 0;">
-              <div style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-1);">
-                <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--grey-600); flex-shrink: 0; margin-top: 6px;"></div>
-                <div style="font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: 400;">Fetching order data</div>
-              </div>
-              <div style="margin-left: 1px; padding-left: var(--space-4); border-left: 2px solid var(--grey-200); font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.6; padding-bottom: var(--space-3);">
-                Retrieved 847 orders from the past 30 days.
-              </div>
-            </div>
-
-            <!-- Step 2 -->
-            <div style="padding-left: 0;">
-              <div style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-1);">
-                <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--grey-600); flex-shrink: 0; margin-top: 6px;"></div>
-                <div style="font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: 400;">Analyzing patterns</div>
-              </div>
-              <div style="margin-left: 1px; padding-left: var(--space-4); border-left: 2px solid var(--grey-200); font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.6; padding-bottom: var(--space-3);">
-                Identifying top products and shipping trends across regions.
-              </div>
-            </div>
-
-            <!-- Step 3 -->
-            <div style="padding-left: 0;">
-              <div style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-1);">
-                <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--grey-600); flex-shrink: 0; margin-top: 6px;"></div>
-                <div style="font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: 400;">Preparing summary</div>
-              </div>
-              <div style="margin-left: 1px; padding-left: var(--space-4); border-left: 2px solid var(--grey-200); font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.6;">
-                Compiling findings into a comprehensive report.
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -1694,11 +1664,8 @@
 
     <div class="preview-box" style="position: relative; min-height: 400px; align-items: center;">
       <!-- Restart Button -->
-      <button onclick="restartFeedback()" style="position: absolute; top: var(--space-4); right: var(--space-4); background: var(--base-white); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: var(--space-2) var(--space-4); font-size: var(--font-size-xs); color: var(--text-secondary); cursor: pointer; font-family: 'Figtree', sans-serif; font-weight: 500; display: flex; align-items: center; gap: var(--space-2);">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="23 4 23 10 17 10"></polyline>
-          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-        </svg>
+      <button onclick="restartFeedback()" style="position: absolute; top: var(--space-4); right: var(--space-4); background: var(--base-white); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: var(--space-2) var(--space-4); font-size: var(--font-size-xs); color: var(--text-primary); cursor: pointer; font-family: 'Figtree', sans-serif; font-weight: 500; display: flex; align-items: center; gap: var(--space-2);">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="1 4 3 8 7 6"/></svg>
         Restart
       </button>
 
@@ -1742,9 +1709,9 @@
           </button>
         </div>
         <label style="display: block; font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-2);">What could have been better?</label>
-        <textarea id="feedback-text" style="width: 300px; height: 80px; padding: var(--space-3); border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; color: var(--text-primary); resize: none; margin-bottom: var(--space-4); box-sizing: border-box; outline: none;" placeholder="Share your feedback..."></textarea>
+        <textarea id="feedback-text" style="width: 300px; height: 80px; padding: var(--space-3); border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; color: var(--text-primary); resize: none; margin-bottom: var(--space-4); box-sizing: border-box; outline: none; transition: border-color 0.12s;" onfocus="this.style.borderColor='var(--grey-600)'" onblur="this.style.borderColor='var(--border-light)'" placeholder="Share your feedback..."></textarea>
         <div style="display: flex; justify-content: flex-end;">
-          <button onclick="submitFeedback()" style="background: var(--indigo-950); color: var(--base-white); border: none; border-radius: var(--radius-sm); padding: var(--space-2) var(--space-5); font-size: var(--font-size-sm); font-weight: 500; cursor: pointer; font-family: 'Figtree', sans-serif;">
+          <button onclick="submitFeedback()" style="background: var(--indigo-950); color: var(--base-white); border: none; border-radius: var(--radius-xs); height: 32px; padding: 0 var(--space-5); font-size: var(--font-size-sm); font-weight: 500; cursor: pointer; font-family: 'Figtree', sans-serif;">
             Submit
           </button>
         </div>
@@ -1903,81 +1870,42 @@
   <!-- CLARIFICATION CARD -->
   <div class="page" id="page-clarification-card">
     <h1 class="page-title">Clarification Card</h1>
-    <p class="page-subtitle">A card component that visually represents a clarification flow — used when AI needs to narrow an ambiguous request before choosing a response pattern.</p>
+    <p class="page-subtitle">A card component that visually represents a clarification flow. Use it when AI needs to narrow an ambiguous request before choosing a response pattern.</p>
 
-    <div class="preview-box">
-        <div class="clarification-card" id="clarify-card-radio" style="width: 357px;">
-          <div class="clarification-card__header">
-            <span class="clarification-card__step">Step 2 of 4</span>
-          </div>
-          <div class="clarification-card__body">
-            <div class="clarification-card__question">What do you want to filter by?</div>
-            <div class="clarification-card__radio-options" id="clarification-radio-options">
-              <button class="clarification-card__radio-option" onclick="selectRadioOption(this, 'date')">
-                <span class="clarification-card__radio-circle"></span>
-                <span class="clarification-card__radio-text">
-                  <span class="clarification-card__radio-title">Date range</span>
-                  <!-- <span class="clarification-card__radio-desc">Filter orders by a specific time period</span> -->
-                </span>
-              </button>
-              <button class="clarification-card__radio-option" onclick="selectRadioOption(this, 'carrier')">
-                <span class="clarification-card__radio-circle"></span>
-                <span class="clarification-card__radio-text">
-                  <span class="clarification-card__radio-title">Carrier or service</span>
-                  <!-- <span class="clarification-card__radio-desc">Filter by shipping carrier or service type</span> -->
-                </span>
-              </button>
-              <button class="clarification-card__radio-option" onclick="selectRadioOption(this, 'status')">
-                <span class="clarification-card__radio-circle"></span>
-                <span class="clarification-card__radio-text">
-                  <span class="clarification-card__radio-title">Order status</span>
-                  <!-- <span class="clarification-card__radio-desc">Filter by shipped, pending, or failed</span> -->
-                </span>
-              </button>
-              <button class="clarification-card__radio-option" onclick="selectRadioOption(this, 'cost')">
-                <span class="clarification-card__radio-circle"></span>
-                <span class="clarification-card__radio-text">
-                  <span class="clarification-card__radio-title">Cost threshold</span>
-                  <!-- <span class="clarification-card__radio-desc">Filter orders above or below a spend amount</span> -->
-                </span>
-              </button>
-            </div>
-          </div>
-          <div class="clarification-card__footer">
-            <button class="clarification-card__back">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-              Back
-            </button>
-            <button class="clarification-card__next" disabled>Next</button>
-          </div>
-        </div>
+    <div style="display:flex;gap:var(--space-2);margin-bottom:var(--space-4);">
+      <button class="toggle-btn active" onclick="switchClarifyVariant('single', event)">Single select</button>
+      <button class="toggle-btn" onclick="switchClarifyVariant('multi', event)">Multi select</button>
+      <button class="toggle-btn" onclick="switchClarifyVariant('multistep', event)">Multi step</button>
+    </div>
+    <div class="preview-box" id="clarify-variant-preview" style="min-height:480px;">
+      <div class="clarification-card" id="clarify-card-radio"></div>
     </div>
 
     <div class="section-title">When to use</div>
-    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
-      <li>The user's request could go in multiple directions</li>
-      <li>Required information is missing before AI can respond</li>
-      <li>The AI needs the user to choose a path before proceeding</li>
-    </ul>
-
-    <div class="section-title">Guidelines</div>
-    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
-      <li>Ask one clarifying question — not multiple at once</li>
-      <li>Offer 2–4 concrete options when possible</li>
-      <li>Acknowledge the user's intent before asking</li>
-      <li>Keep the question short and focused</li>
-    </ul>
-
-    <div class="section-title">When to use what</div>
-    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--border-light); border-radius: var(--radius-sm); margin-bottom: var(--space-10); overflow: hidden;">
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
-        <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">Clarification card</div>
-        <div style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6;">Multiple structured choices or a higher-risk decision.</div>
+    <p style="font-size: var(--font-size-md); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-6);">Use when the assistant needs the user to choose between multiple valid interpretations before it can produce the right answer, chart, filtered view, or action.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-6);">
+      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6);">
+        <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Use when</div>
+        <ul style="font-size: var(--font-size-sm); color: var(--text-primary); padding-left: var(--space-5); line-height: 1.8; margin: 0;">
+          <li>A term has multiple meanings, like "print volume"</li>
+          <li>The requested object is unclear, like "show me problem shipments"</li>
+          <li>The scope is missing: location, timeframe, carrier, store, or account</li>
+          <li>The AI needs a decision before taking action</li>
+          <li>Guessing could produce the wrong data or wrong workflow</li>
+        </ul>
       </div>
-      <div style="padding: var(--space-6);">
-        <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">Prompt chips</div>
-        <div style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6;">Optional next steps after the AI has already responded.</div>
+      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6);">
+        <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Avoid when</div>
+        <ul style="font-size: var(--font-size-sm); color: var(--text-primary); padding-left: var(--space-5); line-height: 1.8; margin: 0;">
+          <li>The AI can answer with a reasonable default</li>
+          <li>The ambiguity is low risk</li>
+          <li>Prompt chips would be enough for optional follow-up</li>
+          <li>The user already provided enough context</li>
+        </ul>
       </div>
+    </div>
+    <div style="background:var(--grey-050);border-radius:var(--radius-sm);padding:var(--space-5) var(--space-6);font-size:var(--font-size-sm);color:var(--text-secondary);line-height:1.7;margin-bottom:var(--space-10);">
+      <strong style="color:var(--text-primary);">Key difference:</strong> Clarification card = required input before continuing. Prompt chips = optional next steps after answering.
     </div>
   </div>
 
@@ -1987,30 +1915,27 @@
     <h1 class="page-title">Typing Text</h1>
     <p class="page-subtitle">Animates AI-generated text as it streams character by character, giving users a sense of the response being composed in real time.</p>
 
-    <div class="preview-box">
+    <div class="preview-box" style="position:relative;min-height:420px;align-items:flex-start;padding-top:var(--space-12);">
+      <button onclick="restartTyping()" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--base-white);border:1px solid var(--border-light);border-radius:var(--radius-xs);padding:var(--space-2) var(--space-4);font-size:var(--font-size-xs);color:var(--text-primary);cursor:pointer;font-family:'Figtree',sans-serif;font-weight:500;display:flex;align-items:center;gap:var(--space-2);">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="1 4 3 8 7 6"/></svg>
+        Restart
+      </button>
       <div style="max-width: 520px; width: 100%;">
-        <div style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-5);">User:</div>
-        <div style="background: var(--grey-100); border-radius: var(--radius-sm); padding: var(--space-4) var(--space-5); font-size: var(--font-size-md); margin-bottom: var(--space-6);">Show me my top shipping cost this month.</div>
-        <div style="font-size: var(--font-size-md); line-height: 1.7;" id="typing-text-output"></div>
-        <div style="margin-top: var(--space-6); display: flex; gap: var(--space-3);">
-          <button class="btn" onclick="restartTyping()">Replay</button>
-        </div>
+        <div style="display:flex;justify-content:flex-end;margin-bottom:var(--space-6);"><div style="background:var(--grey-100);border-radius:var(--radius-sm);padding:var(--space-4) var(--space-5);font-size:var(--font-size-md);max-width:65%;">Show me my top shipping cost this month.</div></div>
+        <div style="font-size: var(--font-size-md); line-height: 1.7; min-height: 160px;" id="typing-text-output"></div>
       </div>
     </div>
 
     <div class="section-title">When to use</div>
     <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.8; margin-bottom: var(--space-10);">
-      <li>When streaming a response token by token from the AI model</li>
-      <li>To signal that the AI is actively generating — not loading</li>
-      <li>For short to medium-length responses where the effect feels natural</li>
+      <li>Streaming text from the AI response as it is generated</li>
+      <li>Showing that AI is actively writing, not stuck or loading</li>
     </ul>
 
     <div class="section-title">Guidelines</div>
     <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.8; margin-bottom: var(--space-10);">
-      <li>Keep the cursor blinking to indicate active generation</li>
-      <li>Do not use for tables, structured data, or very long responses</li>
-      <li>Remove the cursor immediately when the response completes</li>
-      <li>Pair with a skeleton or spinner for the initial loading state before text begins</li>
+      <li>Use AI thinking before text begins.</li>
+      <li>Stream only text-based responses.</li>
     </ul>
   </div>
 
@@ -2019,28 +1944,28 @@
 <script>
   const assistExamples = [
     { query: "Where do I find my API keys?", rows: [
-      { label: "Answer", text: "You can find API keys in Settings." },
-      { label: "Guidance", text: "Settings → Developer → API Keys" },
+      { label: "Answer", text: "You can find <strong>API keys</strong> in Settings." },
+      { label: "Guidance", text: "<strong>Settings > Developer > API Keys</strong>" },
       { label: "Next step", btn: "Open API Keys" }
     ]},
     { query: "How do I void a label?", rows: [
-      { label: "Answer", text: "You can void a label within 30 days of purchase." },
-      { label: "Guidance", text: "Go to Shipments → find the label → click Void" },
+      { label: "Answer", text: "You can void a label within <strong>30 days of purchase</strong>, as long as it hasn't been picked up by the carrier." },
+      { label: "Guidance", steps: ["Go to <strong>Shipments</strong>", "Find the label you want to void", "Click the label to open details", "Select <strong>Void label</strong>"] },
       { label: "Next step", btn: "Go to Shipments" }
     ]},
     { query: "Why can't I connect my store?", rows: [
-      { label: "Answer", text: "This is usually an auth or permissions issue." },
-      { label: "Guidance", text: "Check store credentials and reconnect in Settings → Stores" },
+      { label: "Answer", text: "This is usually a credentials or permissions issue with your store." },
+      { label: "Guidance", steps: ["Go to Settings > <strong>Stores</strong>", "Select your store and click <strong>Reconnect</strong>", "Re-enter your store credentials", "If the error persists, check that <strong>API access is enabled</strong> in your store admin"] },
       { label: "Next step", btn: "Go to Store Settings" }
     ]},
     { query: "Find orders from John Smith last week.", rows: [
-      { label: "Answer", text: "Found 3 orders from John Smith." },
-      { label: "Guidance", text: "Showing results from June 1–7" },
+      { label: "Answer", text: "Found <strong>3 orders</strong> from John Smith." },
+      { label: "Guidance", text: "Showing results from <strong>June 1–7</strong>" },
       { label: "Next step", btn: "View all orders" }
     ]},
     { query: "What product cost me the most?", rows: [
-      { label: "Answer", text: "Your highest cost product was Priority Mail at $142." },
-      { label: "Guidance", text: "Based on orders from the last 30 days" },
+      { label: "Answer", text: "Your highest cost product was <strong>Priority Mail at $142</strong>." },
+      { label: "Guidance", text: "Based on orders from the <strong>last 30 days</strong>" },
       { label: "Next step", btn: "View cost report" }
     ]},
     { query: "Can you fix this carrier outage?", rows: [
@@ -2061,10 +1986,14 @@
       message: "I'd like to help. Can you tell me more about what's happening?",
       chips: ["Label not printing", "Store not connecting", "Order not syncing", "Carrier error"]
     },
-    { title: "Create a rule", route: "Route after clarification: Configure",
+    { title: "Create a rule", route: "Route after clarification: Configure. Use a clarification card to collect required inputs.",
       query: "Create a rule",
       message: "Sure! What should this rule do?",
-      chips: ["Route orders by carrier", "Apply insurance automatically", "Filter by order weight", "Set default packaging"]
+      chips: ["Route orders by carrier", "Apply insurance automatically", "Filter by order weight", "Set default packaging"],
+      cardAfterChip: {
+        question: "Which orders should this rule apply to?",
+        options: ["All orders", "Orders above a cost threshold", "Orders by carrier or service", "Orders by destination zone"]
+      }
     },
     { title: "Help with labels", route: "Route after clarification: Assist",
       query: "Help with labels",
@@ -2076,23 +2005,17 @@
       message: "I can help optimize your workflow. Where would you like to start?",
       chips: ["Automate order routing", "Reduce manual steps", "Speed up label creation", "Review carrier performance"]
     },
-    { title: "Clarification card", route: "Route after clarification: Assist or Configure",
-      type: "card",
-      query: "Help me fix my shipments",
-      question: "What do you want help with?",
-      options: ["Delayed shipments", "Failed label creation", "Tracking not updating", "Carrier exceptions"]
-    }
   ];
 
   const configureExamples = [
     { query: "Create a rule to use UPS Ground for orders over $50",
       confirmIntent: "Here is a draft of your automation rule based on the order total threshold you requested:",
-      planPreview: `<strong>Rule Name:</strong> UPS Ground for High-Value Orders (or any name you prefer).<br><br><strong>Criteria:</strong> Order Total → Is Greater Than → [Enter Dollar Amount].<br><br><strong>Actions:</strong> Set Carrier/Service/Package → UPS → UPS Ground → Package`,
+      planPreview: `<strong>Rule Name:</strong> UPS Ground for High-Value Orders (or any name you prefer).<br><br><strong>Criteria:</strong> Order Total is greater than [Enter Dollar Amount].<br><br><strong>Actions:</strong> Set Carrier → UPS → UPS Ground`,
       nextSteps: ["Apply rule", "Cancel"]
     },
     { query: "Change these orders to FedEx Ground",
       confirmIntent: "I'll update the selected orders to use FedEx Ground. Here's a summary of what will change:",
-      planPreview: `<strong>Orders affected:</strong> 12 orders currently assigned to other carriers.<br><br><strong>Change:</strong> Carrier → FedEx → FedEx Ground.<br><br><strong>Note:</strong> Rate differences may apply. Review before confirming.`,
+      planPreview: `<strong>Orders affected:</strong> 12 orders currently assigned to other carriers.<br><br><strong>New carrier:</strong> FedEx Ground.<br><br><strong>Note:</strong> Rate differences may apply. Review before confirming.`,
       nextSteps: ["Confirm update", "Cancel"]
     }
   ];
@@ -2103,11 +2026,11 @@
       items: ["Check carrier status", "View affected shipments", "Contact support"]
     },
     { query: "Refund all of these labels for me.", note: "Deep Link", type: "btns",
-      response: "I can't refund these automatically here. You can review eligible labels and start the refund process from the Labels page.",
+      response: "I <strong>can't refund these automatically</strong> here. You can review eligible labels and start the refund process from the <strong>Labels page</strong>.",
       items: ["Go to Labels"]
     },
     { query: "Talk to support for me.", note: "Support handoff", type: "btns",
-      response: "I can't contact support from here, but you can continue in Help Center to get support.",
+      response: "I can't contact support from here, but you can continue in <strong>Help Center</strong> to get support.",
       items: ["Get Support"]
     }
   ];
@@ -2129,9 +2052,16 @@
 
     ex.rows.forEach(row => {
       if (row.label === 'Answer') {
-        document.getElementById('assist-answer').textContent = row.text;
+        document.getElementById('assist-answer').innerHTML = row.text;
       } else if (row.label === 'Guidance') {
-        document.getElementById('assist-guidance').textContent = row.text;
+        const el = document.getElementById('assist-guidance');
+        if (row.steps) {
+          el.innerHTML = row.steps.map((s, i) =>
+            `<div style="margin-bottom:var(--space-2);">${i+1}. ${s}</div>`
+          ).join('');
+        } else {
+          el.innerHTML = row.text;
+        }
       } else if (row.label === 'Next step' && row.btn) {
         document.getElementById('assist-nextstep').textContent = row.btn;
       }
@@ -2171,6 +2101,12 @@
           <div class="user-query-right">${ex.query}</div>
         </div>
         <div class="clarification-card" style="width:100%">
+          <div class="clarification-card__header">
+            <span></span>
+            <button class="clarification-card__close" aria-label="Close">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
           <div class="clarification-card__body">
             <div class="clarification-card__question">${ex.question}</div>
             <div class="clarification-card__radio-options">${options}</div>
@@ -2187,22 +2123,68 @@
       return;
     }
 
-    let chips = ex.chips.map(c => `<button class="prompt-chip">${c}</button>`).join('');
+    let chips = ex.chips.map((c, i) =>
+      `<button class="prompt-chip" ${ex.cardAfterChip ? `onclick="showClarifyCard(this, ${i})"` : ''}>${c}</button>`
+    ).join('');
     document.getElementById('clarification-preview').innerHTML = `
       <div style="overflow:hidden">
         <div class="user-query-right">${ex.query}</div>
       </div>
       <div class="ai-message">${ex.message}</div>
-      <div class="prompt-chips">${chips}</div>
+      <div class="prompt-chips" id="clarify-chips">${chips}</div>
+      <div id="clarify-card-slot"></div>
       <div class="chat-input-mock"><span class="plus">+</span><span class="send">↑</span></div>
     `;
+  }
+
+  function showClarifyCard(btn, idx) {
+    const ex = clarificationExamples.find(e => e.cardAfterChip);
+    if (!ex) return;
+    const chipLabel = btn.textContent;
+    document.getElementById('clarify-chips').style.display = 'none';
+    const card = ex.cardAfterChip;
+    const options = card.options.map(o => `
+      <button class="clarification-card__radio-option" onclick="selectRadioOption(this)">
+        <span class="clarification-card__radio-circle"></span>
+        <span class="clarification-card__radio-text"><span class="clarification-card__radio-title">${o}</span></span>
+      </button>`).join('');
+    document.getElementById('clarify-card-slot').innerHTML = `
+      <div style="overflow:hidden;margin-bottom:var(--space-2);">
+        <div class="user-query-right">${chipLabel}</div>
+      </div>
+      <div class="ai-message" style="margin-bottom:var(--space-4);">Got it. To set up this rule, I need a few details first.</div>
+      <div class="clarification-card" style="width:100%;">
+        <div class="clarification-card__header">
+          <span class="clarification-card__step">Step 1 of 3</span>
+          <button class="clarification-card__close" onclick="hideClarifyCard()" aria-label="Close">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="clarification-card__body">
+          <div class="clarification-card__question">${card.question}</div>
+          <div class="clarification-card__radio-options">
+            ${options}
+            <input type="text" class="clarification-card__input" placeholder="Or type it here…" style="margin-top:var(--space-5);height:32px;border-radius:var(--radius-xs);border-color:var(--grey-300);" onfocus="this.style.borderColor='var(--grey-600)'" onblur="this.style.borderColor='var(--grey-300)'" />
+          </div>
+        </div>
+        <div class="clarification-card__footer">
+          <span></span>
+          <button class="clarification-card__next" disabled>Next</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function hideClarifyCard() {
+    document.getElementById('clarify-card-slot').innerHTML = '';
+    document.getElementById('clarify-chips').style.display = '';
   }
 
   function renderConfigurePreview(idx) {
     const ex = configureExamples[idx];
     let btns = ex.nextSteps.map(s => `<button class="btn">${s}</button>`).join('');
     document.getElementById('configure-preview').innerHTML = `
-      <div class="configure-query"><span>User:</span><strong>${ex.query}</strong></div>
+      <div class="user-bubble"><span>User:</span><strong>${ex.query}</strong></div>
       <div class="configure-response-row">
         <div class="configure-label">Confirm Intent</div>
         <div class="configure-content">${ex.confirmIntent}</div>
@@ -2259,7 +2241,7 @@
   function renderEscalationPreview(idx) {
     const ex = escalationExamples[idx];
     document.getElementById('escalation-preview').innerHTML = `
-      <div class="user-bubble"><span>User:</span>${ex.query}</div>
+      <div style="overflow:hidden;margin-bottom:var(--space-4)"><div class="user-query-right">${ex.query}</div></div>
       <div class="ai-message" style="margin-bottom:var(--space-4)">${ex.response}</div>
       <div style="margin-bottom:var(--space-4)">
         <button class="btn">${ex.btn}</button>
@@ -2278,18 +2260,18 @@
 
   const insightExamples = [
     { title: "Savings Insight",
-      desc: "Use when AI identifies a cost-saving opportunity and prompts the user to explore potential savings.",
+      desc: "AI detects a cost-saving opportunity and surfaces it proactively. <strong>Use Insight</strong> because the AI noticed it first. If the user had asked \"What product cost me the most?\", use Assist instead.",
       html: `
         <div>
           <img src="img/Insight/image 32.png" alt="Savings Insight" style="width:100%;height:auto;display:block;" />
         </div>`
     },
     { title: "Label Failures",
-      desc: "Use when AI detects a problem or risk the user may not have noticed.",
+      desc: "AI detects a spike in label failures the user may not have noticed. <strong>Use Insight</strong> because the AI proactively surfaced the issue. If the user had asked \"Why are my labels failing?\", use Assist instead.",
       html: `<div style="font-size:var(--font-size-sm);color:var(--text-secondary)">Label failure detection and alerting visualization.</div>`
     },
     { title: "Opportunity Insight",
-      desc: "Use when AI detects a workflow or automation opportunity.",
+      desc: "AI detects a workflow or automation opportunity and recommends acting on it. <strong>Use Insight</strong> because the AI noticed the opportunity. If the user wants to apply it, move to Configure.",
       html: `<div style="font-size:var(--font-size-sm);color:var(--text-secondary)">Workflow optimization and automation opportunity detection.</div>`
     }
   ];
@@ -2297,7 +2279,7 @@
   function renderInsightPreview(idx) {
     const ex = insightExamples[idx];
     document.getElementById('insight-preview').innerHTML = `
-      <div style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-5)">${ex.desc}</div>
+      <div style="font-size:var(--font-size-sm);color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">${ex.desc}</div>
       ${ex.html}
     `;
   }
@@ -2318,13 +2300,13 @@
     ],
     'guardrails': [],
     'ui-patterns': [
-      { page: 'chain-of-thought',   label: 'Chain of Thought' },
-      { page: 'feedback-bar',       label: 'Feedback Bar' },
       { page: 'ai-thinking',        label: 'AI Thinking' },
+      { page: 'buttons-ctas',       label: 'Buttons & CTAs' },
+      { page: 'chain-of-thought',   label: 'Chain of Thought' },
+      { page: 'clarification-card', label: 'Clarification Card' },
+      { page: 'feedback-bar',       label: 'Feedback Bar' },
       { page: 'input-assisted',     label: 'Generated Content' },
       { page: 'prompt-chips',       label: 'Prompt Chips' },
-      { page: 'buttons-ctas',       label: 'Buttons & CTAs' },
-      { page: 'clarification-card', label: 'Clarification Card' },
       { page: 'typing-text',        label: 'Typing Text' },
     ],
   };
@@ -2332,6 +2314,7 @@
   // Map every page back to its category
   const pageToCategory = {
     'principles': 'principles',
+
     'response-patterns': 'response-patterns',
     'guardrails': 'response-patterns',
     'ui-patterns': 'ui-patterns',
@@ -2410,6 +2393,7 @@
     if (pushState) history.pushState({ page: pageId }, '', '#' + pageId);
     resetPageInteractions();
     if (pageId === 'typing-text') setTimeout(runTyping, 200);
+    if (pageId === 'chain-of-thought') setTimeout(cotReplay, 400);
   }
 
   window.addEventListener('popstate', (e) => {
@@ -2549,6 +2533,92 @@
     btn.style.cursor = 'pointer';
     btn.style.opacity = '1';
     btn.style.color = 'var(--text-primary)';
+  }
+
+  var _cotSteps = ['Fetching order data…', 'Analyzing patterns…', 'Preparing summary…'];
+  var _cotTimers = [];
+
+  function cotToggleSteps() {
+    var c = document.getElementById('cot-steps-container');
+    var ch = document.getElementById('cot-steps-chevron');
+    if (!c) return;
+    var open = c.style.maxHeight && c.style.maxHeight !== '0px';
+    c.style.maxHeight = open ? '0' : '400px';
+    if (ch) ch.style.transform = open ? '' : 'rotate(180deg)';
+  }
+
+  function cotReplay() {
+    var l = document.getElementById('cot-combined-loading');
+    var c = document.getElementById('cot-combined-completed');
+    var label = document.getElementById('cot-current-step');
+    var container = document.getElementById('cot-steps-container');
+    var chevron = document.getElementById('cot-steps-chevron');
+    if (!l || !c) return;
+
+    // Clear any running timers
+    _cotTimers.forEach(clearTimeout);
+    _cotTimers = [];
+
+    // Reset
+    c.style.display = 'none';
+    l.style.display = 'block';
+    if (container) { container.style.maxHeight = '0'; }
+    if (chevron) chevron.style.transform = '';
+    if (label) label.textContent = '';
+    ['cot-step1','cot-step2','cot-step3'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) el.style.opacity = '0';
+    });
+    [1,2,3].forEach(function(n){
+      var d = document.getElementById('cot-dot'+n);
+      if(d){ d.className = 'cot-dot'; }
+    });
+
+    function cotSetActive(activeNum) {
+      [1,2,3].forEach(function(n){
+        var d = document.getElementById('cot-dot'+n);
+        if(!d) return;
+        d.className = 'cot-dot';
+        if(n < activeNum) d.classList.add('cot-dot--done');
+        else if(n === activeNum) d.classList.add('cot-dot--active');
+      });
+    }
+
+    // Step 1 active immediately
+    cotSetActive(1);
+    if(label) label.textContent = _cotSteps[0];
+
+    _cotTimers.push(setTimeout(function(){
+      var e = document.getElementById('cot-step1');
+      if(e) e.style.opacity='1';
+      cotSetActive(1);
+      if(label) label.textContent = _cotSteps[0];
+    }, 500));
+    _cotTimers.push(setTimeout(function(){
+      var e = document.getElementById('cot-step2');
+      if(e) e.style.opacity='1';
+      cotSetActive(2);
+      if(label) label.textContent = _cotSteps[1];
+    }, 1500));
+    _cotTimers.push(setTimeout(function(){
+      var e = document.getElementById('cot-step3');
+      if(e) e.style.opacity='1';
+      cotSetActive(3);
+      if(label) label.textContent = _cotSteps[2];
+    }, 2800));
+    _cotTimers.push(setTimeout(function(){
+      l.style.display = 'none';
+      c.style.display = 'block';
+    }, 4000));
+  }
+
+  function cotToggleCompleted() {
+    var details = document.getElementById('cot-done-details');
+    var chevron = document.getElementById('cot-done-chevron');
+    if (!details) return;
+    var open = details.style.maxHeight !== '0px' && details.style.maxHeight !== '';
+    details.style.maxHeight = open ? '0' : '500px';
+    if (chevron) chevron.style.transform = open ? '' : 'rotate(180deg)';
   }
 
   function toggleCompletedCOT() {
@@ -2739,7 +2809,7 @@
       } else {
         clearInterval(_typingTimer);
       }
-    }, 30);
+    }, 18);
   }
 
   function restartTyping() { runTyping(); }
@@ -2754,6 +2824,184 @@
     const nextBtn = card.querySelector('.clarification-card__next');
     if (nextBtn) nextBtn.disabled = !hasSelection;
   }
+
+  // ── Clarification card variant switcher ──────────────────────────────
+  let clarifyVariant = 'single';
+  let multiStepStep = 1;
+
+  const singleOpts = [
+    { id:'date',    title:'Date range',       desc:'Filter orders by a specific time period' },
+    { id:'carrier', title:'Carrier or service',desc:'Filter by shipping carrier or service type' },
+    { id:'status',  title:'Order status',     desc:'Filter by shipped, pending, or failed' },
+    { id:'cost',    title:'Cost threshold',   desc:'Filter orders above or below a spend amount' },
+  ];
+
+  const multiOpts = [
+    { id:'delayed',    title:'Delayed pickups',       desc:'Carrier has not scanned the package' },
+    { id:'failed',     title:'Failed label creation', desc:'Label could not be generated' },
+    { id:'tracking',   title:'Tracking not updating', desc:'No scan events in the last 48 hours' },
+    { id:'exceptions', title:'Carrier exceptions',    desc:'Delivery attempted, address issue, etc.' },
+  ];
+
+  const multiSteps = [
+    { key:'type',      label:'Print type',  type:'single', question:"What does 'print volume' refer to?",
+      options:[
+        { id:'labels', title:'Shipping labels printed', desc:'Number of labels printed per location' },
+        { id:'orders', title:'Orders fulfilled',        desc:'Fulfillment volume by location' },
+        { id:'pod',    title:'Print-on-demand orders',  desc:'Orders from a POD app by location' },
+        { id:'other',  title:'Something else',          desc:'A different type of print volume' },
+      ]},
+    { key:'period',    label:'Time period', type:'single', question:'Which time period?',
+      options:[
+        { id:'7d',      title:'Last 7 days',  desc:'Rolling 7-day window' },
+        { id:'30d',     title:'Last 30 days', desc:'Rolling 30-day window' },
+        { id:'quarter', title:'This quarter', desc:'Current fiscal quarter' },
+        { id:'custom',  title:'Custom range', desc:'Pick your own dates' },
+      ]},
+    { key:'breakdown', label:'Breakdown',   type:'multi',  question:'Break down results by?',
+      hint:'Select all that apply',
+      options:[
+        { id:'location', title:'Location',      desc:'Each fulfillment center' },
+        { id:'carrier',  title:'Carrier',       desc:'UPS, FedEx, USPS, etc.' },
+        { id:'sku',      title:'SKU / Product', desc:'Per product line' },
+        { id:'none',     title:'No breakdown',  desc:'Show total summary only' },
+      ]},
+  ];
+
+  const checkSVG = `<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5L4 7.5L8.5 2.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const backSVG  = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const closeSVG = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1.5 1.5L10.5 10.5M10.5 1.5L1.5 10.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>`;
+
+  function ccOptionRow(opt, i, variant, checked, onclick) {
+    const isMulti = variant === 'multi';
+    const selectedClass = checked ? 'cc-option--selected' : '';
+    const left = isMulti
+      ? `<span class="cc-checkbox"></span>`
+      : `<span class="cc-num">${i+1}.</span>`;
+    const right = !isMulti ? `<span class="cc-check">${checkSVG}</span>` : '';
+    return `<button class="cc-option cc-option--${isMulti?'multi':'single'} ${selectedClass}" onclick="${onclick}">
+      <span class="cc-option__left">${left}</span>
+      <span class="cc-option__text">
+        <span class="cc-option__title">${opt.title}</span>
+        ${opt.desc ? `<span class="cc-option__desc">${opt.desc}</span>` : ''}
+      </span>
+      <span class="cc-option__right">${right}</span>
+    </button>`;
+  }
+
+  function ccAskRow() {
+    return `<div class="cc-ask"><div class="cc-ask__inner"><input class="cc-ask__input" placeholder="Or something else…" /></div></div>`;
+  }
+
+  function ccHeader(question, hint) {
+    return `
+      <div class="clarification-card__header">
+        <div class="clarification-card__header-left">
+          <div class="clarification-card__question">${question}</div>
+          ${hint ? `<div class="clarification-card__hint">${hint}</div>` : ''}
+        </div>
+        <button class="clarification-card__close" onclick="renderClarifyVariant()" aria-label="Close">${closeSVG}</button>
+      </div>`;
+  }
+
+  function renderClarifyVariant() {
+    const card = document.getElementById('clarify-card-radio');
+    if (!card) return;
+
+    if (clarifyVariant === 'single') {
+      card.innerHTML = `
+        ${ccHeader("What do you want to filter by?")}
+        <div class="clarification-card__body">
+          ${singleOpts.map((o,i) => ccOptionRow(o, i, 'single', false, `ccSelectSingle(this)`)).join('')}
+          ${ccAskRow()}
+        </div>
+        <div class="clarification-card__footer">
+          <span></span>
+          <button class="clarification-card__next" disabled>Next</button>
+        </div>`;
+
+    } else if (clarifyVariant === 'multi') {
+      card.innerHTML = `
+        ${ccHeader("Which carrier issues do you want to flag?", "Select all that apply")}
+        <div class="clarification-card__body">
+          ${multiOpts.map((o,i) => ccOptionRow(o, i, 'multi', false, `ccSelectMulti(this)`)).join('')}
+          ${ccAskRow()}
+        </div>
+        <div class="clarification-card__footer">
+          <span></span>
+          <button class="clarification-card__next" disabled>Apply</button>
+        </div>`;
+
+    } else if (clarifyVariant === 'multistep') {
+      renderMultiStepVariant();
+    }
+  }
+
+  function ccSelectSingle(btn) {
+    const card = btn.closest('.clarification-card');
+    const wasSelected = btn.classList.contains('cc-option--selected');
+    card.querySelectorAll('.cc-option--single').forEach(b => b.classList.remove('cc-option--selected'));
+    if (!wasSelected) btn.classList.add('cc-option--selected');
+    const hasSelection = card.querySelectorAll('.cc-option--selected').length > 0;
+    card.querySelector('.clarification-card__next').disabled = !hasSelection;
+  }
+
+  function ccSelectMulti(btn) {
+    btn.classList.toggle('cc-option--selected');
+    const card = btn.closest('.clarification-card');
+    const hasSelection = card.querySelectorAll('.cc-option--selected').length > 0;
+    card.querySelector('.clarification-card__next').disabled = !hasSelection;
+  }
+
+  function renderMultiStepVariant() {
+    const card = document.getElementById('clarify-card-radio');
+    const step = multiSteps[multiStepStep - 1];
+    const isMulti = step.type === 'multi';
+    const total = multiSteps.length;
+
+    const dots = `<div class="cc-dots">
+      ${multiStepStep > 1 ? `<button onclick="multiStepNav(-1)" style="background:none;border:none;cursor:pointer;color:var(--text-secondary);padding:0;display:flex;margin-right:2px;">${backSVG}</button>` : ''}
+      <div style="display:flex;gap:4px;">
+        ${multiSteps.map((_,i) => `<div class="cc-dot ${i < multiStepStep-1 ? 'cc-dot--done' : i === multiStepStep-1 ? 'cc-dot--active' : 'cc-dot--future'}"></div>`).join('')}
+      </div>
+      <span class="cc-step-count">${multiStepStep} / ${total}</span>
+    </div>`;
+
+    const nextLabel = multiStepStep === total ? 'Finish' : 'Next';
+
+    card.innerHTML = `
+      <div class="clarification-card__header">
+        <div class="clarification-card__header-left">
+          ${dots}
+          <div class="clarification-card__question">${step.question}</div>
+          ${step.hint ? `<div class="clarification-card__hint">${step.hint}</div>` : ''}
+        </div>
+        <button class="clarification-card__close" onclick="renderClarifyVariant()" aria-label="Close">${closeSVG}</button>
+      </div>
+      <div class="clarification-card__body">
+        ${step.options.map((o,i) => ccOptionRow(o, i, isMulti ? 'multi' : 'single', false, isMulti ? 'ccSelectMulti(this)' : 'ccSelectSingle(this)')).join('')}
+        ${ccAskRow()}
+      </div>
+      <div class="clarification-card__footer">
+        <button class="clarification-card__back" onclick="multiStepNav(1)">Skip</button>
+        <button class="clarification-card__next" disabled onclick="multiStepNav(1)">${nextLabel}</button>
+      </div>`;
+  }
+
+  function switchClarifyVariant(variant, e) {
+    clarifyVariant = variant;
+    multiStepStep = 1;
+    document.querySelectorAll('#page-clarification-card .toggle-btn').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    renderClarifyVariant();
+  }
+
+  function multiStepNav(dir) {
+    multiStepStep = Math.max(1, Math.min(multiSteps.length, multiStepStep + dir));
+    renderMultiStepVariant();
+  }
+
+  renderClarifyVariant();
 
   function resetPageInteractions() {
     // Feedback bar
@@ -2848,6 +3096,7 @@
     document.getElementById('clarification-card-input').value = '';
   }
 </script>
+
 
 </body>
 </html>
