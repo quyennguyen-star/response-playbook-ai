@@ -31,7 +31,12 @@
       "Bash(gh repo *)",
       "WebFetch(domain:mantine.dev)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(python3 *)"
+      "Bash(python3 *)",
+      "Bash(open *)",
+      "Bash(sed -n '33,692p' \"/Users/quyen.nguyen/Desktop/AI Playbook/surface_interaction.html\")",
+      "Read(//tmp/**)",
+      "Bash(git checkout *)",
+      "Bash(git stash *)"
     ]
   },
   "enableAllProjectMcpServers": true,
