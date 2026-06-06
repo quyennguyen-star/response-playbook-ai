@@ -149,16 +149,15 @@ Do not use Insight + Recommend for user-requested data questions. If the user as
 | AI detects label failures spiked | Insight + Recommend | The AI proactively surfaced an issue. |
 | AI detects a possible automation opportunity | Insight + Recommend | The AI proactively surfaced an opportunity. |
 
-### Insight + Recommend anatomy
+### Proactive insight anatomy
 
-Insight → Supporting signal/source → Recommendation → Next step
+An insight proactively surfaces a meaningful trend, risk, opportunity, savings, or workflow improvement before the user asks.
 
 | Part | Purpose |
 |---|---|
-| **Insight** | The proactive observation. |
-| **Supporting signal/source** | The data, documentation, or signal that explains why the insight is being shown. |
-| **Recommendation** | What the AI suggests the user should do next. |
-| **Next step** | The CTA, deep link, review action, or follow-up that helps the user act. |
+| **01 Insight** | What the AI noticed. |
+| **02 Context** | Why the insight is being shown. Include supporting data or source when helpful. |
+| **03 Recommendation / Next step** | What the user should do next. |
 
 **Decision rule:** If the AI notices it first, use Insight + Recommend. If the user asks for it first, use Assist. If the user wants to apply or create something from the insight, move to Configure.
 

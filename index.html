@@ -65,7 +65,7 @@
       padding: var(--space-6);
     }
     .sidebar-logo-text { font-size: var(--font-size-md); font-weight: 600; }
-    .sidebar-nav { padding: var(--space-4) 0; flex: 1; overflow-y: auto; }
+    .sidebar-nav { padding: var(--space-4) 0; flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: flex-start; }
     .nav-section-label {
       font-size: var(--font-size-xs); font-weight: 600;
       color: var(--text-secondary); text-transform: uppercase;
@@ -775,13 +775,16 @@
     /* USE CASE TABLE */
     .uc-table {
       width: 100%;
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
       margin-bottom: var(--space-10);
       border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
     }
     .uc-table th {
       text-align: left;
-      padding: var(--space-3) var(--space-4);
+      padding: var(--space-6);
       background: var(--grey-050);
       border-bottom: 1px solid var(--border-light);
       font-size: var(--font-size-xs);
@@ -789,7 +792,7 @@
       color: var(--text-primary);
     }
     .uc-table td {
-      padding: var(--space-4) var(--space-4);
+      padding: var(--space-6);
       border-bottom: 1px solid var(--border-light);
       font-size: var(--font-size-sm);
       vertical-align: top;
@@ -797,6 +800,23 @@
     .uc-table tr:last-child td {
       border-bottom: none;
     }
+    /* Anatomy grids */
+    .anatomy-grid {
+      display: grid;
+      gap: 0;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-10);
+      overflow: hidden;
+    }
+    .anatomy-grid--3 { grid-template-columns: repeat(3, 1fr); }
+    .anatomy-grid--4 { grid-template-columns: repeat(4, 1fr); }
+    .anatomy-grid > div {
+      padding: var(--space-6);
+      border-right: 1px solid var(--border-light);
+    }
+    .anatomy-grid > div:last-child { border-right: none; }
+
     .uc-badge {
       display: inline-block;
       padding: var(--space-2) var(--space-4);
@@ -1273,16 +1293,16 @@
   <div class="page" id="page-assist">
     <h1 class="page-title">Assist</h1>
     <p class="page-subtitle">Assist helps users get answers, follow instructions, understand product or support context, and move to the right next step.</p>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+    <div class="anatomy-grid anatomy-grid--3">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">01 Answer</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Direct answer, summary, limitation statement.</div>
       </div>
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Guidance</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Path, steps, context, or supporting detail.</div>
       </div>
-      <div style="padding: var(--space-6);">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Next step</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Link, CTA, follow-up, fallback, or escalation.</div>
       </div>
@@ -1378,23 +1398,19 @@
   <!-- INSIGHT -->
   <div class="page" id="page-insight">
     <h1 class="page-title">Insight</h1>
-    <p class="page-subtitle">Insight proactively surfaces a meaningful trend, issue, risk, opportunity, savings opportunity, or workflow improvement.</p>
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+    <p class="page-subtitle">An insight proactively surfaces a meaningful trend, risk, opportunity, savings, or workflow improvement before the user asks.</p>
+    <div class="anatomy-grid anatomy-grid--3">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">01 Insight</div>
-        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">The proactive observation.</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">What the AI noticed.</div>
       </div>
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Signal / Source</div>
-        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">The data, documentation, or signal that explains why the insight is being shown.</div>
+      <div>
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Context</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Why the insight is being shown. Include supporting data or source when helpful.</div>
       </div>
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Recommendation</div>
-        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">What the AI suggests the user should do next.</div>
-      </div>
-      <div style="padding: var(--space-6);">
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">04 Next step</div>
-        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">A CTA, deep link, review action, or follow-up.</div>
+      <div>
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Recommendation / Next step</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">What the user should do next.</div>
       </div>
     </div>
     <div class="explorer-shell">
@@ -1420,16 +1436,16 @@
   <div class="page" id="page-configure">
     <h1 class="page-title">Configure</h1>
     <p class="page-subtitle">Configure helps users create, apply, or generate something with AI, such as a report, automation rule, setting, or workflow.</p>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+    <div class="anatomy-grid anatomy-grid--3">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">01 Confirm Intent</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Direct answer, Scope confirmation.</div>
       </div>
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Plan, Preview</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Configuration preview.</div>
       </div>
-      <div style="padding: var(--space-6);">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Execution, Next Steps</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Manual configuration instructions, Follow-up options, Support details.</div>
       </div>
@@ -1462,14 +1478,14 @@
       <li>The AI needs the user to choose a path before responding</li>
     </ul>
 
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+    <div class="anatomy-grid anatomy-grid--3">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
       </div>
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">02 Ask clarifying question</div>
       </div>
-      <div style="padding: var(--space-6);">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Offer options</div>
       </div>
     </div>
@@ -1512,14 +1528,14 @@
       <div class="use-when-item"><span class="bullet">·</span> The action is outside the product's current AI capability</div>
       <div class="use-when-item"><span class="bullet">·</span> The safest path is to guide, route, or escalate instead</div>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+    <div class="anatomy-grid anatomy-grid--3">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
       </div>
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">02 State the boundary</div>
       </div>
-      <div style="padding: var(--space-6);">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Offer next step</div>
       </div>
     </div>
@@ -1553,14 +1569,14 @@
       <div class="use-when-item"><span class="bullet">·</span> The user is blocked and cannot continue</div>
       <div class="use-when-item"><span class="bullet">·</span> The user explicitly asks for support</div>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border-light); margin-bottom: var(--space-10);">
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+    <div class="anatomy-grid anatomy-grid--3">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
       </div>
-      <div style="padding: var(--space-6); border-right: 1px solid var(--border-light);">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">02 Explain why escalation is needed</div>
       </div>
-      <div style="padding: var(--space-6);">
+      <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Route to support</div>
       </div>
     </div>
