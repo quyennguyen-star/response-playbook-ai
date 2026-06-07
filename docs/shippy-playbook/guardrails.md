@@ -6,6 +6,26 @@ Guardrails define when AI should pause, clarify, state a boundary, or route the 
 
 ## Clarification
 
+Use clarification when the AI needs required information before it can continue.
+
+### Two types
+
+**Intent clarification** — Use when the user's request could mean more than one product area, task, or response pattern. Helps AI determine what the user is trying to do before responding.
+
+| | |
+|---|---|
+| Example | "Show me performance." |
+| Question | "What performance do you want to review?" |
+| Options | Shipping performance, Carrier performance, Store performance, API performance |
+
+**Configuration clarification** — Use when the user's intent is clear, but required details are missing before AI can continue. Helps AI collect the information needed to draft, preview, or complete the task.
+
+| | |
+|---|---|
+| Example | "Create a report for delayed shipments." |
+| Question | "What date range should this report include?" |
+
+
 **When to use:**
 - The user's request could go in multiple directions
 - Required information is missing
@@ -30,9 +50,11 @@ Guardrails define when AI should pause, clarify, state a boundary, or route the 
 
 | Pattern | Use when | Best for |
 |---|---|---|
-| **Text asking** | The request only needs one small follow-up question. | Light clarification |
-| **Prompt chips** | There are a few clear directions the user can choose from. | Fast path selection |
-| **Refinement card** | The request is broad, multi-step, or needs more structure before AI can respond. | Bigger clarification moment |
+| **Text asking** | AI needs one open-ended or custom answer. | Light clarification |
+| **Prompt chips** | AI is offering optional follow-up paths. | Fast path selection |
+| **Refinement card** | AI needs required structured input before it can continue. | Bigger clarification moment |
+
+Do not use prompt chips for required setup details or system-changing decisions.
 
 **Clarification card vs. prompt chips:**
 - Use **prompt chips** when the AI already understands intent and wants to help the user choose a next step (optional shortcuts)
@@ -50,7 +72,7 @@ Guardrails define when AI should pause, clarify, state a boundary, or route the 
 - The safest path is to guide, route, or escalate instead
 
 **Structure:**
-1. Acknowledge the limitation clearly — do not apologize excessively
+1. Acknowledge the limitation clearly. Do not apologize excessively.
 2. Give actionable steps with **bold labels** so the user can scan what to do
 3. Offer to help with a workaround or related next step
 
@@ -95,4 +117,4 @@ Then offer prompt chips: **Check carrier status** / **Get Support** / **Pause fu
 
 **Rules:**
 - Do not leave the user without a next step
-- Always route to a specific destination (Help Center, support chat, billing page) — never a dead end
+- Always route to a specific destination (Help Center, support chat, billing page). Never leave the user without a next step.

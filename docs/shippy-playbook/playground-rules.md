@@ -16,11 +16,11 @@ Product teams use the playground to:
 
 ## Structure
 
-**Left rail — Use Case Library**
+**Left rail: Use Case Library**
 - Grouped by response pattern: Assist, Insight, Configure
 - Each row shows: use case name + recommended UI + risk level
 
-**Middle column — Test Setup**
+**Middle column: Test Setup**
 - Use case name and user intent
 - Example prompt
 - Response pattern badge
@@ -29,7 +29,7 @@ Product teams use the playground to:
 - Surface selector (Sidebar / Sheet / Modal)
 - Data source
 
-**Right panel — AI Response Preview**
+**Right panel: AI Response Preview**
 - Ask ShipStation side panel UI
 - Empty state: icon + headline + example prompt as starter chip
 - Active state: user message + scripted AI response + CTA + filter summary

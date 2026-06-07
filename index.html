@@ -67,11 +67,10 @@
     .sidebar-logo-text { font-size: var(--font-size-md); font-weight: 600; }
     .sidebar-nav { padding: var(--space-4) 0; flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: flex-start; }
     .nav-section-label {
-      font-size: var(--font-size-xs); font-weight: 600;
-      color: var(--text-secondary); text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: var(--space-5) var(--space-5) var(--space-2);
-      margin-top: var(--space-2);
+      font-size: var(--font-size-xs); font-weight: 400;
+      color: var(--text-secondary);
+      padding: var(--space-5) var(--space-5) var(--space-1);
+      margin-top: var(--space-4);
     }
     .nav-section-label:first-child { margin-top: 0; }
     .nav-item--parent { cursor: pointer; }
@@ -82,7 +81,7 @@
     
     .nav-item {
       display: block;
-      padding: var(--space-4) var(--space-5);
+      padding: var(--space-3) var(--space-4);
       font-size: var(--font-size-md);
       color: var(--text-primary);
       cursor: pointer;
@@ -90,7 +89,7 @@
       transition: background 0.1s ease, font-weight 0.1s ease;
       text-decoration: none;
       margin: 1px var(--space-3);
-      line-height: 1.5;
+      line-height: 1.4;
     }
     .nav-item:hover {
       background: var(--grey-100);
@@ -365,8 +364,8 @@
     /* CLARIFICATION CARD */
     .refinement-card {
       background: var(--base-white);
+      border: 1px solid var(--border-light);
       border-radius: var(--radius-sm);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06);
       overflow: hidden;
       width: 340px;
     }
@@ -405,9 +404,9 @@
     .refinement-card__body { padding: 0 var(--space-6) var(--space-6); }
     /* Option row — shared */
     .cc-option {
-      display: flex; align-items: center; gap: var(--space-3);
+      display: flex; align-items: flex-start; gap: var(--space-3);
       width: 100%; text-align: left;
-      padding: var(--space-3) var(--space-3);
+      padding: var(--space-2) var(--space-2);
       border-radius: var(--radius-xs);
       border: 1.5px solid transparent;
       background: transparent;
@@ -416,11 +415,11 @@
       transition: all 0.1s;
     }
     .cc-option:hover { background: var(--grey-050); }
-    .cc-option__left { width: 20px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+    .cc-option__left { width: 16px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; margin-top: 2px; }
     .cc-option__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
     .cc-option__title { font-size: var(--font-size-md); font-weight: var(--font-weight-medium); color: var(--text-primary); line-height: 1.3; }
     .cc-option__desc { font-size: var(--font-size-xs); color: var(--text-secondary); margin-top: var(--space-1); }
-    .cc-option__right { flex-shrink: 0; width: 20px; display: flex; justify-content: center; align-items: center; }
+    .cc-option__right { flex-shrink: 0; width: 14px; display: flex; justify-content: center; align-items: center; align-self: center; }
     /* Single select — numbered + check on right */
     .cc-option--single.cc-option--selected {
       border-color: var(--grey-950);
@@ -906,10 +905,88 @@
       float: right; clear: both;
     }
     .ai-message {
-      font-size: var(--font-size-sm); margin-bottom: var(--space-5);
+      font-size: var(--font-size-sm); margin-bottom: var(--space-4);
       clear: both; padding-top: var(--space-3);
     }
-    .prompt-chips { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-5); }
+    .prompt-chips { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-5); }
+    .prompt-chips--inline { flex-direction: row; flex-wrap: wrap; }
+    /* CITATION */
+    .citation {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      background: var(--grey-100); border: none; border-radius: 9999px;
+      height: 28px; padding: 0 var(--space-4) 0 var(--space-2);
+      font-size: 12px; color: var(--text-primary);
+      cursor: pointer; transition: background 0.12s;
+      font-family: 'Figtree', sans-serif; font-weight: 500;
+      text-decoration: none;
+    }
+    .citation:hover { background: var(--grey-200); }
+    .citation__icons { display: flex; align-items: center; }
+    .citation__icon {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid var(--grey-100);
+      margin-left: -6px; display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; overflow: hidden; flex-shrink: 0;
+      background: var(--base-white);
+    }
+    .citation__icon:first-child { margin-left: 0; }
+    .citation__icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .citation-tooltip {
+      display: none; position: absolute; bottom: calc(100% + 8px); left: 0;
+      background: var(--base-white); border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm); padding: var(--space-5);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04); width: 260px; z-index: 100;
+      pointer-events: none;
+    }
+    .citation--hoverable:hover .citation-tooltip { display: block; }
+
+    /* SOURCE REFERENCE */
+    .source-ref {
+      display: inline-flex; align-items: center; gap: var(--space-3);
+      background: var(--base-white); border: 1px solid var(--border-light);
+      border-radius: 9999px; padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+      cursor: pointer; transition: background 0.12s; user-select: none;
+    }
+    .source-ref:hover { background: var(--grey-050); }
+    .source-ref__icons { display: flex; align-items: center; }
+    .source-ref__icon {
+      width: 24px; height: 24px; border-radius: 50%;
+      border: 2px solid var(--base-white);
+      margin-left: -6px; background: var(--grey-100);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 600; overflow: hidden; flex-shrink: 0;
+    }
+    .source-ref__icon:first-child { margin-left: 0; }
+    .source-ref__icon img { width: 100%; height: 100%; object-fit: cover; }
+    .source-ref__more {
+      background: var(--grey-100); color: var(--text-secondary);
+      font-size: 10px; font-weight: 600;
+    }
+    .source-ref__label {
+      font-size: var(--font-size-sm); color: var(--text-primary); font-weight: 500; white-space: nowrap;
+    }
+    .source-ref__drawer {
+      background: var(--base-white); border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm); margin-top: var(--space-2);
+      overflow: hidden; display: none;
+    }
+    .source-ref__drawer.open { display: block; }
+    .source-ref__link {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: var(--space-3) var(--space-5);
+      border-bottom: 1px solid var(--border-light);
+      font-size: var(--font-size-sm); color: var(--text-primary);
+      text-decoration: none; transition: background 0.1s;
+    }
+    .source-ref__link:last-child { border-bottom: none; }
+    .source-ref__link:hover { background: var(--grey-050); }
+    .source-ref__link-icon {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--grey-100); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; overflow: hidden;
+    }
+    .source-ref__link-icon img { width: 100%; height: 100%; object-fit: cover; }
+
     .prompt-chip {
       display: inline-block; padding: var(--space-3) var(--space-5);
       border: 1px solid var(--border-light); border-radius: 9999px;
@@ -1049,7 +1126,7 @@
     <!-- Header -->
     <div style="text-align:center; padding: var(--space-12) var(--space-8) var(--space-10); max-width: 640px; margin: 0 auto;">
       <h1 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-4);">Principles</h1>
-      <p style="font-size: var(--font-size-md); color: var(--text-secondary); line-height: 1.6;">Use these principles to make responses clear, useful, and consistent across patterns.</p>
+      <p style="font-size: var(--font-size-md); color: var(--text-secondary); line-height: 1.6;">Use these principles to make responses clear, useful, and consistent across AI patterns.</p>
     </div>
 
     <!-- 4-column principle cards -->
@@ -1100,154 +1177,73 @@
   <!-- RESPONSE PATTERNS -->
   <div class="page" id="page-response-patterns">
     <h1 class="page-title">Response Patterns</h1>
-    <p class="page-subtitle">Response patterns help product teams choose how AI should respond based on the interaction type: assisting users, providing proactive insights, or configuring system behavior.</p>
+    <p class="page-subtitle">Use response patterns to choose how AI should respond based on user intent, system signal, and action risk.</p>
 
-    <!-- Pattern Overview Cards -->
-    <div class="rp-cards">
-      <!-- Assist Card -->
-      <div style="background: var(--grey-100); padding: var(--space-6); border-radius: var(--radius-sm); display: flex; flex-direction: column; height: 100%;">
-        <div style="background: var(--base-white); padding: var(--space-6); border-radius: var(--radius-sm); margin-bottom: var(--space-6); flex: 1; display: flex; flex-direction: column;">
-          <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-5);">Assist</h3>
-          <p style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5; margin-bottom: var(--space-8);">User asks for help, guidance, explanation, search, or support context.</p>
+    <!-- Pattern cards -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5);margin-bottom:var(--space-10);align-items:stretch;">
 
-          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
-            <div style="display: flex; align-items: center; gap: var(--space-3);">
-              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--blue-100); color: var(--blue-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">1</div>
-              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Answer</div>
-            </div>
-            <div style="display: flex; align-items: center; gap: var(--space-3);">
-              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--blue-100); color: var(--blue-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">2</div>
-              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Guidance</div>
-            </div>
-            <div style="display: flex; align-items: center; gap: var(--space-3);">
-              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--blue-100); color: var(--blue-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">3</div>
-              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Next step</div>
-            </div>
-          </div>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: var(--space-3); padding: 0 var(--space-2);">
-          <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-primary); flex-shrink: 0; margin-top: 2px;">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <div style="font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.5;">Include steps, paths, or links when helpful.</div>
-          </div>
-          <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-primary); flex-shrink: 0; margin-top: 2px;">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <div style="font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.5;">State limitations clearly.</div>
-          </div>
+      <div style="background:var(--grey-050);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:var(--space-5);display:flex;flex-direction:column;">
+        <div style="font-size:var(--font-size-lg);font-weight:var(--font-weight-semibold);color:var(--text-primary);margin-bottom:var(--space-2);">Assist</div>
+        <div style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-5);line-height:1.5;">User asks AI for help, guidance, or support.</div>
+        <div style="background:var(--base-white);border-radius:var(--radius-sm);padding:var(--space-5);display:grid;grid-template-columns:70px 1fr;gap:var(--space-4) var(--space-4);align-items:start;flex:1;">
+          <div style="font-size:var(--font-size-xs);color:var(--text-secondary);padding-top:2px;">Structure</div>
+          <div style="font-size:var(--font-size-sm);color:var(--text-primary);line-height:1.5;">Answer → Guidance → Next step</div>
+          <div style="font-size:var(--font-size-xs);color:var(--text-secondary);padding-top:2px;">End state</div>
+          <div style="font-size:var(--font-size-sm);color:var(--text-primary);line-height:1.5;">Clear answer, path, or next action.</div>
         </div>
       </div>
 
-      <!-- Insight Card -->
-      <div style="background: var(--grey-100); padding: var(--space-6); border-radius: var(--radius-sm); display: flex; flex-direction: column; height: 100%;">
-        <div style="background: var(--base-white); padding: var(--space-6); border-radius: var(--radius-sm); margin-bottom: var(--space-6); flex: 1; display: flex; flex-direction: column;">
-          <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-5);">Insight</h3>
-          <p style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5; margin-bottom: var(--space-8);">AI surfaces a trend, issue, risk, or opportunity and recommends what to do next.</p>
-
-          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
-            <div style="display: flex; align-items: center; gap: var(--space-3);">
-              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--indigo-100); color: var(--indigo-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">1</div>
-              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Insight</div>
-            </div>
-            <div style="display: flex; align-items: center; gap: var(--space-3);">
-              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--indigo-100); color: var(--indigo-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">2</div>
-              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Recommendation</div>
-            </div>
-            <div style="display: flex; align-items: center; gap: var(--space-3);">
-              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--indigo-100); color: var(--indigo-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">3</div>
-              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Next step</div>
-            </div>
-          </div>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: var(--space-3); padding: 0 var(--space-2);">
-          <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-primary); flex-shrink: 0; margin-top: 2px;">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <div style="font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.5;">Make the insight proactive.</div>
-          </div>
-          <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-primary); flex-shrink: 0; margin-top: 2px;">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <div style="font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.5;">Support with data or signals.</div>
-          </div>
+      <div style="background:var(--grey-050);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:var(--space-5);display:flex;flex-direction:column;">
+        <div style="font-size:var(--font-size-lg);font-weight:var(--font-weight-semibold);color:var(--text-primary);margin-bottom:var(--space-2);">Insight</div>
+        <div style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-5);line-height:1.5;">AI proactively surfaces a trend, risk, or opportunity.</div>
+        <div style="background:var(--base-white);border-radius:var(--radius-sm);padding:var(--space-5);display:grid;grid-template-columns:70px 1fr;gap:var(--space-4) var(--space-4);align-items:start;flex:1;">
+          <div style="font-size:var(--font-size-xs);color:var(--text-secondary);padding-top:2px;">Structure</div>
+          <div style="font-size:var(--font-size-sm);color:var(--text-primary);line-height:1.5;">Insight → Recommendation → Next step</div>
+          <div style="font-size:var(--font-size-xs);color:var(--text-secondary);padding-top:2px;">End state</div>
+          <div style="font-size:var(--font-size-sm);color:var(--text-primary);line-height:1.5;">User knows what was noticed and what to do.</div>
         </div>
       </div>
 
-      <!-- Configure Card -->
-      <div style="background: var(--grey-100); padding: var(--space-6); border-radius: var(--radius-sm); display: flex; flex-direction: column; height: 100%;">
-        <div style="background: var(--base-white); padding: var(--space-6); border-radius: var(--radius-sm); margin-bottom: var(--space-6); flex: 1; display: flex; flex-direction: column;">
-          <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-5);">Configure</h3>
-          <p style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5; margin-bottom: var(--space-8);">User wants to create, edit, apply, or generate something with AI.</p>
-
-          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
-            <div style="display: flex; align-items: center; gap: var(--space-3);">
-              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--green-100); color: var(--green-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">1</div>
-              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Confirm intent</div>
-            </div>
-            <div style="display: flex; align-items: center; gap: var(--space-3);">
-              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--green-100); color: var(--green-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">2</div>
-              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Preview</div>
-            </div>
-            <div style="display: flex; align-items: center; gap: var(--space-3);">
-              <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--green-100); color: var(--green-700); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; flex-shrink: 0;">3</div>
-              <div style="font-size: var(--font-size-md); color: var(--text-primary);">Apply</div>
-            </div>
-          </div>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: var(--space-3); padding: 0 var(--space-2);">
-          <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-primary); flex-shrink: 0; margin-top: 2px;">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <div style="font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.5;">Preview before applying.</div>
-          </div>
-          <div style="display: flex; align-items: flex-start; gap: var(--space-2);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-primary); flex-shrink: 0; margin-top: 2px;">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <div style="font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.5;">Describe what changed after completion.</div>
-          </div>
+      <div style="background:var(--grey-050);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:var(--space-5);display:flex;flex-direction:column;">
+        <div style="font-size:var(--font-size-lg);font-weight:var(--font-weight-semibold);color:var(--text-primary);margin-bottom:var(--space-2);">Configure</div>
+        <div style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-5);line-height:1.5;">AI helps the user create, update, or generate something that may change the system.</div>
+        <div style="background:var(--base-white);border-radius:var(--radius-sm);padding:var(--space-5);display:grid;grid-template-columns:70px 1fr;gap:var(--space-4) var(--space-4);align-items:start;flex:1;">
+          <div style="font-size:var(--font-size-xs);color:var(--text-secondary);padding-top:2px;">Structure</div>
+          <div style="font-size:var(--font-size-sm);color:var(--text-primary);line-height:1.5;">Confirm intent → Preview output → Review / apply</div>
+          <div style="font-size:var(--font-size-xs);color:var(--text-secondary);padding-top:2px;">End state</div>
+          <div style="font-size:var(--font-size-sm);color:var(--text-primary);line-height:1.5;">User reviews before anything is applied.</div>
         </div>
       </div>
+
     </div>
 
-    <!-- Use Case Mapping -->
-    <h2 class="section-title" style="margin-top:var(--space-10)">Use Case Mapping</h2>
     <table class="uc-table">
       <thead>
         <tr>
-          <th>Use Case</th>
-          <th>Example ask</th>
+          <th>User intent</th>
+          <th>Example</th>
           <th>Pattern</th>
-          <th>End State</th>
+          <th>End state</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Find / navigate</td>
+          <td>Find or navigate</td>
           <td>"Where do I find API keys?"</td>
           <td><span class="uc-badge assist">Assist</span></td>
-          <td>User gets the exact location, path, and link to the screen, setting, or action.</td>
+          <td>User gets the location and product link.</td>
         </tr>
         <tr>
-          <td>Learn / guidance</td>
+          <td>Learn or complete a task</td>
           <td>"How do I void a label?"</td>
           <td><span class="uc-badge assist">Assist</span></td>
-          <td>User gets clear instructions with a path to complete the task.</td>
+          <td>User gets clear steps and the right path.</td>
         </tr>
         <tr>
-          <td>Support / troubleshooting</td>
+          <td>Troubleshoot</td>
           <td>"Why can't I connect my store?"</td>
           <td><span class="uc-badge assist">Assist</span></td>
-          <td>User understands the likely issue, fix steps, and where to go if unresolved.</td>
+          <td>User gets likely cause, fix steps, and escalation path.</td>
         </tr>
         <tr>
           <td>Human escalation</td>
@@ -1259,34 +1255,40 @@
           <td>Ask my data</td>
           <td>"What product cost me the most in shipping last month?"</td>
           <td><span class="uc-badge assist">Assist</span></td>
-          <td>User gets the answer with supporting data and source, plus link to the relevant report/page.</td>
+          <td>User gets the answer, source, and report link.</td>
         </tr>
         <tr>
-          <td>Create / generate</td>
+          <td>Create or generate</td>
           <td>"Create a rule to use UPS Ground for orders over $50."</td>
           <td><span class="uc-badge configure">Configure</span></td>
-          <td>AI drafts the rule.</td>
+          <td>AI drafts the output for review.</td>
         </tr>
         <tr>
-          <td>Apply / update</td>
+          <td>Apply or update</td>
           <td>"Change these orders to FedEx Ground."</td>
           <td><span class="uc-badge configure">Configure</span></td>
-          <td>AI summarizes the affected items, previews the change, and requires confirmation.</td>
+          <td>AI previews affected items and asks for confirmation.</td>
         </tr>
         <tr>
-          <td>Proactive Insight</td>
-          <td>Machine detects a possible automation, optimization or issue</td>
+          <td>Proactive insight</td>
+          <td>AI detects a possible automation, optimization, risk, or issue.</td>
           <td><span class="uc-badge insight">Insight</span></td>
-          <td>User sees the alert/CTA and can review, act or dismiss</td>
+          <td>User sees the insight, recommendation, and next step.</td>
         </tr>
         <tr>
-          <td>Unsupported / unknown</td>
+          <td>Unsupported or unknown</td>
           <td>"Can you fix this carrier outage?"</td>
           <td><span class="uc-badge assist">Assist</span></td>
-          <td>AI explains the limitation, provides the best available next step, and routes or escalates.</td>
+          <td>AI explains the limitation and routes to the best next step.</td>
         </tr>
       </tbody>
     </table>
+
+    <div style="background:var(--grey-050);border-radius:var(--radius-sm);padding:var(--space-6);font-size:var(--font-size-md);line-height:1.8;margin-bottom:var(--space-10);">
+      <div>Use <strong>Assist</strong> when the user asks for help.</div>
+      <div>Use <strong>Insight</strong> when AI notices something first.</div>
+      <div>Use <strong>Configure</strong> when AI creates, updates, or prepares something that may change the system.</div>
+    </div>
   </div>
 
   <!-- ASSIST -->
@@ -1352,6 +1354,7 @@
           <div class="response-label">Next step</div>
           <div id="assist-nextstep"></div>
         </div>
+        <div id="assist-chips-row" style="display:none;margin-top:var(--space-4);"></div>
       </div>
       </div>
     </div>
@@ -1435,21 +1438,22 @@
   <!-- CONFIGURE -->
   <div class="page" id="page-configure">
     <h1 class="page-title">Configure</h1>
-    <p class="page-subtitle">Configure helps users create, apply, or generate something with AI, such as a report, automation rule, setting, or workflow.</p>
+    <p class="page-subtitle">Configure is used when AI helps users create or update a rule, automation, configuration, or workflow. AI drafts the proposed output, previews what will change, and requires user review before anything is applied.</p>
     <div class="anatomy-grid anatomy-grid--3">
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">01 Confirm Intent</div>
-        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Direct answer, Scope confirmation.</div>
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">01 Confirm intent</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">AI confirms what it is creating or updating.</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Plan, Preview</div>
-        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Configuration preview.</div>
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Preview output</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">AI shows the proposed configuration or generated item.</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Execution, Next Steps</div>
-        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Manual configuration instructions, Follow-up options, Support details.</div>
+        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Review / apply</div>
+        <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">User reviews the generated output before any system change happens.</div>
       </div>
     </div>
+
     <div class="explorer-shell">
 
       <div class="explorer-body">
@@ -1478,6 +1482,25 @@
       <li>The AI needs the user to choose a path before responding</li>
     </ul>
 
+    <h2 class="section-title">Two types of clarification</h2>
+    <div style="margin-bottom:var(--space-10);">
+      <div style="margin-bottom:var(--space-6);">
+        <div style="font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);color:var(--text-primary);margin-bottom:var(--space-3);">Intent clarification</div>
+        <ul style="font-size:var(--font-size-md);color:var(--text-primary);padding-left:var(--space-6);line-height:1.8;margin:0;">
+          <li>Use when the user's request could mean more than one product area, task, or response pattern.</li>
+          <li>Helps AI determine what the user is trying to do before responding.</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);color:var(--text-primary);margin-bottom:var(--space-3);">Configuration clarification</div>
+        <ul style="font-size:var(--font-size-md);color:var(--text-primary);padding-left:var(--space-6);line-height:1.8;margin:0;">
+          <li>Use when the user's intent is clear, but required details are missing before AI can continue.</li>
+          <li>Helps AI collect the information needed to draft, preview, or complete the task.</li>
+        </ul>
+      </div>
+    </div>
+
+
     <div class="anatomy-grid anatomy-grid--3">
       <div>
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
@@ -1501,21 +1524,24 @@
       <tbody>
         <tr>
           <td style="font-weight:500;">Text asking</td>
-          <td>The request only needs one small follow-up question.</td>
-          <td style="">Light clarification</td>
+          <td>AI needs one open-ended or custom answer.</td>
+          <td>Light clarification</td>
         </tr>
         <tr>
           <td style="font-weight:500;">Prompt chips</td>
-          <td>There are a few clear directions the user can choose from.</td>
-          <td style="">Fast path selection</td>
+          <td>AI is offering optional follow-up paths.</td>
+          <td>Fast path selection</td>
         </tr>
         <tr>
           <td style="font-weight:500;">Refinement card</td>
-          <td>The request is broad, multi-step, or needs more structure before AI can respond.</td>
-          <td style="">Bigger clarification moment</td>
+          <td>AI needs required structured input before it can continue.</td>
+          <td>Bigger clarification moment</td>
         </tr>
       </tbody>
     </table>
+    <div style="background:var(--grey-050);border-radius:var(--radius-sm);padding:var(--space-5) var(--space-6);font-size:var(--font-size-sm);color:var(--text-primary);line-height:1.7;margin-bottom:var(--space-10);">
+      Do not use prompt chips for required setup details or system-changing decisions.
+    </div>
 
     <div class="explorer-shell">
 
@@ -1658,8 +1684,26 @@
   <!-- UI PATTERNS -->
   <div class="page" id="page-ui-patterns">
     <h1 class="page-title">UI Patterns</h1>
-    <p class="page-subtitle">Common UI components used across response patterns.</p>
-    <div class="info-banner">UI Patterns documentation coming soon.</div>
+    <p class="page-subtitle">Components used to surface AI responses. Organized by how they function in the conversation.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5);margin-top:var(--space-8);">
+
+      <div style="border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:var(--space-6);"">
+        <div style="font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);color:var(--text-primary);margin-bottom:var(--space-3);">NLP / Chat Actions</div>
+        <div style="font-size:var(--font-size-sm);color:var(--text-secondary);line-height:1.6;">Components that help users navigate, choose, or reference sources within a conversation.</div>
+      </div>
+
+      <div style="border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:var(--space-6);"">
+        <div style="font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);color:var(--text-primary);margin-bottom:var(--space-3);">AI Process & Feedback</div>
+        <div style="font-size:var(--font-size-sm);color:var(--text-secondary);line-height:1.6;">Components that show AI state, progress, or collect user feedback on a response.</div>
+      </div>
+
+      <div style="border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:var(--space-6);"">
+        <div style="font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);color:var(--text-primary);margin-bottom:var(--space-3);">Generated / Assisted Output</div>
+        <div style="font-size:var(--font-size-sm);color:var(--text-secondary);line-height:1.6;">Components that surface AI-modified or AI-generated content within the product interface.</div>
+      </div>
+
+    </div>
   </div>
 
   <!-- CHAIN OF THOUGHT -->
@@ -1682,21 +1726,21 @@
           <div id="cot-steps-container" style="max-height:0;overflow:hidden;transition:max-height 0.3s ease;padding-left: var(--space-2);">
             <div id="cot-step1" style="opacity:0;transition:opacity 0.4s;">
               <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);">
-                <div id="cot-dot1" class="cot-dot cot-dot--active" style="width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:6px;"></div>
+                <div id="cot-dot1" class="cot-dot cot-dot--active" style="width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:5px;"></div>
                 <div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Fetching order data</div>
               </div>
               <div style="margin-left:1px;padding-left:var(--space-4);border-left:2px solid var(--grey-200);font-size:var(--font-size-xs);color:var(--text-secondary);line-height:1.6;padding-bottom:var(--space-3);">Retrieved 847 orders from the past 30 days.</div>
             </div>
             <div id="cot-step2" style="opacity:0;transition:opacity 0.4s;">
               <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);">
-                <div id="cot-dot2" class="cot-dot" style="width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:6px;"></div>
+                <div id="cot-dot2" class="cot-dot" style="width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:5px;"></div>
                 <div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Analyzing patterns</div>
               </div>
               <div style="margin-left:1px;padding-left:var(--space-4);border-left:2px solid var(--grey-200);font-size:var(--font-size-xs);color:var(--text-secondary);line-height:1.6;padding-bottom:var(--space-3);">Identifying top products and shipping trends across regions.</div>
             </div>
             <div id="cot-step3" style="opacity:0;transition:opacity 0.4s;">
               <div style="display:flex;align-items:flex-start;gap:var(--space-2);">
-                <div id="cot-dot3" class="cot-dot" style="width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:6px;"></div>
+                <div id="cot-dot3" class="cot-dot" style="width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:5px;"></div>
                 <div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Preparing summary</div>
               </div>
             </div>
@@ -1713,11 +1757,11 @@
           </div>
           <div id="cot-done-details" style="max-height:0;overflow:hidden;transition:max-height 0.3s ease;">
             <div style="padding-top:var(--space-4);padding-left:var(--space-2);">
-              <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);"><div style="width:4px;height:4px;border-radius:50%;background:var(--grey-600);flex-shrink:0;margin-top:6px;"></div><div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Fetching order data</div></div>
+              <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);"><div style="width:4px;height:4px;border-radius:50%;background:var(--grey-600);flex-shrink:0;margin-top:5px;"></div><div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Fetching order data</div></div>
               <div style="margin-left:1px;padding-left:var(--space-4);border-left:2px solid var(--grey-200);font-size:var(--font-size-xs);color:var(--text-secondary);line-height:1.6;padding-bottom:var(--space-3);">Retrieved 847 orders from the past 30 days.</div>
-              <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);"><div style="width:4px;height:4px;border-radius:50%;background:var(--grey-600);flex-shrink:0;margin-top:6px;"></div><div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Analyzing patterns</div></div>
+              <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);"><div style="width:4px;height:4px;border-radius:50%;background:var(--grey-600);flex-shrink:0;margin-top:5px;"></div><div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Analyzing patterns</div></div>
               <div style="margin-left:1px;padding-left:var(--space-4);border-left:2px solid var(--grey-200);font-size:var(--font-size-xs);color:var(--text-secondary);line-height:1.6;padding-bottom:var(--space-3);">Identifying top products and shipping trends across regions.</div>
-              <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);"><div style="width:4px;height:4px;border-radius:50%;background:var(--grey-600);flex-shrink:0;margin-top:6px;"></div><div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Preparing summary</div></div>
+              <div style="display:flex;align-items:flex-start;gap:var(--space-2);margin-bottom:var(--space-1);"><div style="width:4px;height:4px;border-radius:50%;background:var(--grey-600);flex-shrink:0;margin-top:5px;"></div><div style="font-size:var(--font-size-xs);color:var(--text-secondary);">Preparing summary</div></div>
               <div style="margin-left:1px;padding-left:var(--space-4);border-left:2px solid var(--grey-200);font-size:var(--font-size-xs);color:var(--text-secondary);line-height:1.6;">Compiling findings into a comprehensive report.</div>
             </div>
           </div>
@@ -1801,7 +1845,7 @@
 
   <!-- AI THINKING -->
   <div class="page" id="page-ai-thinking">
-    <h1 class="page-title">AI Thinking</h1>
+    <h1 class="page-title">AI Thinking State</h1>
     <p class="page-subtitle">Visual indicators that show AI is processing a request.</p>
 
     <div class="preview-box">
@@ -1818,8 +1862,8 @@
 
   <!-- GENERATED CONTENT -->
   <div class="page" id="page-input-assisted">
-    <h1 class="page-title">Generated Content</h1>
-    <p class="page-subtitle">AI generates form field values based on context, order history, or user patterns.</p>
+    <h1 class="page-title">Assisted Content</h1>
+    <p class="page-subtitle">Used when AI modifies, fills, or updates a field, value, or setting on behalf of the user.</p>
 
     <div class="preview-box">
       <div style="display: flex; width: 320px; flex-direction: column; align-items: flex-start; gap: var(--space-5);">
@@ -1867,9 +1911,9 @@
 
     <div class="section-title">When to use</div>
     <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
-      <li>When AI can predict field values based on order history or patterns</li>
-      <li>To auto-fill shipping details from previously used addresses</li>
-      <li>When user preferences can be applied to speed up form completion</li>
+      <li>When AI modifies, fills, or updates a field, value, or setting on behalf of the user</li>
+      <li>To visually indicate that AI changed something in the interface</li>
+      <li>When the user needs to know what changed and where</li>
     </ul>
   </div>
 
@@ -1903,28 +1947,34 @@
   </div>
 
   <!-- BUTTONS & CTAs -->
-  <div class="page" id="page-buttons-ctas">
-    <h1 class="page-title">Buttons & CTAs</h1>
-    <p class="page-subtitle">Action buttons that navigate users to specific pages or trigger system actions.</p>
+  <div class="page" id="page-response-actions">
+    <h1 class="page-title">Response Actions</h1>
+    <p class="page-subtitle">Action buttons route users to a product destination or review surface. Keep response actions separate from prompt chips and citations.</p>
 
-    <div class="preview-box">
-      <button class="btn">Go to Labels</button>
+    <div class="section-title">Product deep link</div>
+    <p style="font-size:var(--font-size-md);color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5);">Routes the user to an existing product area, page, setting, feature, or filtered view.</p>
+    <div class="preview-box" style="justify-content:flex-start;gap:var(--space-3);flex-wrap:wrap;min-height:auto;padding:var(--space-6);margin-bottom:var(--space-5);">
+      <button class="btn" style="pointer-events:none;">Go to Labels</button>
+      <button class="btn" style="pointer-events:none;">Open shipping rules</button>
+      <button class="btn" style="pointer-events:none;">View carrier settings</button>
+      <button class="btn" style="pointer-events:none;">Go to automation settings</button>
     </div>
-
-    <div class="section-title">When to use</div>
-    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
-      <li>For deep links to specific pages or features</li>
-      <li>For support handoffs and escalations</li>
-      <li>For capability boundary routing</li>
-      <li>When the action takes the user outside the chat</li>
+    <ul style="font-size:var(--font-size-md);color:var(--text-primary);padding-left:var(--space-6);line-height:1.8;margin-bottom:var(--space-10);">
+      <li>Use one destination per response.</li>
+      <li>Label the destination clearly. Match the product's navigation language.</li>
+      <li>Do not use product deep links for AI-generated output. Use a review action instead.</li>
     </ul>
 
-    <div class="section-title">Guidelines</div>
-    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6;">
-      <li>Use action verbs (Go to, View, Contact, Get)</li>
-      <li>Keep text clear and destination-focused</li>
-      <li>Use buttons instead of prompt chips for navigation</li>
-      <li>Limit to 1-3 button options per response</li>
+    <div class="section-title">Review action</div>
+    <p style="font-size:var(--font-size-md);color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5);">Opens AI-generated output for review before anything is applied.</p>
+    <div class="preview-box" style="justify-content:flex-start;gap:var(--space-3);flex-wrap:wrap;min-height:auto;padding:var(--space-6);margin-bottom:var(--space-5);">
+      <button class="btn" style="pointer-events:none;">Review rule</button>
+      <button class="btn" style="pointer-events:none;">Review changes</button>
+      <button class="btn" style="pointer-events:none;">Review automation</button>
+    </div>
+    <ul style="font-size:var(--font-size-md);color:var(--text-primary);padding-left:var(--space-6);line-height:1.8;margin-bottom:var(--space-10);">
+      <li>Use "Review [object]" when AI has drafted or prepared something.</li>
+      <li>Do not use Apply, Save, Enable, Send, Delete, or Overwrite before the user reviews the generated output.</li>
     </ul>
   </div>
 
@@ -1981,9 +2031,64 @@
   </div>
 
 
+  <!-- SOURCE REFERENCE -->
+  <div class="page" id="page-citation">
+    <h1 class="page-title">Citations</h1>
+    <p class="page-subtitle">Shows the user where an AI response came from. Surfaces source icons inline with a count, expanding to reveal individual links on click.</p>
+
+    <div class="preview-box">
+      <div style="display:flex;gap:var(--space-2);">
+        <div class="citation citation--hoverable" style="position:relative;cursor:default;">
+          <div class="citation__icons">
+            <div class="citation__icon" style="background:#0078d4;">
+              <img src="https://help.shipstation.com/favicon.ico" onerror="this.style.display='none'" />
+            </div>
+          </div>
+          Help Center
+          <div class="citation-tooltip">
+            <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-3);">
+              <div class="citation__icon" style="background:#0078d4;width:16px;height:16px;font-size:7px;border:none;"><img src="https://help.shipstation.com/favicon.ico" onerror="this.style.display='none'" /></div>
+              <span style="font-size:11px;color:var(--text-secondary);">help.shipstation.com</span>
+            </div>
+            <div style="font-size:var(--font-size-sm);font-weight:600;color:var(--text-primary);margin-bottom:var(--space-2);">ShipStation Help Center</div>
+            <div style="font-size:11px;color:var(--text-secondary);line-height:1.5;">Browse help articles, guides, and step-by-step instructions for ShipStation features.</div>
+          </div>
+        </div>
+        <div class="citation citation--hoverable" style="position:relative;cursor:default;">
+          <div class="citation__icons">
+            <div class="citation__icon" style="background:#1a1a2e;color:#fff;font-size:8px;font-weight:700;">API</div>
+          </div>
+          API Docs
+          <div class="citation-tooltip">
+            <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-3);">
+              <div class="citation__icon" style="background:#1a1a2e;color:#fff;font-size:7px;font-weight:700;width:16px;height:16px;border:none;">API</div>
+              <span style="font-size:11px;color:var(--text-secondary);">shipstation.com/docs/api</span>
+            </div>
+            <div style="font-size:var(--font-size-sm);font-weight:600;color:var(--text-primary);margin-bottom:var(--space-2);">ShipStation API Reference</div>
+            <div style="font-size:11px;color:var(--text-secondary);line-height:1.5;">Full API reference for ShipStation endpoints, authentication, webhooks, and integrations.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">When to use</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6; margin-bottom: var(--space-10);">
+      <li>When the AI response is based on product documentation, developer docs, help articles, or policy</li>
+      <li>When the user may want to verify or read more about the source</li>
+      <li>After Assist responses that draw from documented knowledge</li>
+    </ul>
+
+    <div class="section-title">Guidelines</div>
+    <ul style="font-size: var(--font-size-md); color: var(--text-primary); padding-left: var(--space-6); line-height: 1.6;">
+      <li>Show source reference below the response, not as the main action</li>
+      <li>Only show when the response depends on a documented source</li>
+      <li>Do not show for conversational or general responses</li>
+    </ul>
+  </div>
+
   <!-- TYPING TEXT -->
   <div class="page" id="page-typing-text">
-    <h1 class="page-title">Typing Text</h1>
+    <h1 class="page-title">Typing / Streaming Text</h1>
     <p class="page-subtitle">Animates AI-generated text as it streams character by character, giving users a sense of the response being composed in real time.</p>
 
     <div class="preview-box" style="position:relative;min-height:420px;align-items:flex-start;padding-top:var(--space-12);">
@@ -2005,6 +2110,12 @@
       <li>Use AI thinking before text begins.</li>
       <li>Stream only text-based responses.</li>
     </ul>
+  </div>
+
+  <!-- GENERATED OBJECT PREVIEW -->
+  <div class="page" id="page-generated-object">
+    <h1 class="page-title">Generated Object Preview</h1>
+    <p class="page-subtitle">Coming soon.</p>
   </div>
 
 </main>
@@ -2086,7 +2197,7 @@
     },
     { title: "Create a rule", route: "Route after clarification: Configure. Use a refinement card to collect required inputs.",
       query: "Create a rule",
-      message: "I can help you set that up. What should the rule do?",
+      message: "I can help with that. What kind of rule do you want to create?",
       chips: ["Route orders by carrier", "Apply insurance automatically", "Filter by order weight", "Set default packaging"],
       cardAfterChip: {
         question: "Which orders should this rule apply to?",
@@ -2109,12 +2220,12 @@
     { query: "Create a rule to use UPS Ground for orders over $50",
       confirmIntent: "Here is a draft of your automation rule based on the order total threshold you requested:",
       planPreview: `<strong>Rule Name:</strong> UPS Ground for High-Value Orders (or any name you prefer).<br><br><strong>Criteria:</strong> Order Total is greater than [Enter Dollar Amount].<br><br><strong>Actions:</strong> Set Carrier → UPS → UPS Ground`,
-      nextSteps: ["Apply rule", "Cancel"]
+      nextSteps: ["Review rule"]
     },
     { query: "Change these orders to FedEx Ground",
       confirmIntent: "I'll update the selected orders to use FedEx Ground. Here's a summary of what will change:",
       planPreview: `<strong>Orders affected:</strong> 12 orders currently assigned to other carriers.<br><br><strong>New carrier:</strong> FedEx Ground.<br><br><strong>Note:</strong> Rate differences may apply. Review before confirming.`,
-      nextSteps: ["Confirm update", "Cancel"]
+      nextSteps: ["Review changes"]
     }
   ];
 
@@ -2124,7 +2235,7 @@
       items: ["Check carrier status", "View affected shipments", "Contact support"]
     },
     { query: "Refund all of these labels for me.", note: "Deep Link", type: "btns",
-      response: "I <strong>can't refund these automatically</strong> here. You can review eligible labels and start the refund process from the <strong>Labels page</strong>.",
+      response: "I can't refund these automatically here. You can review eligible labels and start the refund process from the Labels page.",
       items: ["Go to Labels"]
     },
     { query: "Talk to support for me.", note: "Support handoff", type: "btns",
@@ -2144,6 +2255,8 @@
   }
 
   function renderAssistPreview(idx) {
+    const chipsRow = document.getElementById('assist-chips-row');
+    if (chipsRow) { chipsRow.style.display = 'none'; chipsRow.innerHTML = ''; }
     const ex = assistExamples[idx];
 
     document.getElementById('assist-user-query').textContent = ex.query;
@@ -2163,14 +2276,24 @@
       } else if (row.label === 'Next step') {
         const el = document.getElementById('assist-nextstep');
         const row_label = document.getElementById('assist-nextstep-row');
+        const chipsRow = document.getElementById('assist-chips-row');
         if (row.none) {
           row_label.style.display = 'none';
+          if (chipsRow) chipsRow.style.display = 'none';
+        } else if (row.chips) {
+          // Chips go near input, hide the response row
+          row_label.style.display = 'none';
+          if (chipsRow) {
+            chipsRow.style.display = 'flex';
+            chipsRow.style.flexWrap = 'wrap';
+            chipsRow.style.gap = 'var(--space-2)';
+            chipsRow.innerHTML = row.chips.map(c=>`<button class="prompt-chip" style="pointer-events:none;">${c}</button>`).join('');
+          }
         } else {
           row_label.style.display = 'flex';
-          if (row.chips) {
-            el.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">${row.chips.map(c=>`<button class="prompt-chip" style="pointer-events:none;">${c}</button>`).join('')}</div>`;
-          } else if (row.fallback) {
-            el.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">${row.fallback.map(c=>`<button class="btn" style="pointer-events:none;">${c}</button>`).join('')}</div>`;
+          if (chipsRow) chipsRow.style.display = 'none';
+          if (row.fallback) {
+            el.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">${row.fallback.map(c=>`<button class="prompt-chip" style="pointer-events:none;">${c}</button>`).join('')}</div>`;
           } else if (row.btn) {
             el.innerHTML = `<button class="btn" style="pointer-events:none;">${row.btn}</button>`;
           } else if (row.text) {
@@ -2245,8 +2368,14 @@
           <div class="user-query-right">${ex.query}</div>
         </div>
         <div class="ai-message">${ex.message}</div>
-        ${chipsHtml}
-        <div id="clarify-card-slot"></div>
+        <div style="display:flex;gap:var(--space-2);margin-top:0;">
+          <button class="feedback-btn" style="background:transparent;border:none;cursor:pointer;padding:var(--space-2);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-secondary)"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg></button>
+          <button class="feedback-btn" style="background:transparent;border:none;cursor:pointer;padding:var(--space-2);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-secondary)"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg></button>
+        </div>
+        <div style="margin-top:auto;padding-top:var(--space-4);">
+          ${chipsHtml}
+          <div id="clarify-card-slot"></div>
+        </div>
       </div>
       <div class="chat-input-mock"><span class="plus">+</span><span class="send">↑</span></div>
     `;
@@ -2256,17 +2385,18 @@
     const ex = clarificationExamples.find(e => e.cardAfterChip);
     if (!ex) return;
     const chipLabel = btn.textContent;
-    document.getElementById('clarify-chips').style.display = 'none';
     const card = ex.cardAfterChip;
     const options = card.options.map((o, i) => ccOptionRow({id: i, title: o}, i, 'single', false, 'ccSelectSingle(this)')).join('');
-    const slot = document.getElementById('clarify-card-slot');
-    slot.style.cssText = 'position:absolute;bottom:0;left:0;right:0;padding:var(--space-10);background:var(--grey-050);';
-    slot.innerHTML = `
-      <div style="overflow:hidden;margin-bottom:var(--space-2);">
-        <div class="user-query-right">${chipLabel}</div>
+    // Replace entire preview: conversation + bottom-anchored card replacing the input
+    const preview = document.getElementById('clarification-preview');
+    preview.innerHTML = `
+      <div style="flex:1;display:flex;flex-direction:column;">
+        <div style="overflow:hidden;margin-bottom:var(--space-4);">
+          <div class="user-query-right">${chipLabel}</div>
+        </div>
+        <div class="ai-message">I need a few details before I can draft the rule.</div>
       </div>
-      <div class="ai-message" style="margin-bottom:var(--space-4);">I can help set that up. A few details first.</div>
-      <div class="refinement-card" style="width:100%;">
+      <div class="refinement-card" style="width:100%;border-radius:var(--radius-sm) var(--radius-sm) 0 0;flex-shrink:0;">
         <div class="refinement-card__header">
           <div class="refinement-card__header-left">
             <span class="refinement-card__step">Step 1 of 3</span>
@@ -2289,10 +2419,9 @@
   }
 
   function hideClarifyCard() {
-    const slot = document.getElementById('clarify-card-slot');
-    slot.innerHTML = '';
-    slot.style.cssText = '';
-    document.getElementById('clarify-chips').style.display = '';
+    // Re-render the original clarification preview
+    const activeIdx = parseInt(document.querySelector('#clarification-examples-list .example-item.active').dataset.clarify);
+    renderClarificationPreview(activeIdx);
   }
 
   function renderConfigurePreview(idx) {
@@ -2328,13 +2457,19 @@
       itemsHtml = `<div class="btn-chips">${btns}</div>`;
     }
 
+    const isChips = ex.type === 'chips';
     document.getElementById('cb-preview').innerHTML = `
       <div style="flex:1;display:flex;flex-direction:column;">
         <div style="overflow:hidden">
           <div class="user-query-right">${ex.query}</div>
         </div>
         <div class="ai-message">${ex.response}</div>
-        ${itemsHtml}
+        ${!isChips ? itemsHtml : ''}
+        <div style="display:flex;gap:var(--space-2);margin-top:0;">
+          <button class="feedback-btn" style="background:transparent;border:none;cursor:pointer;padding:var(--space-2);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-secondary)"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg></button>
+          <button class="feedback-btn" style="background:transparent;border:none;cursor:pointer;padding:var(--space-2);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-secondary)"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg></button>
+        </div>
+        ${isChips ? `<div style="margin-top:auto;padding-top:var(--space-4);">${itemsHtml}</div>` : ''}
       </div>
       <div class="chat-input-mock"><span class="plus">+</span><span class="send">↑</span></div>
     `;
@@ -2414,10 +2549,11 @@
   const sidebarConfig = {
     'principles': [],
     'response-patterns': [
-      { page: 'response-patterns', label: 'Overview' },
-      { page: 'assist',    label: 'Assist' },
-      { page: 'insight',   label: 'Insight' },
-      { page: 'configure', label: 'Configure' },
+      { page: 'response-patterns', label: 'Overview', children: [
+        { page: 'assist',    label: 'Assist' },
+        { page: 'insight',   label: 'Insight' },
+        { page: 'configure', label: 'Configure' },
+      ]},
       { page: 'guardrails', label: 'Guardrails', children: [
         { page: 'clarification',       label: 'Clarification' },
         { page: 'capability-boundary', label: 'Capability Boundary' },
@@ -2426,14 +2562,18 @@
     ],
     'guardrails': [],
     'ui-patterns': [
-      { page: 'ai-thinking',        label: 'AI Thinking' },
-      { page: 'buttons-ctas',       label: 'Buttons & CTAs' },
-      { page: 'chain-of-thought',   label: 'Chain of Thought' },
-      { page: 'refinement-card', label: 'Refinement Card' },
-      { page: 'feedback-bar',       label: 'Feedback Bar' },
-      { page: 'input-assisted',     label: 'Generated Content' },
+      { group: 'NLP / Chat Actions' },
+      { page: 'response-actions',       label: 'Response Actions' },
+      { page: 'citation',           label: 'Citations' },
       { page: 'prompt-chips',       label: 'Prompt Chips' },
-      { page: 'typing-text',        label: 'Typing Text' },
+      { page: 'refinement-card',    label: 'Refinement Card' },
+      { group: 'AI Process & Feedback' },
+      { page: 'ai-thinking',        label: 'AI Thinking State' },
+      { page: 'chain-of-thought',   label: 'Chain of Thought' },
+      { page: 'feedback-bar',       label: 'Feedback Bar' },
+      { page: 'typing-text',        label: 'Typing / Streaming Text' },
+      { group: 'Generated / Assisted Output' },
+      { page: 'input-assisted',     label: 'Assisted Content' },
     ],
   };
 
@@ -2458,6 +2598,9 @@
     const items = sidebarConfig[cat] || [];
     const isChildActive = (item) => item.children && item.children.some(c => c.page === activePage);
     document.getElementById('sidebar-nav').innerHTML = items.map(item => {
+      if (item.group) {
+        return `<div class="nav-section-label">${item.group}</div>`;
+      }
       if (!item.children) {
         return `<div class="nav-item${item.page === activePage ? ' active' : ''}" data-page="${item.page}" onclick="showPage('${item.page}')">${item.label}</div>`;
       }
@@ -2477,7 +2620,7 @@
     currentCat = cat;
     document.querySelectorAll('.topbar__link[data-cat]').forEach(l =>
       l.classList.toggle('active', l.dataset.cat === cat));
-    const defaultPage = sidebarConfig[cat]?.[0]?.page || cat;
+    const defaultPage = cat === 'ui-patterns' ? 'ui-patterns' : (sidebarConfig[cat] || []).find(i => i.page)?.page || cat;
     renderSidebar(cat, defaultPage);
     showPage(defaultPage);
   }
@@ -3147,6 +3290,43 @@
   }
 
   renderClarifyVariant();
+
+  // ── Response Actions type switcher ─────────────────────────────────────────
+  const btnTypes = [
+    {
+      title: 'Product deep link',
+      desc: 'Routes the user to a specific product area, page, setting, or feature.',
+      buttons: ['Go to Labels', 'Open shipping rules', 'View carrier settings', 'Go to automation settings']
+    },
+    {
+      title: 'Call to action',
+      desc: 'Sends the user to review an AI-generated item before applying. Always required after Configure responses.',
+      buttons: ['Review rule', 'Review changes', 'Review automation']
+    }
+  ];
+
+  function switchBtnType(idx, el) {
+    document.querySelectorAll('#btn-type-list .example-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    renderBtnType(idx);
+  }
+
+  function renderBtnType(idx) {
+    const t = btnTypes[idx];
+    document.getElementById('btn-type-preview').innerHTML = `
+      <p style="font-size:var(--font-size-md);color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-6);">${t.desc}</p>
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+        ${t.buttons.map(b => `<button class="btn" style="pointer-events:none;width:fit-content;">${b}</button>`).join('')}
+      </div>
+    `;
+  }
+
+  renderBtnType(0);
+
+  function toggleSourceDrawer() {
+    const drawer = document.getElementById('source-drawer');
+    if (drawer) drawer.classList.toggle('open');
+  }
 
   function resetPageInteractions() {
     // Feedback bar

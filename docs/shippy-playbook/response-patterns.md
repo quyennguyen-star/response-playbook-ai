@@ -47,8 +47,8 @@ Be friendly but efficient. Get to the point without warmup phrases.
 
 - No filler: avoid "Sure!", "Got it!", "Of course!", or "Great question!"
 - No unnecessary warmup before the actual response
-- Short acknowledgment is fine when it adds clarity — but go straight to the ask or answer
-- Conversational, not robotic — write like a knowledgeable colleague, not a help article
+- Short acknowledgment is fine when it adds clarity. Go straight to the ask or answer.
+- Conversational, not robotic. Write like a knowledgeable colleague, not a help article.
 
 | Instead of | Use |
 |---|---|
@@ -125,7 +125,7 @@ Use `→` for sequences of selections or steps within a workflow. These are acti
 - State limitations clearly
 
 **When the answer is a limitation or fallback:**
-1. Acknowledge what's outside AI's control — directly, without over-apologizing
+1. Acknowledge what's outside AI's control. Be direct. Do not over-apologize.
 2. Give actionable steps with **bold labels** so the user can scan what to try
 3. End with prompt chips or an offer to help with a related workaround
 
@@ -191,20 +191,37 @@ An insight proactively surfaces a meaningful trend, risk, opportunity, savings, 
 **When to use:** User wants to create, apply, or generate something with AI.
 
 **Structure:**
-1. Confirm intent — Direct answer, scope confirmation
-2. Plan / Preview — Show what will be created or changed
-3. Execution / Next steps — Manual configuration instructions, follow-up options, support details
+1. Confirm intent — AI confirms what it is creating or updating
+2. Preview output — AI shows the proposed configuration or generated item
+3. Review / apply — User reviews the generated output before any system change happens
 
 **Examples:**
 
 | User query | Confirm intent | Plan preview | Next steps |
 |---|---|---|---|
-| "Create a rule to use UPS Ground for orders over $50" | Here is a draft of your automation rule based on the order total threshold you requested. | **Rule Name:** UPS Ground for High-Value Orders. **Criteria:** Order Total is greater than [Enter Dollar Amount]. **Actions:** Set Carrier → UPS → UPS Ground | Apply rule / Cancel |
-| "Change these orders to FedEx Ground" | I'll update the selected orders to use FedEx Ground. Here's a summary of what will change. | **Orders affected:** 12 orders currently assigned to other carriers. **New carrier:** FedEx Ground. **Note:** Rate differences may apply. Review before confirming. | Confirm update / Cancel |
+| "Create a rule to use UPS Ground for orders over $50" | Here is a draft of your automation rule based on the order total threshold you requested. | **Rule Name:** UPS Ground for High-Value Orders. **Criteria:** Order Total is greater than [Enter Dollar Amount]. **Actions:** Set Carrier → UPS → UPS Ground | Review rule |
+| "Change these orders to FedEx Ground" | I'll update the selected orders to use FedEx Ground. Here's a summary of what will change. | **Orders affected:** 12 orders currently assigned to other carriers. **New carrier:** FedEx Ground. **Note:** Rate differences may apply. Review before confirming. | Review changes |
 
 **Rules:**
 - Always preview before applying
 - Describe what changed after completion
+
+### AI-created actions in chat
+
+When AI creates a rule, automation, draft, configuration, or workflow from natural language, the chat response should not apply it directly.
+
+The user must open the generated item in a review surface before applying, saving, enabling, sending, or deleting.
+
+**CTA rules:**
+
+| Use | When |
+|---|---|
+| **Review [object]** | AI-created items the user needs to inspect before applying |
+| **Open [area]** | Existing product destinations |
+| **View [source]** | Documentation or supporting information |
+| Prompt chips | Optional conversational refinements after the response |
+
+Do not use direct apply / save / enable / delete CTAs inside the chat response for AI-generated changes.
 
 ### Clarification cards
 
@@ -225,7 +242,7 @@ Use when the assistant needs the user to choose between multiple valid interpret
 - Prompt chips would be enough for optional follow-up
 - The user already provided enough context
 
-**Key difference:** Clarification card = required input before continuing. Prompt chips = optional next steps after answering.
+**Key difference:** Refinement card = required structured input before AI can continue. Prompt chips = optional follow-up paths after AI has responded. Do not use prompt chips for required setup details or system-changing decisions.
 
 ---
 

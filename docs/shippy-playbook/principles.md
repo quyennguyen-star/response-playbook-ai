@@ -2,25 +2,25 @@
 
 These four principles govern every AI response in ShipStation. They apply regardless of which response pattern is used.
 
-## 01 — Lead with value
+## 01: Lead with value
 
 Open with the most useful part of the response before adding context or detail.
 
 Ask: What does the user need first?
 
-## 02 — Make the next step clear
+## 02: Make the next step clear
 
 Every response should help the user continue with a path, CTA, review step, follow-up, or support route.
 
 Ask: What should the user do next?
 
-## 03 — Controls in the workflow
+## 03: Controls in the workflow
 
 AI can guide, draft, or recommend, but users should review and act in the product workflow where the change belongs.
 
 Ask: Where should the user control this?
 
-## 04 — Trust when it matters
+## 04: Trust when it matters
 
 Use data, sources, previews, or fallback paths when the response affects decisions, settings, support, or account outcomes.
 

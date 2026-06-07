@@ -59,23 +59,53 @@ Suggested follow-up actions presented as pill buttons after an AI response.
 
 **When to use:**
 - After AI has already responded and wants to offer helpful next actions
-- The chips are optional shortcuts — the user does not need to answer them to continue
+- The chips are optional shortcuts. The user does not need to select one to continue.
 - When the AI has enough context to respond and wants to help the user explore, refine, or act
 
 **Do not use prompt chips when:**
-- The AI is actually missing required information to respond — use Clarification instead
+- The AI is missing required information to respond. Use text asking or a refinement card instead.
+- The decision involves required setup details or system-changing actions.
 
 ---
 
-## Buttons & CTAs
+## Response Actions
 
-Action buttons that navigate users to specific pages or trigger system actions.
+Action buttons route users to a product destination or review surface. Keep response actions separate from prompt chips and citations.
 
-**Rules:**
-- Use action verbs (Go to, View, Contact, Get)
-- Keep text clear and destination-focused
-- Use buttons instead of prompt chips for navigation
-- Limit to 1–3 button options per response
+### Product deep link
+
+Routes the user to an existing product area, page, setting, feature, or filtered view.
+
+**Examples:** Go to Labels, Open shipping rules, View carrier settings, Go to automation settings
+
+**Guidelines:**
+- Use one destination per response.
+- Label the destination clearly. Match the product's navigation language.
+- Do not use product deep links for AI-generated output. Use a review action instead.
+
+### Review action
+
+Opens AI-generated output for review before anything is applied.
+
+**Examples:** Review rule, Review changes, Review automation
+
+**Guidelines:**
+- Use "Review [object]" when AI has drafted or prepared something.
+- Do not use Apply, Save, Enable, Send, Delete, or Overwrite before the user reviews the generated output.
+
+### Buttons vs. citations
+
+Keep product actions and source references separate.
+
+- Use **buttons** when the user is being routed to a product destination or review surface.
+- Use **citation components** when the AI is referencing supporting documentation, sources, or evidence.
+- Do not use inline hyperlinks as the primary action.
+
+### General rules
+- Use action verbs: Go to, Open, View, Review, See
+- Keep text short and destination-focused
+- Use buttons instead of prompt chips when the action navigates the user somewhere
+- Limit to 1–3 buttons per response
 
 ---
 
@@ -84,8 +114,8 @@ Action buttons that navigate users to specific pages or trigger system actions.
 A card component that presents structured choices when the AI needs the user to decide before moving forward.
 
 **Variants:**
-- **Checkbox** (multi-select): "Select all that apply" — use when multiple selections are valid
-- **Radio card** (single-select): Title + optional description per option — use when only one selection is valid and options benefit from description
+- **Checkbox** (multi-select): "Select all that apply". Use when multiple selections are valid.
+- **Radio card** (single-select): Title + optional description per option. Use when only one selection is valid and options benefit from description.
 
 **Anatomy:**
 - Step label (e.g. "Step 2 of 4")
@@ -99,8 +129,8 @@ A card component that presents structured choices when the AI needs the user to 
 - The AI needs the user to choose a scope, source, account, date range, carrier, or workflow
 
 **When NOT to use:**
-- When the AI can safely continue without the user's input — use prompt chips instead
-- For simple one-missing-detail clarification — ask inline conversationally
+- When the AI can safely continue without the user's input. Use prompt chips instead.
+- For simple one-missing-detail clarification. Ask inline conversationally.
 
 ---
 
