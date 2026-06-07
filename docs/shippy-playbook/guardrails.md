@@ -26,6 +26,14 @@ Guardrails define when AI should pause, clarify, state a boundary, or route the 
 | "Help with labels" | Happy to help with labels. What do you need? | Void a label / Reprint a label / Fix a label error / Bulk print labels |
 | "Optimize my workflow" | I can help optimize your workflow. Where would you like to start? | Automate order routing / Reduce manual steps / Speed up label creation / Review carrier performance |
 
+### Choosing the right method
+
+| Pattern | Use when | Best for |
+|---|---|---|
+| **Text asking** | The request only needs one small follow-up question. | Light clarification |
+| **Prompt chips** | There are a few clear directions the user can choose from. | Fast path selection |
+| **Refinement card** | The request is broad, multi-step, or needs more structure before AI can respond. | Bigger clarification moment |
+
 **Clarification card vs. prompt chips:**
 - Use **prompt chips** when the AI already understands intent and wants to help the user choose a next step (optional shortcuts)
 - Use a **refinement card** when multiple structured choices are needed or the decision has meaningful consequences (required before proceeding)
@@ -42,17 +50,26 @@ Guardrails define when AI should pause, clarify, state a boundary, or route the 
 - The safest path is to guide, route, or escalate instead
 
 **Structure:**
-1. Acknowledge intent
-2. State the boundary
-3. Offer next step
+1. Acknowledge the limitation clearly — do not apologize excessively
+2. Give actionable steps with **bold labels** so the user can scan what to do
+3. Offer to help with a workaround or related next step
 
-**Examples:**
+**Rules:**
+- Be direct about what AI can't do. Don't hedge.
+- Always give the user somewhere to go or something to try.
+- Bold the action label in each step, not the whole sentence.
+- End with an offer to help with a related action if one exists.
 
-| User query | Response | Next step |
-|---|---|---|
-| "Can you fix this carrier outage?" | I can't fix a carrier outage directly, but I can help you check carrier status or choose another service. | Check carrier status / View affected shipments / Contact support |
-| "Refund all of these labels for me." | I can't refund these automatically here. You can review eligible labels and start the refund process from the Labels page. | Go to Labels |
-| "Talk to support for me." | I can't contact support from here, but you can continue in Help Center to get support. | Get Support |
+**Example: Carrier outage**
+
+> That's outside what I can fix directly — carrier outages are managed by the carriers themselves.
+>
+> Here are a few steps to investigate:
+> - **Check ShipStation's status page** for any reported issues with carrier integrations.
+> - **Check the carrier's status page directly** — UPS, FedEx, and USPS all have service alert pages.
+> - **Contact ShipStation support** if the outage is affecting your fulfillment workflows. They can often provide ETAs on resolution.
+
+Then offer prompt chips: **Check carrier status** / **Get Support** / **Pause fulfillment rules**
 
 ---
 

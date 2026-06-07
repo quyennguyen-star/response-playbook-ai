@@ -308,7 +308,7 @@
       flex-direction: column;
       justify-content: flex-start;
       overflow-y: auto;
-      max-height: 480px;
+      height: 480px;
     }
 
     /* ANATOMY VIEW */
@@ -1312,27 +1312,27 @@
       <div class="examples-list" id="assist-examples-list">
         <div class="example-item active" data-example="0">
           <div class="example-item-title">Find / navigate</div>
-          <div class="example-item-desc">"Where do I find API keys?"</div>
+          <div class="example-item-desc">CTA / deep link</div>
         </div>
         <div class="example-item" data-example="1">
           <div class="example-item-title">Learn / guidance</div>
-          <div class="example-item-desc">"How do I void a label?"</div>
+          <div class="example-item-desc">CTA / deep link</div>
         </div>
         <div class="example-item" data-example="2">
           <div class="example-item-title">Support / troubleshooting</div>
-          <div class="example-item-desc">"Why can't I connect my store?"</div>
+          <div class="example-item-desc">Prompt chips</div>
         </div>
         <div class="example-item" data-example="3">
           <div class="example-item-title">Search</div>
-          <div class="example-item-desc">"Find orders from John Smith last week."</div>
+          <div class="example-item-desc">CTA / deep link</div>
         </div>
         <div class="example-item" data-example="4">
           <div class="example-item-title">Ask my data</div>
-          <div class="example-item-desc">"What product cost me the most?"</div>
+          <div class="example-item-desc">CTA / deep link</div>
         </div>
         <div class="example-item" data-example="5">
           <div class="example-item-title">Unsupported / unknown</div>
-          <div class="example-item-desc">"Can you fix this carrier outage?"</div>
+          <div class="example-item-desc">Fallback / support route</div>
         </div>
       </div>
       <div class="example-preview" style="min-height:420px;">
@@ -1348,9 +1348,9 @@
           <div class="response-label">Guidance</div>
           <div class="response-text" id="assist-guidance">Settings > Developer > API Keys</div>
         </div>
-        <div class="response-row">
+        <div class="response-row" id="assist-nextstep-row">
           <div class="response-label">Next step</div>
-          <button class="btn" id="assist-nextstep">Open API Keys</button>
+          <div id="assist-nextstep"></div>
         </div>
       </div>
       </div>
@@ -1376,7 +1376,7 @@
         <tr>
           <td style="font-weight:500;">CTA / deep link</td>
           <td>There is one clear place the user should go or one clear action to take.</td>
-          <td><button class="btn btn--filled" style="pointer-events:none;">Open API Keys</button></td>
+          <td><button class="btn" style="pointer-events:none;">Open API Keys</button></td>
         </tr>
         <tr>
           <td style="font-weight:500;">Prompt chips</td>
@@ -1386,7 +1386,7 @@
         <tr>
           <td style="font-weight:500;">Fallback / support route</td>
           <td>AI cannot complete or confidently resolve the request.</td>
-          <td><div style="display:flex;flex-wrap:wrap;gap:var(--space-2);"><button class="btn" style="pointer-events:none;">Check carrier status</button><button class="btn" style="pointer-events:none;">Get support</button></div></td>
+          <td><div style="display:flex;flex-wrap:wrap;gap:var(--space-2);"><button class="btn" style="pointer-events:none;">Get Support</button></div></td>
         </tr>
       </tbody>
     </table>
@@ -1489,6 +1489,34 @@
         <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Offer options</div>
       </div>
     </div>
+    <h2 class="section-title">Choosing the right method</h2>
+    <table class="uc-table">
+      <thead>
+        <tr>
+          <th style="width:25%;">Pattern</th>
+          <th style="width:45%;">Use when</th>
+          <th>Best for</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:500;">Text asking</td>
+          <td>The request only needs one small follow-up question.</td>
+          <td style="">Light clarification</td>
+        </tr>
+        <tr>
+          <td style="font-weight:500;">Prompt chips</td>
+          <td>There are a few clear directions the user can choose from.</td>
+          <td style="">Fast path selection</td>
+        </tr>
+        <tr>
+          <td style="font-weight:500;">Refinement card</td>
+          <td>The request is broad, multi-step, or needs more structure before AI can respond.</td>
+          <td style="">Bigger clarification moment</td>
+        </tr>
+      </tbody>
+    </table>
+
     <div class="explorer-shell">
 
       <div class="explorer-body">
@@ -1498,6 +1526,7 @@
         </div>
         <div class="example-item" data-clarify="1">
           <div class="example-item-title">Fix this issue</div>
+          <div class="example-item-desc">Text asking</div>
         </div>
         <div class="example-item" data-clarify="2">
           <div class="example-item-title">Create a rule</div>
@@ -1509,8 +1538,8 @@
           <div class="example-item-title">Optimize my workflow</div>
         </div>
       </div>
-      <div class="example-preview">
-        <div id="clarification-preview"></div>
+      <div class="example-preview" style="position:relative;">
+        <div id="clarification-preview" style="display:flex;flex-direction:column;flex:1;height:100%;"></div>
       </div>
       </div>
     </div>
@@ -2002,35 +2031,45 @@
     return `<div style="display:flex;align-items:center;gap:var(--space-2);">${aiDots()}${shimmerText(text, size)}</div>`;
   }
   const assistExamples = [
-    { query: "Where do I find my API keys?", rows: [
+    { query: "Where do I find my API keys?", nextStepType: "CTA / deep link", rows: [
       { label: "Answer", text: "You can find <strong>API keys</strong> in Settings." },
       { label: "Guidance", text: "<strong>Settings > Developer > API Keys</strong>" },
       { label: "Next step", btn: "Open API Keys" }
     ]},
-    { query: "How do I void a label?", rows: [
+    { query: "How do I void a label?", nextStepType: "CTA / deep link", rows: [
       { label: "Answer", text: "You can void a label within <strong>30 days of purchase</strong>, as long as it hasn't been picked up by the carrier." },
       { label: "Guidance", steps: ["Go to <strong>Shipments</strong>", "Find the label you want to void", "Click the label to open details", "Select <strong>Void label</strong>"] },
       { label: "Next step", btn: "Go to Shipments" }
     ]},
-    { query: "Why can't I connect my store?", rows: [
-      { label: "Answer", text: "This is usually a credentials or permissions issue with your store." },
-      { label: "Guidance", steps: ["Go to Settings > <strong>Stores</strong>", "Select your store and click <strong>Reconnect</strong>", "Re-enter your store credentials", "If the error persists, check that <strong>API access is enabled</strong> in your store admin"] },
-      { label: "Next step", btn: "Go to Store Settings" }
+    { query: "Why can't I connect my store?", nextStepType: "Prompt chips", rows: [
+      { label: "Answer", text: "There are a few common reasons a store might not connect:" },
+      { label: "Guidance", steps: [
+        "<strong>Authentication errors:</strong> Your store may need to be re-authorized. Try disconnecting and reconnecting from <strong>Settings > Stores</strong>.",
+        "<strong>API permissions:</strong> Your store may not have granted the required permissions. Check the permission settings in your store admin.",
+        "<strong>Credentials mismatch:</strong> Double-check that the store URL, API key, and secret are entered correctly.",
+        "<strong>Browser issues:</strong> Try clearing your cache or using a different browser.",
+        "<strong>Store-side outage:</strong> Your store platform may be experiencing issues. Check their status page."
+      ]},
+      { label: "Next step", text: "Which store are you trying to connect? I can give more specific guidance if I know which one it is." }
     ]},
-    { query: "Find orders from John Smith last week.", rows: [
-      { label: "Answer", text: "Found <strong>3 orders</strong> from John Smith." },
-      { label: "Guidance", text: "Showing results from <strong>June 1–7</strong>" },
-      { label: "Next step", btn: "View all orders" }
+    { query: "Find orders from John Smith last week.", nextStepType: "CTA / deep link", rows: [
+      { label: "Answer", text: "Found <strong>3 orders</strong> from John Smith between <strong>June 1–7</strong>." },
+      { label: "Guidance", text: "Orders: <strong>#10482</strong> · Jun 3 · $24.50 &nbsp;|&nbsp; <strong>#10491</strong> · Jun 5 · $67.00 &nbsp;|&nbsp; <strong>#10504</strong> · Jun 7 · $12.80" },
+      { label: "Next step", btn: "View all 3 orders" }
     ]},
-    { query: "What product cost me the most?", rows: [
+    { query: "What product cost me the most?", nextStepType: "CTA / deep link", rows: [
       { label: "Answer", text: "Your highest cost product was <strong>Priority Mail at $142</strong>." },
       { label: "Guidance", text: "Based on orders from the <strong>last 30 days</strong>" },
       { label: "Next step", btn: "View cost report" }
     ]},
-    { query: "Can you fix this carrier outage?", rows: [
-      { label: "Answer", text: "I'm not able to fix carrier outages directly." },
-      { label: "Guidance", text: "Check the carrier status page for updates" },
-      { label: "Next step", btn: "Get Support" }
+    { query: "Can you fix this carrier outage?", nextStepType: "Fallback / support route", rows: [
+      { label: "Answer", text: "That's outside what I can fix directly — carrier outages are managed by the carriers themselves." },
+      { label: "Guidance", steps: [
+        "<strong>Check ShipStation's status page</strong> for any reported issues with carrier integrations.",
+        "<strong>Check the carrier's status page directly</strong> — UPS, FedEx, and USPS all have service alert pages.",
+        "<strong>Contact ShipStation support</strong> if the outage is affecting your fulfillment workflows. They can often provide ETAs on resolution."
+      ]},
+      { label: "Next step", chips: ["Check carrier status", "Get Support", "Pause fulfillment rules"] }
     ]}
   ];
 
@@ -2042,12 +2081,12 @@
     },
     { title: "Fix this issue", route: "Route after clarification: Assist or Escalation",
       query: "Fix this issue",
-      message: "I'd like to help. Can you tell me more about what's happening?",
-      chips: ["Label not printing", "Store not connecting", "Order not syncing", "Carrier error"]
+      message: "Happy to help. Is this happening with a shipment, a label, or something else?",
+      chips: null
     },
     { title: "Create a rule", route: "Route after clarification: Configure. Use a refinement card to collect required inputs.",
       query: "Create a rule",
-      message: "Sure! What should this rule do?",
+      message: "I can help you set that up. What should the rule do?",
       chips: ["Route orders by carrier", "Apply insurance automatically", "Filter by order weight", "Set default packaging"],
       cardAfterChip: {
         question: "Which orders should this rule apply to?",
@@ -2121,8 +2160,23 @@
         } else {
           el.innerHTML = row.text;
         }
-      } else if (row.label === 'Next step' && row.btn) {
-        document.getElementById('assist-nextstep').textContent = row.btn;
+      } else if (row.label === 'Next step') {
+        const el = document.getElementById('assist-nextstep');
+        const row_label = document.getElementById('assist-nextstep-row');
+        if (row.none) {
+          row_label.style.display = 'none';
+        } else {
+          row_label.style.display = 'flex';
+          if (row.chips) {
+            el.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">${row.chips.map(c=>`<button class="prompt-chip" style="pointer-events:none;">${c}</button>`).join('')}</div>`;
+          } else if (row.fallback) {
+            el.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">${row.fallback.map(c=>`<button class="btn" style="pointer-events:none;">${c}</button>`).join('')}</div>`;
+          } else if (row.btn) {
+            el.innerHTML = `<button class="btn" style="pointer-events:none;">${row.btn}</button>`;
+          } else if (row.text) {
+            el.innerHTML = row.text;
+          }
+        }
       }
     });
   }
@@ -2182,16 +2236,18 @@
       return;
     }
 
-    let chips = ex.chips.map((c, i) =>
-      `<button class="prompt-chip" ${ex.cardAfterChip ? `onclick="showClarifyCard(this, ${i})"` : ''}>${c}</button>`
-    ).join('');
+    const chipsHtml = ex.chips
+      ? `<div class="prompt-chips" id="clarify-chips">${ex.chips.map((c, i) => `<button class="prompt-chip" ${ex.cardAfterChip ? `onclick="showClarifyCard(this, ${i})"` : ''}>${c}</button>`).join('')}</div>`
+      : '';
     document.getElementById('clarification-preview').innerHTML = `
-      <div style="overflow:hidden">
-        <div class="user-query-right">${ex.query}</div>
+      <div style="flex:1;display:flex;flex-direction:column;">
+        <div style="overflow:hidden">
+          <div class="user-query-right">${ex.query}</div>
+        </div>
+        <div class="ai-message">${ex.message}</div>
+        ${chipsHtml}
+        <div id="clarify-card-slot"></div>
       </div>
-      <div class="ai-message">${ex.message}</div>
-      <div class="prompt-chips" id="clarify-chips">${chips}</div>
-      <div id="clarify-card-slot"></div>
       <div class="chat-input-mock"><span class="plus">+</span><span class="send">↑</span></div>
     `;
   }
@@ -2202,29 +2258,27 @@
     const chipLabel = btn.textContent;
     document.getElementById('clarify-chips').style.display = 'none';
     const card = ex.cardAfterChip;
-    const options = card.options.map(o => `
-      <button class="refinement-card__radio-option" onclick="selectRadioOption(this)">
-        <span class="refinement-card__radio-circle"></span>
-        <span class="refinement-card__radio-text"><span class="refinement-card__radio-title">${o}</span></span>
-      </button>`).join('');
-    document.getElementById('clarify-card-slot').innerHTML = `
+    const options = card.options.map((o, i) => ccOptionRow({id: i, title: o}, i, 'single', false, 'ccSelectSingle(this)')).join('');
+    const slot = document.getElementById('clarify-card-slot');
+    slot.style.cssText = 'position:absolute;bottom:0;left:0;right:0;padding:var(--space-10);background:var(--grey-050);';
+    slot.innerHTML = `
       <div style="overflow:hidden;margin-bottom:var(--space-2);">
         <div class="user-query-right">${chipLabel}</div>
       </div>
-      <div class="ai-message" style="margin-bottom:var(--space-4);">Got it. To set up this rule, I need a few details first.</div>
+      <div class="ai-message" style="margin-bottom:var(--space-4);">I can help set that up. A few details first.</div>
       <div class="refinement-card" style="width:100%;">
         <div class="refinement-card__header">
-          <span class="refinement-card__step">Step 1 of 3</span>
+          <div class="refinement-card__header-left">
+            <span class="refinement-card__step">Step 1 of 3</span>
+            <div class="refinement-card__question">${card.question}</div>
+          </div>
           <button class="refinement-card__close" onclick="hideClarifyCard()" aria-label="Close">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
         <div class="refinement-card__body">
-          <div class="refinement-card__question">${card.question}</div>
-          <div class="refinement-card__radio-options">
-            ${options}
-            <input type="text" class="refinement-card__input" placeholder="Or type it here…" style="margin-top:var(--space-5);height:32px;border-radius:var(--radius-xs);border-color:var(--grey-300);" onfocus="this.style.borderColor='var(--grey-600)'" onblur="this.style.borderColor='var(--grey-300)'" />
-          </div>
+          ${options}
+          ${ccAskRow()}
         </div>
         <div class="refinement-card__footer">
           <span></span>
@@ -2235,7 +2289,9 @@
   }
 
   function hideClarifyCard() {
-    document.getElementById('clarify-card-slot').innerHTML = '';
+    const slot = document.getElementById('clarify-card-slot');
+    slot.innerHTML = '';
+    slot.style.cssText = '';
     document.getElementById('clarify-chips').style.display = '';
   }
 
@@ -2273,11 +2329,13 @@
     }
 
     document.getElementById('cb-preview').innerHTML = `
-      <div style="overflow:hidden">
-        <div class="user-query-right">${ex.query}</div>
+      <div style="flex:1;display:flex;flex-direction:column;">
+        <div style="overflow:hidden">
+          <div class="user-query-right">${ex.query}</div>
+        </div>
+        <div class="ai-message">${ex.response}</div>
+        ${itemsHtml}
       </div>
-      <div class="ai-message">${ex.response}</div>
-      ${itemsHtml}
       <div class="chat-input-mock"><span class="plus">+</span><span class="send">↑</span></div>
     `;
   }
@@ -2306,20 +2364,23 @@
   function renderEscalationPreview(idx) {
     const ex = escalationExamples[idx];
     document.getElementById('escalation-preview').innerHTML = `
-      <div style="overflow:hidden;margin-bottom:var(--space-4)"><div class="user-query-right">${ex.query}</div></div>
-      <div class="ai-message" style="margin-bottom:var(--space-4)">${ex.response}</div>
-      <div style="margin-bottom:var(--space-4)">
-        <button class="btn">${ex.btn}</button>
+      <div style="flex:1;display:flex;flex-direction:column;">
+        <div style="overflow:hidden;margin-bottom:var(--space-4)"><div class="user-query-right">${ex.query}</div></div>
+        <div class="ai-message" style="margin-bottom:var(--space-4)">${ex.response}</div>
+        <div style="margin-bottom:var(--space-4)">
+          <button class="btn">${ex.btn}</button>
+        </div>
+        <div style="font-size:var(--font-size-sm);color:var(--text-primary);line-height:1.6;margin-bottom:var(--space-4)">${ex.followup}</div>
+        <div style="display:flex;gap:var(--space-2)">
+          <button class="feedback-btn" style="background:transparent;border:none;cursor:pointer;padding:var(--space-2);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);transition:background 0.15s ease;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-secondary)"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+          </button>
+          <button class="feedback-btn" style="background:transparent;border:none;cursor:pointer;padding:var(--space-2);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);transition:background 0.15s ease;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-secondary)"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+          </button>
+        </div>
       </div>
-      <div style="font-size:var(--font-size-sm);color:var(--text-primary);line-height:1.6;margin-bottom:var(--space-4)">${ex.followup}</div>
-      <div style="display:flex;gap:var(--space-2)">
-        <button class="feedback-btn" style="background:transparent;border:none;cursor:pointer;padding:var(--space-2);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);transition:background 0.15s ease;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-secondary)"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-        </button>
-        <button class="feedback-btn" style="background:transparent;border:none;cursor:pointer;padding:var(--space-2);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);transition:background 0.15s ease;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-secondary)"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
-        </button>
-      </div>
+      <div class="chat-input-mock"><span class="plus">+</span><span class="send">↑</span></div>
     `;
   }
 

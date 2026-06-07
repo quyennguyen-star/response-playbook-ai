@@ -84,8 +84,14 @@ Real examples from the playbook. These are the source of truth for how the AI as
 
 ### Limitation message
 **User:** "Can you fix this carrier outage?"
-**AI:** I can't fix a carrier outage directly, but I can help you check carrier status or choose another service.
-**Chips:** Check carrier status / View affected shipments / Contact support
+**AI:** That's outside what I can fix directly — carrier outages are managed by the carriers themselves.
+
+Steps to investigate:
+- **Check ShipStation's status page** for any reported issues with carrier integrations.
+- **Check the carrier's status page directly** — UPS, FedEx, and USPS all have service alert pages.
+- **Contact ShipStation support** if the outage is affecting your fulfillment workflows. They can often provide ETAs on resolution.
+
+**Chips:** Check carrier status / Get Support / Pause fulfillment rules
 
 ### Deep link
 **User:** "Refund all of these labels for me."

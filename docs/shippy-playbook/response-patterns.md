@@ -41,6 +41,24 @@ If the assistant is using product knowledge, documentation, policy, or user data
 
 ---
 
+## Voice and tone
+
+Be friendly but efficient. Get to the point without warmup phrases.
+
+- No filler: avoid "Sure!", "Got it!", "Of course!", or "Great question!"
+- No unnecessary warmup before the actual response
+- Short acknowledgment is fine when it adds clarity — but go straight to the ask or answer
+- Conversational, not robotic — write like a knowledgeable colleague, not a help article
+
+| Instead of | Use |
+|---|---|
+| "Sure! What should this rule do?" | "What should this rule do?" |
+| "Got it. To set up this rule, I need a few details first." | "I can help set that up. What should the rule do?" |
+| "Great! I found 3 orders." | "Found **3 orders** from John Smith." |
+| "Of course, I'd be happy to help with that." | "Happy to help. Is this happening with a shipment, a label, or something else?" |
+
+---
+
 ## Bold text in AI responses
 
 Use bold text to make AI responses easier to scan. Bold should help users quickly identify the most important parts of the response without reading every line.
@@ -105,6 +123,11 @@ Use `→` for sequences of selections or steps within a workflow. These are acti
 **Rules:**
 - Include steps, paths, or links when helpful
 - State limitations clearly
+
+**When the answer is a limitation or fallback:**
+1. Acknowledge what's outside AI's control — directly, without over-apologizing
+2. Give actionable steps with **bold labels** so the user can scan what to try
+3. End with prompt chips or an offer to help with a related workaround
 
 ### Assist: Choosing the next step
 
