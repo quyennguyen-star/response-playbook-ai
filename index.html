@@ -21,8 +21,8 @@
       --space-1: 2px; --space-2: 4px; --space-3: 6px; --space-4: 8px; --space-5: 12px;
       --space-6: 16px; --space-8: 24px; --space-10: 32px; --space-12: 48px;
       --font-size-xs: 12px; --font-size-sm: 13px; --font-size-md: 14px;
-      --font-size-lg: 16px; --font-size-xl: 20px; --font-size-2xl: 28px;
-      --font-weight-medium: 500; --font-weight-semibold: 600; --font-weight-bold: 700;
+      --font-size-lg: 16px; --font-size-xl: 20px; --font-size-2xl: 32px;
+      --font-weight-regular: 400; --font-weight-medium: 500; --font-weight-semibold: 600; --font-weight-bold: 700;
       --sidebar-width: 256px;
     }
 
@@ -42,13 +42,13 @@
     }
     .topbar__logo { height: 28px; width: auto; margin-right: var(--space-5); display: block; }
     .topbar__link {
-      font-size: var(--font-size-md); font-weight: 400;
+      font-size: var(--font-size-md); font-weight: var(--font-weight-regular);
       color: var(--text-secondary); text-decoration: none;
       padding: var(--space-2) var(--space-5); border-radius: var(--radius-xs);
       transition: color 0.12s, background 0.12s; cursor: pointer; white-space: nowrap;
     }
     .topbar__link:hover { color: var(--text-primary); background: var(--grey-100); }
-    .topbar__link.active { color: var(--text-primary); font-weight: 500; }
+    .topbar__link.active { color: var(--text-primary); font-weight: var(--font-weight-medium); }
 
     /* SIDEBAR */
     .sidebar {
@@ -64,10 +64,10 @@
       display: flex; align-items: center; gap: var(--space-4);
       padding: var(--space-6);
     }
-    .sidebar-logo-text { font-size: var(--font-size-md); font-weight: 600; }
+    .sidebar-logo-text { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); }
     .sidebar-nav { padding: var(--space-4) 0; flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: flex-start; }
     .nav-section-label {
-      font-size: var(--font-size-xs); font-weight: 400;
+      font-size: var(--font-size-xs); font-weight: var(--font-weight-regular);
       color: var(--text-secondary);
       padding: var(--space-5) var(--space-5) var(--space-1);
       margin-top: var(--space-4);
@@ -77,7 +77,7 @@
     .nav-children { display: none; margin-left: var(--space-8); border-left: 1px solid var(--grey-200); padding-left: var(--space-1); padding-bottom: var(--space-1); }
     .nav-children.open { display: block; }
     .nav-item--child { font-size: var(--font-size-sm); color: var(--text-secondary); }
-    .nav-item--child.active { color: var(--indigo-950); font-weight: 500; }
+    .nav-item--child.active { color: var(--indigo-950); font-weight: var(--font-weight-medium); }
     
     .nav-item {
       display: block;
@@ -96,7 +96,7 @@
     }
     .nav-item.active {
       background: var(--grey-100);
-      font-weight: 500;
+      font-weight: var(--font-weight-medium);
     }
     .nav-item.parent {
       cursor: pointer; margin-top: var(--space-3); margin-bottom: 2px;
@@ -111,6 +111,7 @@
     /* MAIN */
     .main { margin-left: var(--sidebar-width); margin-top: 64px; flex: 1; display: flex; justify-content: center; overflow-y: auto; height: calc(100vh - 64px); }
     .page { display: none; padding: var(--space-8); max-width: 1088px; width: 100%; }
+    #page-example-detail, #page-stampy-nlp { max-width: 1400px; }
     .page.active { display: block; }
     .page-title { font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-2); }
     .page-subtitle {
@@ -128,7 +129,7 @@
     .toggle-btn {
       padding: 4px var(--space-4); border: none; background: transparent;
       font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
-      font-weight: 500; color: var(--text-secondary); cursor: pointer;
+      font-weight: var(--font-weight-medium); color: var(--text-secondary); cursor: pointer;
       border-radius: 4px; transition: all 0.15s;
     }
     .toggle-btn.active {
@@ -183,7 +184,7 @@
     }
     .anatomy-pattern-card-content { padding: var(--space-6); }
     .anatomy-pattern-card-title {
-      font-size: var(--font-size-md); font-weight: 700;
+      font-size: var(--font-size-md); font-weight: var(--font-weight-bold);
       margin-bottom: var(--space-5);
     }
     .anatomy-step {
@@ -193,7 +194,7 @@
     .step-num {
       width: 22px; height: 22px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 600; flex-shrink: 0;
+      font-size: 11px; font-weight: var(--font-weight-semibold); flex-shrink: 0;
     }
     .step-num.blue { background: var(--indigo-100); color: var(--indigo-600); }
     .step-num.teal { background: var(--blue-100); color: var(--blue-700); }
@@ -293,9 +294,9 @@
       background: var(--grey-950);
       border-radius: 9999px;
     }
-    .example-item-title { font-size: var(--font-size-md); font-weight: 400; color: var(--text-primary); }
+    .example-item-title { font-size: var(--font-size-md); font-weight: var(--font-weight-regular); color: var(--text-primary); }
     .example-item.active .example-item-title,
-    .clarification-item.active { color: var(--text-primary); font-weight: 600; }
+    .clarification-item.active { color: var(--text-primary); font-weight: var(--font-weight-semibold); }
     .example-item-desc {
       display: none;
     }
@@ -320,12 +321,12 @@
       line-height: var(--line-height-lg);
     }
     .user-bubble span {
-      font-weight: 400;
+      font-weight: var(--font-weight-regular);
       color: var(--text-primary);
       margin-right: var(--space-3);
     }
     .user-bubble strong {
-      font-weight: 600;
+      font-weight: var(--font-weight-semibold);
     }
     .response-row {
       display: flex;
@@ -338,7 +339,7 @@
       background: var(--indigo-100);
       color: var(--indigo-600);
       font-size: var(--font-size-xs);
-      font-weight: 400;
+      font-weight: var(--font-weight-regular);
       padding: var(--space-3) var(--space-5);
       border-radius: var(--radius-sm);
       white-space: nowrap;
@@ -387,7 +388,7 @@
     .refinement-card__step {
       font-size: var(--font-size-xs);
       color: var(--text-secondary);
-      font-weight: 400;
+      font-weight: var(--font-weight-regular);
       margin-bottom: var(--space-2);
     }
     .refinement-card__question {
@@ -425,7 +426,7 @@
       border-color: var(--grey-950);
       background: var(--grey-050);
     }
-    .cc-num { font-size: var(--font-size-xs); font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+    .cc-num { font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--text-primary); font-variant-numeric: tabular-nums; }
     .cc-check { display: none; }
     .cc-option--single.cc-option--selected .cc-check { display: flex; color: var(--text-primary); }
     /* Multi select — checkbox on left */
@@ -475,7 +476,7 @@
     .cc-dot--active { background: var(--grey-950); width: 16px; }
     .cc-dot--done { background: var(--grey-950); width: 6px; }
     .cc-dot--future { width: 6px; }
-    .cc-step-count { font-size: var(--font-size-xs); color: var(--grey-400); font-weight: 500; }
+    .cc-step-count { font-size: var(--font-size-xs); color: var(--grey-400); font-weight: var(--font-weight-medium); }
     /* Footer */
     .refinement-card__footer {
       display: flex; align-items: center; justify-content: space-between;
@@ -494,13 +495,239 @@
       border: none; border-radius: var(--radius-xs);
       height: 32px; padding: 0 var(--space-6);
       font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif;
-      font-weight: 500; cursor: pointer;
+      font-weight: var(--font-weight-medium); cursor: pointer;
       transition: opacity 0.12s;
     }
-    .refinement-card__next:hover:not(:disabled) { background: #333; }
+    .refinement-card__next:hover:not(:disabled) { background: var(--grey-800); }
     .refinement-card__next:disabled {
       background: var(--border-light); color: var(--grey-400); cursor: not-allowed;
     }
+
+    /* EXAMPLES PAGE */
+    .ex-filters { display:flex; gap:var(--space-2); margin-bottom:var(--space-8); flex-wrap:wrap; }
+    .ex-filter-btn {
+      padding: var(--space-2) var(--space-4); border-radius: 9999px;
+      border: 1px solid var(--border-light); background: var(--base-white);
+      font-size: var(--font-size-sm); color: var(--text-secondary);
+      cursor: pointer; font-family: 'Figtree', sans-serif; transition: all 0.1s;
+    }
+    .ex-filter-btn:hover { border-color: var(--border-medium); color: var(--text-primary); }
+    .ex-filter-btn.active { background: var(--grey-950); color: var(--base-white); border-color: var(--grey-950); }
+    .ex-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-5); }
+    .ex-card {
+      border: 1px solid var(--border-light); border-radius: var(--radius-sm);
+      padding: var(--space-6); cursor: pointer; transition: box-shadow 0.15s, transform 0.15s;
+      background: var(--base-white);
+    }
+    .ex-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); transform: translateY(-2px); }
+
+    /* AI SIDE PANEL COMPONENT */
+    .ai-panel {
+      width: 380px; height: 733px; background: var(--base-white);
+      border: 1px solid var(--border-light); border-radius: var(--radius-sm);
+      display: flex; flex-direction: column; overflow: visible; flex-shrink: 0;
+      font-family: 'Figtree', sans-serif;
+    }
+    .ai-panel__header {
+      height: 48px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--space-5); border-bottom: 1px solid var(--border-light);
+      flex-shrink: 0;
+    }
+    .ai-panel__header-left { display: flex; align-items: center; gap: var(--space-3); }
+    .ai-panel__logo {
+      width: 20px; height: 20px; border-radius: 4px;
+      background: var(--indigo-950); display: flex; align-items: center; justify-content: center;
+    }
+    .ai-panel__title { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--text-primary); }
+    .ai-panel__header-icons { display: flex; align-items: center; gap: var(--space-5); cursor: pointer; }
+    .ai-panel__icon-btn { background:none; border:none; cursor:pointer; padding:6px; display:flex; align-items:center; justify-content:center; border-radius:6px; color:var(--text-primary); transition: background 0.1s; position:relative; }
+    .ai-panel__icon-btn:hover { background:var(--grey-100); }
+    .ai-panel__icon-btn::after {
+      content: attr(data-tip);
+      position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+      background: var(--grey-950); color: #fff; font-size: 11px; font-weight: var(--font-weight-medium);
+      padding: 4px 8px; border-radius: 5px; white-space: nowrap;
+      pointer-events: none; opacity: 0; transition: opacity 0.1s;
+      font-family: 'Figtree', sans-serif; z-index: 999;
+    }
+    .ai-panel__icon-btn:hover::after { opacity: 1; }
+    .ai-panel__send { position: relative; }
+    .ai-panel__send::after {
+      content: attr(data-tip);
+      position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+      background: var(--grey-950); color: #fff; font-size: 11px; font-weight: var(--font-weight-medium);
+      padding: 4px 8px; border-radius: 5px; white-space: nowrap;
+      pointer-events: none; opacity: 0; transition: opacity 0.1s;
+      font-family: 'Figtree', sans-serif;
+    }
+    .ai-panel__send:hover::after { opacity: 1; }
+    .ai-panel__starter-chip { background:#fff; border:1px solid var(--grey-200); border-radius:9999px; height:32px; padding:0 16px; font-size:13px; color:var(--text-primary); font-family:'Figtree',sans-serif; font-weight:400; cursor:pointer; transition: background 0.1s, border-color 0.1s; display:inline-flex; align-items:center; }
+    .ai-panel__starter-chip:hover { background:var(--grey-050); border-color:var(--grey-300); }
+    .ai-panel__body {
+      flex: 1; overflow-y: auto; padding: var(--space-5);
+      display: flex; flex-direction: column; gap: var(--space-3);
+    }
+    .ai-panel__composer {
+      flex-shrink: 0; margin: var(--space-6); padding: var(--space-4);
+      border: 1px solid var(--grey-300); border-radius: var(--radius-sm);
+      background: var(--base-white); display: flex; flex-direction: column;
+      gap: var(--space-3); min-height: 76px; max-height: 124px; box-sizing: border-box;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    @keyframes aiGlow {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .ai-panel__composer.focused {
+      border-color: transparent;
+      position: relative;
+      box-shadow: 0 0 8px rgba(147,197,253,0.25), 0 0 16px rgba(196,181,253,0.15);
+    }
+    .ai-panel__composer.focused::before {
+      content: '';
+      position: absolute;
+      inset: -1.5px;
+      border-radius: calc(var(--radius-sm) + 1.5px);
+      background: linear-gradient(270deg, #93C5FD, #C4B5FD, #FECDD3, #C4B5FD, #93C5FD);
+      background-size: 300% 300%;
+      animation: aiGlow 6s ease infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .ai-panel__composer.focused::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-sm);
+      background: var(--base-white);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .ai-panel__composer.focused > * { position: relative; z-index: 2; }
+    .ai-panel__composer-input {
+      font-size: var(--font-size-sm); color: var(--text-secondary);
+      border: none; outline: none; background: transparent; width: 100%;
+      font-family: 'Figtree', sans-serif; resize: none; line-height: 1.5;
+      overflow-y: auto; min-height: 24px;
+    }
+    .ai-panel__composer-actions {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .ai-panel__composer-actions-left { display: flex; align-items: center; gap: var(--space-3); color: var(--text-secondary); }
+    .ai-panel__send {
+      width: 32px; height: 32px; border-radius: var(--radius-xs);
+      background: var(--grey-100); display: flex; align-items: center; justify-content: center;
+      border: none; cursor: not-allowed; color: var(--text-disabled);
+      transition: background 0.15s, color 0.15s; flex-shrink: 0;
+    }
+    .ai-panel__send.active {
+      background: var(--indigo-950); color: var(--base-white); cursor: pointer;
+    }
+    .ai-panel__attach {
+      background: none; border: none; cursor: pointer; padding: 0;
+      display: flex; align-items: center; color: var(--text-secondary);
+      transition: color 0.1s;
+    }
+    .ai-panel__attach:hover { color: var(--text-primary); }
+    /* Messages inside the panel */
+    .ai-panel__msg-user {
+      align-self: flex-end; background: var(--grey-100); border-radius: 14px 14px 4px 14px;
+      padding: var(--space-3) var(--space-4); font-size: var(--font-size-sm); max-width: 85%;
+      line-height: 1.5; color: var(--text-primary);
+    }
+    .ai-panel__msg-ai {
+      align-self: flex-start; display: flex; gap: var(--space-2); align-items: flex-start; max-width: 92%;
+    }
+    .ai-panel__msg-ai-icon {
+      width: 20px; height: 20px; border-radius: 50%; background: var(--indigo-950);
+      flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center;
+    }
+    .ai-panel__msg-ai-bubble {
+      background: var(--grey-050); border-radius: 4px 14px 14px 14px;
+      padding: var(--space-3) var(--space-4); font-size: var(--font-size-sm);
+      line-height: 1.6; color: var(--text-primary); display: flex; flex-direction: column; gap: var(--space-3);
+    }
+    .ai-panel__chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .ai-panel__empty {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: var(--space-4); padding: var(--space-8);
+      text-align: center;
+    }
+    .ai-panel__empty-icon {
+      width: 48px; height: 48px; border-radius: 50%; background: var(--indigo-950);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .ai-panel__empty-title { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); }
+    .ai-panel__empty-sub { font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6; }
+    .ex-card__title { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-2); }
+    .ex-card__desc { font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-5); }
+    .ex-card__meta { display: grid; grid-template-columns: 90px 1fr; gap: var(--space-2) var(--space-3); align-items: baseline; }
+    .ex-card__meta-label { font-size: var(--font-size-xs); color: var(--text-secondary); }
+    .ex-card__meta-value { font-size: var(--font-size-xs); color: var(--text-primary); }
+    .ex-card__badge {
+      display: inline-block; padding: 2px 8px; border-radius: 9999px;
+      font-size: 11px; font-weight: var(--font-weight-medium); margin-right: 4px; margin-bottom: 2px;
+    }
+    .ex-badge--assist { background: var(--indigo-100); color: var(--indigo-600); }
+    .ex-badge--insight { background: var(--green-050); color: var(--green-700); }
+    .ex-badge--configure { background: var(--yellow-050); color: var(--yellow-600); }
+    .ex-badge--clarification { background: var(--purple-050); color: var(--purple-700); }
+    .ex-badge--capability { background: var(--grey-100); color: var(--text-secondary); }
+    /* Example detail page */
+    .ex-detail-back {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      font-size: var(--font-size-sm); color: var(--text-secondary);
+      cursor: pointer; background: none; border: none;
+      font-family: 'Figtree', sans-serif; padding: 0;
+      margin-bottom: var(--space-8); transition: color 0.12s;
+    }
+    .ex-detail-back:hover { color: var(--text-primary); }
+    .ex-detail-header { margin-bottom: var(--space-10); }
+    .ex-detail-header__title { font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-4); }
+    .ex-detail-header__desc { font-size: var(--font-size-md); color: var(--text-secondary); margin-bottom: var(--space-5); line-height: 1.6; }
+    .ex-detail-header__badges { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+    .ex-detail-section { margin-bottom: var(--space-10); }
+    .ex-detail-preview-box {
+      background: var(--grey-100); border: 1px dashed var(--border-medium);
+      border-radius: var(--radius-sm); min-height: 240px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: var(--space-3); color: var(--text-secondary);
+    }
+    .ex-detail-preview-box__label { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-secondary); }
+    .ex-preview-tabs { display: flex; align-items: center; gap: var(--space-1); margin-bottom: var(--space-6); padding-bottom: 4px; }
+    .ex-preview-tab { height: 32px; padding: 0 var(--space-4); font-size: var(--font-size-md); font-weight: var(--font-weight-regular); color: var(--text-secondary); cursor: pointer; border: none; background: none; font-family: 'Figtree', sans-serif; border-radius: var(--radius-sm); transition: color 0.1s, background 0.1s; position: relative; display: inline-flex; align-items: center; }
+    .ex-preview-tab:hover { color: var(--text-primary); background: var(--grey-050); }
+    .ex-preview-tab.active { background: var(--grey-100); color: var(--text-primary); font-weight: var(--font-weight-semibold); }
+    .ex-preview-tab.active::after { content: ''; position: absolute; bottom: -9px; left: 0; right: 0; height: 2px; background: var(--grey-950); border-radius: 1px; }
+    .ex-detail-preview-box__sub { font-size: var(--font-size-sm); color: var(--grey-400); }
+    .ex-detail-field { margin-bottom: var(--space-6); }
+    .ex-detail-field__label { font-size: var(--font-size-xs); font-weight: var(--font-weight-medium); color: var(--text-secondary); margin-bottom: var(--space-2); text-transform: uppercase; letter-spacing: 0.04em; }
+    .ex-detail-field__value { font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.6; }
+    .ex-detail-flow-list { display: flex; flex-direction: column; gap: var(--space-4); }
+    .ex-detail-flow-step { display: flex; align-items: flex-start; gap: var(--space-5); }
+    .ex-detail-flow-step__num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--grey-100); border: 1px solid var(--border-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--text-primary);
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .ex-detail-flow-step__text { font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.6; padding-top: 4px; }
+    .ex-detail-decision-box {
+      background: var(--indigo-050); border: 1px solid var(--indigo-100);
+      border-radius: var(--radius-sm); padding: var(--space-6);
+    }
+    .ex-detail-decision-box__text { font-size: var(--font-size-md); color: var(--indigo-600); line-height: 1.6; }
+    .ex-detail-notes-box {
+      background: var(--grey-050); border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm); padding: var(--space-6);
+    }
+    .ex-detail-notes-box__text { font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.6; }
+    .ex-detail-pattern-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-5); }
+    .ex-detail-pattern-item { }
+    .ex-detail-pattern-item__label { font-size: var(--font-size-xs); font-weight: var(--font-weight-medium); color: var(--text-secondary); margin-bottom: var(--space-3); text-transform: uppercase; letter-spacing: 0.04em; }
+    .ex-detail-pattern-item__value { font-size: var(--font-size-md); color: var(--text-primary); line-height: 1.6; }
 
     .preview-box {
       background: var(--grey-050);
@@ -551,7 +778,7 @@
       box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.10), 0 1px 1px 0 rgba(0, 0, 0, 0.10);
       font-size: var(--font-size-sm);
       font-family: 'Figtree', sans-serif;
-      font-weight: 500;
+      font-weight: var(--font-weight-medium);
       cursor: pointer;
       transition: all 0.15s;
     }
@@ -583,11 +810,11 @@
       gap: var(--space-4); max-width: 90%;
     }
     .chat-ai-answer { font-size: var(--font-size-md); line-height: 1.6; }
-    .chat-ai-path { font-weight: 600; margin-top: var(--space-2); font-size: var(--font-size-md); }
+    .chat-ai-path { font-weight: var(--font-weight-semibold); margin-top: var(--space-2); font-size: var(--font-size-md); }
     .chat-action-btn {
       padding: var(--space-3) var(--space-6); border: 1px solid var(--border-medium);
       border-radius: var(--radius-sm); font-size: var(--font-size-md);
-      font-family: 'Figtree', sans-serif; font-weight: 500;
+      font-family: 'Figtree', sans-serif; font-weight: var(--font-weight-medium);
       cursor: pointer; background: var(--base-white); transition: all 0.15s;
       width: fit-content;
     }
@@ -619,7 +846,7 @@
     .accordion-header {
       padding: var(--space-5) var(--space-6); display: flex;
       justify-content: space-between; align-items: center; cursor: pointer;
-      font-weight: 500; font-size: var(--font-size-md);
+      font-weight: var(--font-weight-medium); font-size: var(--font-size-md);
       background: var(--base-white); transition: background 0.15s;
     }
     .accordion-header:hover { background: var(--grey-050); }
@@ -684,7 +911,7 @@
       padding: var(--space-6); background: var(--grey-050);
     }
     .supported-card-title {
-      font-size: var(--font-size-md); font-weight: 600; margin-bottom: var(--space-4);
+      font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-4);
     }
     .supported-card-item {
       font-size: var(--font-size-sm); color: var(--text-primary); margin-bottom: var(--space-2);
@@ -858,7 +1085,7 @@
     .use-case-table th {
       text-align: left; padding: var(--space-4) var(--space-5);
       background: var(--grey-050); border: 1px solid var(--border-light);
-      font-weight: 600; color: var(--text-secondary); font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold); color: var(--text-secondary); font-size: var(--font-size-xs);
     }
     .use-case-table td {
       padding: var(--space-4) var(--space-5); border: 1px solid var(--border-light);
@@ -866,7 +1093,7 @@
     }
     .badge {
       display: inline-block; padding: 2px var(--space-3);
-      border-radius: var(--radius-xs); font-size: var(--font-size-xs); font-weight: 500;
+      border-radius: var(--radius-xs); font-size: var(--font-size-xs); font-weight: var(--font-weight-medium);
     }
     .badge-assist { background: var(--indigo-100); color: var(--indigo-600); }
     .badge-configure { background: var(--green-050); color: var(--green-700); }
@@ -882,7 +1109,7 @@
     .clarification-item {
       padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--border-light);
       cursor: pointer; border-left: 2px solid transparent;
-      font-size: var(--font-size-md); font-weight: 500; transition: all 0.15s;
+      font-size: var(--font-size-md); font-weight: var(--font-weight-medium); transition: all 0.15s;
     }
     .clarification-item:last-child { border-bottom: none; }
     .clarification-item:hover { background: var(--grey-050); }
@@ -895,7 +1122,7 @@
       display: flex; justify-content: space-between; align-items: center;
       margin-bottom: var(--space-4);
     }
-    .clarification-title { font-size: var(--font-size-md); font-weight: 600; }
+    .clarification-title { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); }
     .clarification-route { font-size: var(--font-size-xs); color: var(--text-secondary); }
     .user-query-right {
       background: var(--grey-100);
@@ -917,7 +1144,7 @@
       height: 28px; padding: 0 var(--space-4) 0 var(--space-2);
       font-size: 12px; color: var(--text-primary);
       cursor: pointer; transition: background 0.12s;
-      font-family: 'Figtree', sans-serif; font-weight: 500;
+      font-family: 'Figtree', sans-serif; font-weight: var(--font-weight-medium);
       text-decoration: none;
     }
     .citation:hover { background: var(--grey-200); }
@@ -926,7 +1153,7 @@
       width: 18px; height: 18px; border-radius: 50%;
       border: 2px solid var(--grey-100);
       margin-left: -6px; display: flex; align-items: center; justify-content: center;
-      font-size: 9px; font-weight: 700; overflow: hidden; flex-shrink: 0;
+      font-size: 9px; font-weight: var(--font-weight-bold); overflow: hidden; flex-shrink: 0;
       background: var(--base-white);
     }
     .citation__icon:first-child { margin-left: 0; }
@@ -954,16 +1181,16 @@
       border: 2px solid var(--base-white);
       margin-left: -6px; background: var(--grey-100);
       display: flex; align-items: center; justify-content: center;
-      font-size: 10px; font-weight: 600; overflow: hidden; flex-shrink: 0;
+      font-size: 10px; font-weight: var(--font-weight-semibold); overflow: hidden; flex-shrink: 0;
     }
     .source-ref__icon:first-child { margin-left: 0; }
     .source-ref__icon img { width: 100%; height: 100%; object-fit: cover; }
     .source-ref__more {
       background: var(--grey-100); color: var(--text-secondary);
-      font-size: 10px; font-weight: 600;
+      font-size: 10px; font-weight: var(--font-weight-semibold);
     }
     .source-ref__label {
-      font-size: var(--font-size-sm); color: var(--text-primary); font-weight: 500; white-space: nowrap;
+      font-size: var(--font-size-sm); color: var(--text-primary); font-weight: var(--font-weight-medium); white-space: nowrap;
     }
     .source-ref__drawer {
       background: var(--base-white); border: 1px solid var(--border-light);
@@ -988,10 +1215,10 @@
     .source-ref__link-icon img { width: 100%; height: 100%; object-fit: cover; }
 
     .prompt-chip {
-      display: inline-block; padding: var(--space-3) var(--space-5);
-      border: 1px solid var(--border-light); border-radius: 9999px;
-      font-size: var(--font-size-sm); cursor: pointer;
-      background: var(--base-white); transition: background 0.15s;
+      display: inline-flex; align-items: center; height: 32px; padding: 0 var(--space-5);
+      border: 1px solid var(--grey-200); border-radius: 9999px;
+      font-size: 13px; cursor: pointer; font-family: 'Figtree', sans-serif;
+      background: var(--base-white); transition: background 0.1s, border-color 0.1s;
       max-width: fit-content;
     }
     .prompt-chip:hover { background: var(--grey-050); }
@@ -1013,7 +1240,7 @@
       color: var(--text-primary); margin-right: var(--space-3);
       font-size: var(--font-size-sm);
     }
-    .configure-query strong { font-weight: 600; font-size: var(--font-size-md); }
+    .configure-query strong { font-weight: var(--font-weight-semibold); font-size: var(--font-size-md); }
     .configure-response-row {
       display: grid; grid-template-columns: 110px 1fr;
       gap: var(--space-4); align-items: start; margin-bottom: var(--space-6);
@@ -1023,7 +1250,7 @@
       background: var(--indigo-100);
       color: var(--indigo-600);
       font-size: var(--font-size-xs);
-      font-weight: 400;
+      font-weight: var(--font-weight-regular);
       padding: var(--space-3) var(--space-5);
       border-radius: var(--radius-sm);
       white-space: nowrap;
@@ -1033,7 +1260,7 @@
     }
     .configure-content { font-size: var(--font-size-sm); }
     .configure-content strong {
-      font-weight: 600; display: block; margin-bottom: 2px;
+      font-weight: var(--font-weight-semibold); display: block; margin-bottom: 2px;
     }
     .btn-group { display: flex; flex-direction: column; gap: var(--space-3); }
 
@@ -1111,6 +1338,8 @@
   <a class="topbar__link active" data-cat="principles" onclick="switchCat('principles'); return false;" href="#">Principles</a>
   <a class="topbar__link" data-cat="response-patterns" onclick="switchCat('response-patterns'); return false;" href="#">Response Patterns</a>
   <a class="topbar__link" data-cat="ui-patterns" onclick="switchCat('ui-patterns'); return false;" href="#">UI Patterns</a>
+  <!-- Examples tab hidden -->
+  <!-- <a class="topbar__link" data-cat="examples" onclick="switchCat('examples'); return false;" href="#">Examples</a> -->
 </header>
 
 <nav class="sidebar">
@@ -1132,23 +1361,23 @@
     <!-- 4-column principle cards -->
     <div style="display: grid; grid-template-columns: repeat(4,1fr); gap: var(--space-4); padding: 0 var(--space-8); margin-bottom: var(--space-8); max-width: 1088px; margin-left: auto; margin-right: auto;">
       <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6); background: var(--base-white);">
-        <div style="font-size: var(--font-size-xs); color: var(--text-primary); font-weight: 600; background: var(--grey-100); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: var(--space-4);">01</div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; margin-bottom: var(--space-4);">Lead with value</div>
+        <div style="font-size: var(--font-size-xs); color: var(--text-primary); font-weight: var(--font-weight-semibold); background: var(--grey-100); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: var(--space-4);">01</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-4);">Lead with value</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6;">Open with the most useful part of the response before adding context or detail.</div>
       </div>
       <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6); background: var(--base-white);">
-        <div style="font-size: var(--font-size-xs); color: var(--text-primary); font-weight: 600; background: var(--grey-100); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: var(--space-4);">02</div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; margin-bottom: var(--space-4);">Make the next step clear</div>
+        <div style="font-size: var(--font-size-xs); color: var(--text-primary); font-weight: var(--font-weight-semibold); background: var(--grey-100); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: var(--space-4);">02</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-4);">Make the next step clear</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6;">Every response should help the user continue with a path, CTA, review step, follow-up, or support route.</div>
       </div>
       <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6); background: var(--base-white);">
-        <div style="font-size: var(--font-size-xs); color: var(--text-primary); font-weight: 600; background: var(--grey-100); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: var(--space-4);">03</div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; margin-bottom: var(--space-4);">Controls in the workflow</div>
+        <div style="font-size: var(--font-size-xs); color: var(--text-primary); font-weight: var(--font-weight-semibold); background: var(--grey-100); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: var(--space-4);">03</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-4);">Controls in the workflow</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6;">AI can guide, draft, or recommend, but users should review and act in the product workflow where the change belongs.</div>
       </div>
       <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6); background: var(--base-white);">
-        <div style="font-size: var(--font-size-xs); color: var(--text-primary); font-weight: 600; background: var(--grey-100); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: var(--space-4);">04</div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; margin-bottom: var(--space-4);">Trust when it matters</div>
+        <div style="font-size: var(--font-size-xs); color: var(--text-primary); font-weight: var(--font-weight-semibold); background: var(--grey-100); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: var(--space-4);">04</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-4);">Trust when it matters</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.6;">Use data, sources, previews, or fallback paths when the response affects decisions, settings, support, or account outcomes.</div>
       </div>
     </div>
@@ -1297,15 +1526,15 @@
     <p class="page-subtitle">Assist helps users get answers, follow instructions, understand product or support context, and move to the right next step.</p>
     <div class="anatomy-grid anatomy-grid--3">
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">01 Answer</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-3);">01 Answer</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Direct answer, summary, limitation statement.</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Guidance</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-3);">02 Guidance</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Path, steps, context, or supporting detail.</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Next step</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-3);">03 Next step</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Link, CTA, follow-up, fallback, or escalation.</div>
       </div>
     </div>
@@ -1404,15 +1633,15 @@
     <p class="page-subtitle">An insight proactively surfaces a meaningful trend, risk, opportunity, savings, or workflow improvement before the user asks.</p>
     <div class="anatomy-grid anatomy-grid--3">
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">01 Insight</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-3);">01 Insight</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">What the AI noticed.</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Context</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-3);">02 Context</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">Why the insight is being shown. Include supporting data or source when helpful.</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Recommendation / Next step</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-3);">03 Recommendation / Next step</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">What the user should do next.</div>
       </div>
     </div>
@@ -1441,15 +1670,15 @@
     <p class="page-subtitle">Configure is used when AI helps users create or update a rule, automation, configuration, or workflow. AI drafts the proposed output, previews what will change, and requires user review before anything is applied.</p>
     <div class="anatomy-grid anatomy-grid--3">
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">01 Confirm intent</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-3);">01 Confirm intent</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">AI confirms what it is creating or updating.</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">02 Preview output</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-3);">02 Preview output</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">AI shows the proposed configuration or generated item.</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3);">03 Review / apply</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-3);">03 Review / apply</div>
         <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.5;">User reviews the generated output before any system change happens.</div>
       </div>
     </div>
@@ -1503,13 +1732,13 @@
 
     <div class="anatomy-grid anatomy-grid--3">
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">02 Ask clarifying question</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: 0;">02 Ask clarifying question</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Offer options</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: 0;">03 Offer options</div>
       </div>
     </div>
     <h2 class="section-title">Choosing the right method</h2>
@@ -1585,13 +1814,13 @@
     </div>
     <div class="anatomy-grid anatomy-grid--3">
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">02 State the boundary</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: 0;">02 State the boundary</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Offer next step</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: 0;">03 Offer next step</div>
       </div>
     </div>
     <div class="explorer-shell">
@@ -1626,13 +1855,13 @@
     </div>
     <div class="anatomy-grid anatomy-grid--3">
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: 0;">01 Acknowledge intent</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">02 Explain why escalation is needed</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: 0;">02 Explain why escalation is needed</div>
       </div>
       <div>
-        <div style="font-size: var(--font-size-md); font-weight: 600; color: var(--text-primary); margin-bottom: 0;">03 Route to support</div>
+        <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: 0;">03 Route to support</div>
       </div>
     </div>
     <div class="explorer-shell">
@@ -1663,19 +1892,19 @@
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin-bottom: var(--space-10);">
       <!-- Clarification -->
       <div style="background: var(--grey-050); border-radius: var(--radius-sm); padding: var(--space-10); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-page="clarification" onclick="showPage('clarification')" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-        <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Clarification</h3>
+        <h3 style="font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-4);">Clarification</h3>
         <p style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.5;">Narrows broad, ambiguous, or incomplete requests before choosing a response pattern.</p>
       </div>
 
       <!-- Capability Boundary -->
       <div style="background: var(--grey-050); border-radius: var(--radius-sm); padding: var(--space-10); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-page="capability-boundary" onclick="showPage('capability-boundary')" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-        <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Capability Boundary</h3>
+        <h3 style="font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-4);">Capability Boundary</h3>
         <p style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.5;">Explains when AI cannot complete a request and provides the safest next step.</p>
       </div>
 
       <!-- Escalation -->
       <div style="background: var(--grey-050); border-radius: var(--radius-sm); padding: var(--space-10); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-page="escalation" onclick="showPage('escalation')" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-        <h3 style="font-size: var(--font-size-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Escalation</h3>
+        <h3 style="font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-4);">Escalation</h3>
         <p style="font-size: var(--font-size-sm); color: var(--text-secondary); line-height: 1.5;">Defines when AI should route the user to Help Center instead of continuing in the current flow.</p>
       </div>
     </div>
@@ -1720,7 +1949,7 @@
         <div id="cot-combined-loading">
           <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-4); cursor:pointer;" onclick="cotToggleSteps()">
             <span id="cot-dots-slot"></span>
-            <div id="cot-current-step" class="shimmer-text" style="font-size: var(--font-size-xs); font-weight: 400;"></div>
+            <div id="cot-current-step" class="shimmer-text" style="font-size: var(--font-size-xs); font-weight: var(--font-weight-regular);"></div>
             <svg id="cot-steps-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.2s;flex-shrink:0;color:var(--grey-600);"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div id="cot-steps-container" style="max-height:0;overflow:hidden;transition:max-height 0.3s ease;padding-left: var(--space-2);">
@@ -1808,7 +2037,7 @@
               <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
             </svg>
           </button>
-          <button id="add-feedback-btn" onclick="openFeedbackModal()" style="background: var(--base-white); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: var(--space-2) var(--space-4); font-size: var(--font-size-sm); color: var(--text-primary); cursor: pointer; font-family: 'Figtree', sans-serif; font-weight: 500; white-space: nowrap;">
+          <button id="add-feedback-btn" onclick="openFeedbackModal()" style="background: var(--base-white); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: var(--space-2) var(--space-4); font-size: var(--font-size-sm); color: var(--text-primary); cursor: pointer; font-family: 'Figtree', sans-serif; font-weight: var(--font-weight-medium); white-space: nowrap;">
             Add Feedback
           </button>
         </div>
@@ -1817,7 +2046,7 @@
       <!-- Feedback Modal -->
       <div id="feedback-modal" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--base-white); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); z-index: 10;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
-          <h3 style="font-size: var(--font-size-lg); font-weight: 600; color: var(--text-primary);">Feedback</h3>
+          <h3 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--text-primary);">Feedback</h3>
           <button onclick="closeFeedbackModal()" style="background: transparent; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-secondary);">
               <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -1825,10 +2054,10 @@
             </svg>
           </button>
         </div>
-        <label style="display: block; font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-2);">What could have been better?</label>
+        <label style="display: block; font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-2);">What could have been better?</label>
         <textarea id="feedback-text" style="width: 300px; height: 80px; padding: var(--space-3); border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; color: var(--text-primary); resize: none; margin-bottom: var(--space-4); box-sizing: border-box; outline: none; transition: border-color 0.12s;" onfocus="this.style.borderColor='var(--grey-600)'" onblur="this.style.borderColor='var(--border-light)'" placeholder="Share your feedback..."></textarea>
         <div style="display: flex; justify-content: flex-end;">
-          <button onclick="submitFeedback()" style="background: var(--indigo-950); color: var(--base-white); border: none; border-radius: var(--radius-xs); height: 32px; padding: 0 var(--space-6); font-size: var(--font-size-sm); font-weight: 500; cursor: pointer; font-family: 'Figtree', sans-serif;">
+          <button onclick="submitFeedback()" style="background: var(--indigo-950); color: var(--base-white); border: none; border-radius: var(--radius-xs); height: 32px; padding: 0 var(--space-6); font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); cursor: pointer; font-family: 'Figtree', sans-serif;">
             Submit
           </button>
         </div>
@@ -1873,14 +2102,14 @@
         </button>
 
         <div style="width: 100%; display: flex; flex-direction: column; gap: var(--space-1);">
-          <label style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary);">Ship From Address</label>
+          <label style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--text-primary);">Ship From Address</label>
           <input id="input-address" type="text" placeholder="Enter address..."
             oninput="removeGlow(this)"
             style="width: 100%; padding: var(--space-3); border: 1px solid var(--border-light); border-radius: var(--radius-xs); font-size: var(--font-size-sm); font-family: 'Figtree', sans-serif; color: var(--text-primary); outline: none; transition: all 0.3s; height: 32px;">
         </div>
 
         <div style="width: 100%; display: flex; flex-direction: column; gap: var(--space-1);">
-          <label style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary);">Carrier</label>
+          <label style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--text-primary);">Carrier</label>
           <div style="position: relative; width: 100%;">
             <select id="input-carrier"
               onchange="removeGlow(this)"
@@ -1897,7 +2126,7 @@
         </div>
 
         <div style="width: 100%; display: flex; flex-direction: column; gap: var(--space-1);">
-          <label style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary);">Package Weight</label>
+          <label style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--text-primary);">Package Weight</label>
           <div style="position: relative; width: 100%;">
             <input id="input-weight" type="number" placeholder="0"
               oninput="removeGlow(this)"
@@ -2006,7 +2235,7 @@
     <p style="font-size: var(--font-size-md); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-6);">Use when the assistant needs the user to choose between multiple valid interpretations before it can produce the right answer, chart, filtered view, or action.</p>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-6);">
       <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6);">
-        <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Use when</div>
+        <div style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-4);">Use when</div>
         <ul style="font-size: var(--font-size-sm); color: var(--text-primary); padding-left: var(--space-5); line-height: 1.8; margin: 0;">
           <li>A term has multiple meanings, like "print volume"</li>
           <li>The requested object is unclear, like "show me problem shipments"</li>
@@ -2016,7 +2245,7 @@
         </ul>
       </div>
       <div style="border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--space-6);">
-        <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4);">Avoid when</div>
+        <div style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: var(--space-4);">Avoid when</div>
         <ul style="font-size: var(--font-size-sm); color: var(--text-primary); padding-left: var(--space-5); line-height: 1.8; margin: 0;">
           <li>The AI can answer with a reasonable default</li>
           <li>The ambiguity is low risk</li>
@@ -2116,6 +2345,26 @@
   <div class="page" id="page-generated-object">
     <h1 class="page-title">Generated Object Preview</h1>
     <p class="page-subtitle">Coming soon.</p>
+  </div>
+
+  <!-- EXAMPLES -->
+  <!-- EXAMPLES -->
+  <div class="page" id="page-examples">
+    <h1 class="page-title">Examples</h1>
+    <p class="page-subtitle">Explore AI use cases across products. Use each example to understand the response pattern, UI patterns, product area, and decisions needed.</p>
+
+    <h2 class="section-title" style="margin-bottom:var(--space-6);">Use cases</h2>
+    <div class="ex-grid" id="ex-grid"></div>
+  </div>
+
+  <!-- Example detail full page -->
+  <div class="page" id="page-example-detail">
+    <div id="example-detail-content"></div>
+  </div>
+
+  <!-- STAMPY AI NLP DETAIL -->
+  <div class="page" id="page-stampy-nlp">
+    <div id="stampy-nlp-content"></div>
   </div>
 
 </main>
@@ -2561,6 +2810,7 @@
       ]},
     ],
     'guardrails': [],
+    'examples': [],
     'ui-patterns': [
       { group: 'NLP / Chat Actions' },
       { page: 'response-actions',       label: 'Response Actions' },
@@ -2584,6 +2834,9 @@
     'response-patterns': 'response-patterns',
     'guardrails': 'response-patterns',
     'ui-patterns': 'ui-patterns',
+    'examples': 'examples',
+    'stampy-nlp': 'examples',
+    'example-detail': 'examples',
   };
   Object.entries(sidebarConfig).forEach(([cat, items]) => {
     items.forEach(item => {
@@ -2620,7 +2873,7 @@
     currentCat = cat;
     document.querySelectorAll('.topbar__link[data-cat]').forEach(l =>
       l.classList.toggle('active', l.dataset.cat === cat));
-    const defaultPage = cat === 'ui-patterns' ? 'ui-patterns' : (sidebarConfig[cat] || []).find(i => i.page)?.page || cat;
+    const defaultPage = (cat === 'ui-patterns' || cat === 'examples') ? cat : (sidebarConfig[cat] || []).find(i => i.page)?.page || cat;
     renderSidebar(cat, defaultPage);
     showPage(defaultPage);
   }
@@ -2660,14 +2913,22 @@
     if (page) page.classList.add('active');
 
     if (pushState) history.pushState({ page: pageId }, '', '#' + pageId);
+    sessionStorage.setItem('lastPage', pageId);
     resetPageInteractions();
     if (pageId === 'typing-text') setTimeout(runTyping, 200);
     if (pageId === 'chain-of-thought') setTimeout(cotReplay, 400);
+    if (pageId === 'examples') renderExamples();
   }
 
   window.addEventListener('popstate', (e) => {
-    const pageId = e.state?.page || location.hash.slice(1) || 'principles';
-    showPage(pageId, false);
+    const hash = location.hash.slice(1) || 'principles';
+    const pageId = e.state?.page || hash;
+    if (hash === 'examples/Stampy' || pageId === 'stampy-nlp') {
+      renderStampyNLP();
+      showPage('stampy-nlp', false);
+    } else {
+      showPage(pageId, false);
+    }
   });
 
   document.querySelectorAll('.nav-item[data-page]').forEach(item => {
@@ -3104,8 +3365,6 @@
 
   function restartTyping() { runTyping(); }
 
-  const initialPage = location.hash.slice(1) || 'principles';
-  showPage(initialPage, false);
 
   function selectRadioOption(btn, value) {
     btn.classList.toggle('refinement-card__radio-option--selected');
@@ -3290,6 +3549,225 @@
   }
 
   renderClarifyVariant();
+
+  // ── Examples page ─────────────────────────────────────────────────────────
+  const examplesData = [
+    {
+      id: 6,
+      title: 'Stampy AI NLP',
+      desc: 'Stamps native AI functionality in Analytics.',
+      pattern: ['assist'],
+      patternLabels: ['Assist'],
+      uiPatterns: 'AI side panel, Prompt chips, Response Actions, Feedback Bar',
+      area: 'Global / All surfaces',
+      ask: 'User opens the panel from any product surface.',
+      behavior: 'Panel opens in empty state with a headline and starter chips. User types or selects a chip to start a conversation. AI responds inline with answer, guidance, and next step actions.',
+      decision: 'Define starter chip content per surface context.',
+      notes: 'This panel is the primary NLP interaction surface for ShipStation AI.'
+    }
+  ];
+
+  let exFilter = 'all';
+
+  function filterExamples(filter, btn) {
+    exFilter = filter;
+    document.querySelectorAll('.ex-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderExamples();
+  }
+
+  function patternBadge(p) {
+    const map = { assist: 'ex-badge--assist', insight: 'ex-badge--insight', configure: 'ex-badge--configure', clarification: 'ex-badge--clarification', capability: 'ex-badge--capability' };
+    const labels = { assist: 'Assist', insight: 'Insight', configure: 'Configure', clarification: 'Clarification', capability: 'Capability Boundary' };
+    return `<span class="ex-card__badge ${map[p]}">${labels[p]}</span>`;
+  }
+
+  function renderExamples() {
+    const grid = document.getElementById('ex-grid');
+    if (!grid) return;
+    const filtered = exFilter === 'all' ? examplesData : examplesData.filter(e => e.pattern.includes(exFilter));
+    grid.innerHTML = filtered.map(ex => `
+      <div class="ex-card" onclick="openExampleDetail(${ex.id})">
+        <div class="ex-card__title">${ex.title}</div>
+        <div class="ex-card__desc">${ex.desc}</div>
+      </div>
+    `).join('');
+  }
+
+  let currentExampleId = null;
+
+  function openExampleDetail(id) {
+    currentExampleId = id;
+    if (id === 6) {
+      renderStampyNLP();
+      history.pushState({ page: 'stampy-nlp' }, '', '#examples/Stampy');
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-stampy-nlp')?.classList.add('active');
+      resetPageInteractions();
+    } else {
+      renderExampleDetail(id);
+      showPage('example-detail', false);
+    }
+  }
+
+  // ── Reusable example preview template ────────────────────────────────────
+  // Usage: buildExamplePreview({ containerId, tabs: [{ id, label, content }] })
+  // Each tab.content is an HTML string rendered in the preview area.
+  // The first tab is active by default.
+
+  function buildExamplePreview({ containerId, tabs }) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const tabButtons = tabs.map((t, i) =>
+      `<button class="ex-preview-tab${i === 0 ? ' active' : ''}" onclick="switchExampleTab(this, '${containerId}', '${t.id}')">${t.label}</button>`
+    ).join('');
+
+    const tabPanels = tabs.map((t, i) =>
+      `<div id="${containerId}-tab-${t.id}" style="${i !== 0 ? 'display:none;' : ''}">${t.content}</div>`
+    ).join('');
+
+    container.innerHTML = `
+      <div class="ex-preview-tabs">${tabButtons}</div>
+      ${tabPanels}
+    `;
+  }
+
+  function switchExampleTab(btn, containerId, tabId) {
+    // Deactivate all tabs in this container
+    btn.closest('.ex-preview-tabs').querySelectorAll('.ex-preview-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    // Show the right panel, hide others
+    const container = document.getElementById(containerId);
+    container.querySelectorAll('[id^="' + containerId + '-tab-"]').forEach(p => {
+      p.style.display = p.id === containerId + '-tab-' + tabId ? '' : 'none';
+    });
+  }
+
+  // ── Shared AI panel HTML ──────────────────────────────────────────────────
+  function aiPanelHTML(id, starters = [], prefill = '') {
+    const composerId = id + '-composer';
+    const sendId = id + '-send';
+    const inputId = id + '-input';
+    return `
+      <div style="background:#F0F2F5;border-radius:var(--radius-sm);min-height:800px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08),0 0 0 1px rgba(0,0,0,0.04);">
+        <div class="ai-panel" style="position:absolute;top:0;right:0;bottom:0;height:100%;border-radius:0;border-top:none;border-bottom:none;border-right:none;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 8px;flex-shrink:0;">
+            <div></div>
+            <div style="display:flex;gap:1px;align-items:center;">
+              <button class="ai-panel__icon-btn" data-tip="History"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="1 4 3 8 7 6"/><polyline points="12 7 12 12 15 15"/></svg></button>
+              <button class="ai-panel__icon-btn" data-tip="New chat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+              <button class="ai-panel__icon-btn" data-tip="Close"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+          </div>
+          <div style="flex:1;overflow-y:auto;display:flex;flex-direction:column;padding:0 16px;">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding-bottom:20px;">
+              <img src="img/Logos/Size=M.svg" width="40" height="40" alt="Ask" />
+              <h3 style="margin:0;font-size:17px;font-weight:600;color:var(--grey-950);text-align:center;line-height:1.4;">How can I help you today?</h3>
+              <div style="display:flex;flex-direction:column;gap:7px;align-items:center;">
+                ${starters.map(s => `<button class="ai-panel__starter-chip">${s}</button>`).join('')}
+              </div>
+            </div>
+          </div>
+          <div class="ai-panel__composer" id="${composerId}">
+            <textarea class="ai-panel__composer-input" id="${inputId}"
+              onfocus="document.getElementById('${composerId}').classList.add('focused')"
+              onblur="document.getElementById('${composerId}').classList.remove('focused')"
+              oninput="document.getElementById('${sendId}').classList.toggle('active',this.value.trim().length>0);this.style.height='auto';this.style.height=this.scrollHeight+'px';"
+              rows="1"${prefill ? ` data-prefill="${prefill.replace(/"/g,'&quot;')}"` : ''}>${prefill ? prefill.replace(/</g,'&lt;') : ''}</textarea>
+            ${prefill ? `<script>setTimeout(()=>{const s=document.getElementById('${sendId}');if(s)s.classList.add('active');},50);<\/script>` : ''}
+            <div class="ai-panel__composer-actions">
+              <button class="ai-panel__icon-btn" data-tip="Attach"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+              <button class="ai-panel__send" id="${sendId}" data-tip="Send"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderStampyNLP() {
+    renderExampleDetail(6, 'stampy-nlp-content');
+    // Build preview using the reusable template
+    buildExamplePreview({
+      containerId: 'stampy-nlp-content-preview-container',
+      tabs: [
+        {
+          id: 'skills',
+          label: 'Skills',
+          content: aiPanelHTML('stampy', [
+            "How do I create a NetStamp?",
+            "Show my savings for the last 3 months",
+            "Can I connect Stamps with a Shopify store?"
+          ])
+        },
+        {
+          id: 'out-of-scope',
+          label: 'Out of Scope',
+          content: aiPanelHTML('stampy-oos', [
+            "How do I create a NetStamp?",
+            "Show my savings for the last 3 months",
+            "Can I connect Stamps with a Shopify store?"
+          ], "Can you send an email to support on my behalf?")
+        }
+      ]
+    });
+  }
+
+  function renderExampleDetail(id, targetId = 'example-detail-content') {
+    const ex = examplesData.find(e => e.id === id);
+    if (!ex) return;
+
+    const flowSteps = [
+      'User asks or a system signal triggers the interaction.',
+      'AI responds with relevant information or asks a clarifying question.',
+      'User chooses an option, provides details, or confirms intent.',
+      'AI routes, drafts, previews, or answers based on the input.',
+      'User reviews the result or takes the next action.'
+    ];
+
+    const patternNote = (() => {
+      const p = ex.pattern[0];
+      const notes = {
+        assist: 'The Assist pattern applies here because the user needs a direct answer or a route to the right place.',
+        insight: 'The Insight pattern applies here because AI surfaces a signal the user did not explicitly request.',
+        configure: 'The Configure pattern applies here because the user needs to define settings or rule logic before AI can act.',
+        clarification: 'The Clarification pattern applies here because AI needs more context before it can give a useful response.',
+        capability: 'The Capability Boundary pattern applies here because the request falls outside what AI can complete directly.'
+      };
+      return notes[p] || 'This pattern was selected based on the nature of the user need and expected AI behavior.';
+    })();
+
+    const html = `
+      <button class="ex-detail-back" onclick="showPage('examples')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Examples
+      </button>
+
+      <div class="ex-detail-header">
+        <div class="ex-detail-header__title">${ex.title}</div>
+        <div class="ex-detail-header__desc">${ex.desc}</div>
+      </div>
+
+      <div class="ex-detail-section" id="${targetId}-preview-container"></div>
+
+    `;
+
+    document.getElementById(targetId).innerHTML = html;
+  }
+
+  renderExamples();
+
+  // ── Initial page load (must be after all data/functions are defined) ─────────
+  (function() {
+    let initialHash = location.hash.slice(1) || sessionStorage.getItem('lastPage') || 'principles';
+    if (initialHash === 'example-detail') initialHash = 'examples';
+    if (initialHash === 'examples/Stampy') {
+      renderStampyNLP();
+      showPage('stampy-nlp', false);
+    } else {
+      showPage(initialHash, false);
+    }
+  })();
 
   // ── Response Actions type switcher ─────────────────────────────────────────
   const btnTypes = [
