@@ -6,7 +6,7 @@ Response patterns define how the AI assistant should respond based on the intera
 
 ## Source rules
 
-Use sources when the assistant is answering from product knowledge, policy, support guidance, developer documentation, help documentation, or account data.
+Use sources when the assistant is answering from product knowledge, policy, support guidance, developer documentation, or help documentation.
 
 Sources help users understand where the answer came from and whether they can trust it.
 
@@ -24,7 +24,6 @@ Sources help users understand where the answer came from and whether they can tr
 |---|---|---|
 | **Developer docs** | The answer explains APIs, endpoints, authentication, webhooks, payloads, errors, or integration behavior. | Source: Developer Docs |
 | **Help docs** | The answer explains product setup, settings, workflows, troubleshooting, or user-facing features. | Source: Help Center |
-| **Product data** | The answer uses the user's account, orders, shipments, labels, analytics, or configuration. | Source: Your shipment data |
 | **Policy / support guidance** | The answer depends on support policy, carrier rules, billing rules, limits, or eligibility. | Source: Support guidance |
 
 ### Placement
@@ -37,7 +36,7 @@ For longer answers, sources can be attached to the specific section they support
 
 ### Decision rule
 
-If the assistant is using product knowledge, documentation, policy, or user data to support the answer, include a source. If the response is general conversation or does not depend on a documented source, do not add one.
+If the assistant is using product knowledge, documentation, or policy to support the answer, include a source. If the response is general conversation or does not depend on a documented source, do not add one.
 
 ---
 
